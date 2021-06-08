@@ -1,0 +1,56 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+header {
+  height: 66px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#site-nav, #logo, #actions {
+  flex: 1;
+}
+
+#logo {
+  display: inline-flex;
+  width: 0;
+}
+
+#logo > img {
+  height: 80%;
+  margin: auto;
+  display: block;  
+}
+
+#site-nav {
+  display: flex;
+  align-items: center;
+}
+
+#site-nav > a {
+  display: flex;
+  margin-left: 8px;
+  text-decoration: none;
+  color: inherit;
+  font-size: 28px;
+}
+
+#site-nav .current-page {
+  border-bottom: 2px black solid;
+}
+
+#actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#submit-location {
+  margin: 4px;
+  background: linear-gradient(to right, #4d4e4d 0%, #40877a 80%, #216155 100%);
+  color: #e1dcdc;
+}

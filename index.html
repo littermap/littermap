@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Littermap</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/pages/home.css">
+</head>
+<body>
+  <header>
+    <nav id="site-nav">
+      <a class="current-page" href="/">Home</a>
+      <a href="/">Contact</a>
+    </nav>
+    <a id="logo" href="/">
+      <img id="logo-image" src="images/logo.png" alt="logo">
+    </a>
+    <section id="actions">
+      <button id="submit-location" onclick="submitLocation()">Submit Location</button>
+    </section>
+  </header>
+  <main id="map" />
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYXtn7DexBLlY0y_mcOZ6t8CoTGkzkEh4"></script>
+  <script>
+    let map;
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        center: new google.maps.LatLng(35.899532, -79.056473),
+        mapTypeId: "terrain",  fullscreenControl: true,
+        gestureHandling: "greedy"
+      });
+    }
+
+    function loadLocations() {
+      map.data.loadGeoJson('https://web.fulcrumapp.com/shares/58738b7d41051b7d.geojson');
+    }
+
+    initMap();
+    loadLocations();
+
+    function submitLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(sendPosition);
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+
+      function sendPosition(position) {
+        let lat = position.coords.latitude;
+        let lon = position.coords.longitude;
+
+        let request = new XMLHttpRequest();
+        request.open('POST', 'https://42904.wayscript.io/');
+
+        let data = JSON.stringify({lat, lon});
+        alert("Submitting: " + data);
+        request.send(data);
+
+        request.onload = () => {
+          alert("Thank you for submitting this point.");
+          alert("Help us crowd source environmental cleanup by building a knowledgebase of locations that need litter and or plastic pollution cleanup. Become a part of the process to clean up the planet and restore it to its natural beauty with the ease of “spotting” locations that others can attend to. If you are one of the thousands of cleanup enthusiasts, use the map to locate your next cleanup.");
+
+          loadLocations();
+        }
+      }
+    }
+
+  </script>
+</body>
+</html>

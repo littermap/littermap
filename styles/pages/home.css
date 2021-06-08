@@ -1,0 +1,10 @@
+body {
+  overflow: hidden;
+}
+
+#map {
+  position: absolute;
+  top: 66px;
+  bottom: 0;
+  width: 100%;
+}

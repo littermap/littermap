@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="65.91 -147.55 797.684 795.547" width="797.684" height="795.547" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="gradient-1-0" gradientUnits="userSpaceOnUse" x1="18.332" y1="-632.947" x2="18.332" y2="137.053" gradientTransform="matrix(-0.008567, -0.999963, 0.915545, -0.007845, 643.23999, 410.284149)" xlink:href="#gradient-1"/>
+    <linearGradient id="gradient-1">
+      <title>ocean</title>
+      <stop offset="0" style="stop-color: rgb(162, 193, 244);"/>
+      <stop offset="0.733" style="stop-color: rgb(67, 148, 223);"/>
+    </linearGradient>
+    <radialGradient id="gradient-3-0" gradientUnits="userSpaceOnUse" cx="1466.491" cy="229.965" r="102.659" gradientTransform="matrix(1.683696, -0.008765, 0.005206, 0.999986, -1003.83058, 12.857195)" xlink:href="#gradient-3"/>
+    <linearGradient id="gradient-3">
+      <title>bottle</title>
+      <stop style="stop-color: rgb(255, 255, 255);" offset="0"/>
+      <stop offset="1" style="stop-color: rgb(50, 50, 50);"/>
+    </linearGradient>
+    <radialGradient id="gradient-3-1" gradientUnits="userSpaceOnUse" cx="1462.903" cy="365.287" r="106.966" gradientTransform="matrix(1.689816, 0.008412, -0.004978, 0.999988, -1007.31582, -12.301797)" xlink:href="#gradient-3"/>
+    <radialGradient id="gradient-3-2" gradientUnits="userSpaceOnUse" cx="1465.056" cy="513.172" r="106.248" gradientTransform="matrix(1.694477, -0.050816, 0.029975, 0.999551, -1032.830459, 74.678063)" xlink:href="#gradient-3"/>
+    <linearGradient id="gradient-2-1" gradientUnits="userSpaceOnUse" x1="-364.939" y1="-2181.201" x2="-364.939" y2="-1544.322" gradientTransform="matrix(0.002197, -0.999996, 0.591783, 0.001301, 1323.965206, -82.264432)" xlink:href="#gradient-2"/>
+    <linearGradient id="gradient-2">
+      <title>land</title>
+      <stop offset="0" style="stop-color: rgb(0, 231, 50);"/>
+      <stop offset="1" style="stop-color: rgb(54, 133, 56);"/>
+    </linearGradient>
+    <linearGradient id="gradient-2-0" gradientUnits="userSpaceOnUse" x1="1140.65" y1="-172.209" x2="1140.65" y2="491.016" gradientTransform="matrix(0.001648, -0.999999, 0.559614, 0.000922, 522.757211, 1490.009195)" xlink:href="#gradient-2"/>
+  </defs>
+  <circle style="color: black; stroke-width: 24px; paint-order: fill; fill: url(#gradient-1-0); stroke: rgb(0, 0, 0);" cx="401" cy="400" r="385" transform="matrix(1, 0, 0, 1, 62.759315, -150.000015)"/>
+  <g transform="matrix(1, 0, 0, 1, -1004.462708, -98.311852)">
+    <title>bottle</title>
+    <rect x="1391.452" y="78.45" width="137.117" height="55.996" style="fill: none; stroke: rgb(0, 0, 0); stroke-width: 22px; fill-opacity: 0.29;" rx="7.179" ry="7.179"/>
+    <polygon style="stroke: rgb(0, 0, 0); stroke-width: 22px; fill: url(#gradient-3-0); fill-opacity: 0.29; stroke-linejoin: round;" points="1564.125 233.194 1489.464 136.28 1429.88 136.998 1358.808 231.759 1358.808 297.805 1376.038 317.906 1547.614 317.906 1564.125 297.805"/>
+    <rect x="1355.937" y="324.367" width="213.932" height="81.84" style="stroke: rgb(0, 0, 0); stroke-width: 22px; fill: url(#gradient-3-1); fill-opacity: 0.29;" rx="16.511" ry="16.511"/>
+    <rect x="1358.808" y="416.257" width="212.496" height="193.831" style="stroke: rgb(0, 0, 0); stroke-width: 22px; fill: url(#gradient-3-2); fill-opacity: 0.29;" rx="30.151" ry="30.151"/>
+  </g>
+  <g style="" transform="matrix(1, 0, 0, 1, 63.759315, -150.000015)">
+    <title>land</title>
+    <path d="M 19.961 342.092 C 18.092 353.909 120.162 357.186 124.375 359.146 C 130.633 362.057 157.311 373.582 163.859 377.811 C 180.789 388.745 178.279 409.226 186.114 425.192 C 193.925 441.109 212.558 477.951 214.111 481.187 C 218.506 490.342 216.574 535.44 218.152 544.03 C 226.863 591.437 172.04 616.444 194.098 659.302 C 205.1 680.679 234.567 715.358 274.462 690.8 C 275.734 690.017 282.199 579.675 327.336 602.242 C 382.911 630.028 343.604 564.255 353.066 532.844 C 374.516 461.64 348.788 454.895 344.768 450.318 C 333.222 437.174 324.524 421.247 311.027 410.116 C 300.788 401.672 265.251 377.839 266.052 373.675 C 269.654 354.945 274.373 352.087 285.901 336.891 C 296.112 323.431 325.647 322.911 326.103 306.022 C 326.66 285.398 290.192 277.725 288.054 257.205 C 284.873 226.665 305.102 198.165 311.745 168.187 C 314.455 155.957 321.928 143.101 317.488 115.063 C 315.139 100.227 277.794 36.365 276.409 36.746 C 199.481 57.899 51.332 143.727 19.961 342.092 Z" style="stroke-linejoin: round; fill: url(#gradient-2-1); stroke-width: 24px; stroke: rgb(0, 0, 0); fill-opacity: 0.91;"/>
+    <path style="stroke-linejoin: round; fill: url(#gradient-2-0); stroke: rgb(0, 0, 0); stroke-width: 24px; fill-opacity: 0.91;" d="M 638.715 99.919 C 640.784 78.54 433.781 179.954 416.556 216.283 C 417.204 208.509 394.093 256.837 397.891 269.408 C 396.03 295.252 415.814 307.456 420.144 307.456 C 455.919 321.86 484.705 315.981 514.561 326.717 C 551.156 339.876 577.445 399.056 577.445 399.056 C 602.493 461.289 586.339 541.289 519.932 568.05 C 406.402 626.647 472.275 747.092 529.143 758.79 C 753.998 704.536 919.793 326.836 638.715 99.919 Z"/>
+  </g>
+</svg>

@@ -5,6 +5,8 @@
   <title>Littermap</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.css">
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/pages/home.css">
 </head>
@@ -27,6 +29,7 @@
     // Leaflet API reference: https://leafletjs.com/reference-1.7.1.html
     //
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.js"></script>
   <script>
     var map, markers = null
 
@@ -76,6 +79,15 @@
         },
         null // Overlays (none yet)
       ).addTo(map)
+
+      // Add "locate me" control
+      //
+      // Add-on options: https://github.com/domoritz/leaflet-locatecontrol#possible-options
+      L.control.locate({
+        strings: {
+          title: "Locate me"
+        }
+      }).addTo(map)
 
       // Remove the default 'Leaflet' prefix from the attribution line and mention OpenStreetMap
       map.attributionControl.setPrefix().addAttribution("Map data from OpenStreetMap")

@@ -103,32 +103,30 @@
     loadLocations()
 
     function submitLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(sendPosition);
-      } else {
-        alert("Geolocation is not supported by this browser.");
-      }
+      if (navigator.geolocation)
+        navigator.geolocation.getCurrentPosition(sendPosition)
+      else
+        alert("Geolocation API is not supported by this browser.")
 
       function sendPosition(position) {
-        let lat = position.coords.latitude;
-        let lon = position.coords.longitude;
+        let lat = position.coords.latitude
+        let lon = position.coords.longitude
 
-        let request = new XMLHttpRequest();
-        request.open('POST', 'https://42904.wayscript.io/');
+        let request = new XMLHttpRequest()
+        request.open('POST', 'https://42904.wayscript.io/')
 
-        let data = JSON.stringify({lat, lon});
-        alert("Submitting: " + data);
-        request.send(data);
+        let data = JSON.stringify({lat, lon})
+        alert("Submitting: " + data)
+        request.send(data)
 
         request.onload = () => {
-          alert("Thank you for submitting this point.");
-          alert("Help us crowd source environmental cleanup by building a knowledgebase of locations that need litter and or plastic pollution cleanup. Become a part of the process to clean up the planet and restore it to its natural beauty with the ease of “spotting” locations that others can attend to. If you are one of the thousands of cleanup enthusiasts, use the map to locate your next cleanup.");
+          alert("Thank you for submitting this point.")
+          alert("Help us crowd source environmental cleanup by building a knowledgebase of locations that need litter and or plastic pollution cleanup. Become a part of the process to clean up the planet and restore it to its natural beauty with the ease of “spotting” locations that others can attend to. If you are one of the thousands of cleanup enthusiasts, use the map to locate your next cleanup.")
 
-          loadLocations();
+          loadLocations()
         }
       }
     }
-
   </script>
 </body>
 </html>

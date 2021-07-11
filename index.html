@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Littermap</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/pages/home.css">
 </head>
@@ -21,25 +22,85 @@
     </section>
   </header>
   <main id="map" />
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYXtn7DexBLlY0y_mcOZ6t8CoTGkzkEh4"></script>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js">
+    //
+    // Leaflet API reference: https://leafletjs.com/reference-1.7.1.html
+    //
+  </script>
   <script>
-    let map;
+    var map, markers = null
 
     function initMap() {
-      map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 12,
-        center: new google.maps.LatLng(35.899532, -79.056473),
-        mapTypeId: "terrain",  fullscreenControl: true,
-        gestureHandling: "greedy"
-      });
+      // Mapbox API token from Leaflet examples
+      var mapboxAPIToken = "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw"
+
+      //
+      // Mapbox Streets layer
+      //
+      // Read more: https://www.mapbox.com/maps/streets/
+      //
+      var mapboxStreets = L.tileLayer(
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=" + mapboxAPIToken,
+        {
+          id: 'mapbox/streets-v11',
+          tileSize: 512,
+          zoomOffset: -1
+        }
+      )
+
+      //
+      // OpenStreetMap standard layer
+      //
+      // Read more: https://wiki.openstreetmap.org/wiki/Standard_tile_layer
+      //
+      var osmStandard = L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          maxZoom: 18,
+        }
+      )
+
+      // Create the map
+      map = L.map('map', {
+        layers: [mapboxStreets]
+      })
+
+      // Show Raleigh-Durham area by default
+      map.setView([35.8579, -78.8442], 10)
+
+      // Add layer switcher control
+      L.control.layers(
+        {
+          "Mapbox Streets": mapboxStreets,
+          "OpenStreetMap Standard": osmStandard
+        },
+        null // Overlays (none yet)
+      ).addTo(map)
+
+      // Remove the default 'Leaflet' prefix from the attribution line and mention OpenStreetMap
+      map.attributionControl.setPrefix().addAttribution("Map data from OpenStreetMap")
     }
 
-    function loadLocations() {
-      map.data.loadGeoJson('https://web.fulcrumapp.com/shares/58738b7d41051b7d.geojson');
+    async function loadLocations() {
+      let url = "https://web.fulcrumapp.com/shares/58738b7d41051b7d.geojson"
+
+      console.log("Fetching litter locations...")
+      let res = await fetch(url)
+
+      if (res.ok) {
+        console.log("Received litter location data")
+        let json = await res.json()
+
+        if (markers)
+          map.removeLayer(markers)
+
+        markers = L.geoJson(json).addTo(map).bindPopup("Someone has reported seeing litter here.")
+      } else
+        console.log("Failed to fetch litter locations: " + res.status)
     }
 
-    initMap();
-    loadLocations();
+    initMap()
+    loadLocations()
 
     function submitLocation() {
       if (navigator.geolocation) {

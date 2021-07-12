@@ -21,13 +21,20 @@
       </div>
     </section>
     <a id="logo" href="/">
-      <img id="logo-image" src="images/logo.svg" alt="logo">
+      <img src="images/logo.svg" alt="logo">
     </a>
-    <section id="actions">
-      <button id="submit-location" onclick="submitLocation()">Submit Location</button>
+    <section id="info">
+      <div id="location-count">
+        retrieving locations
+      </div>
+      <div>
+        Become a sponsor
+      </div>
     </section>
   </header>
-  <main id="map" />
+  <main id="map">
+    <button id="submit-location" onclick="submitLocation()">Submit Location</button>
+  </main>
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js">
     //
     // Leaflet API reference: https://leafletjs.com/reference-1.7.1.html
@@ -106,6 +113,10 @@
       if (res.ok) {
         console.log("Received litter location data")
         let json = await res.json()
+        let count = json.features.length
+        let countInfo = count + ((count !== 1) ? " locations" : " location")
+
+        document.getElementById("location-count").innerText = countInfo
 
         if (markers)
           map.removeLayer(markers)

@@ -16,6 +16,21 @@ header {
   flex: 1;
 }
 
+#site-nav {
+  font: 28px bold sans-serif;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow-x: visible;
+}
+
+#menu {
+  margin-left: 8px;
+  margin-right: 10px;
+  padding: 0 4px;
+  cursor: pointer;
+}
+
 #logo {
   display: inline-flex;
   width: 0;
@@ -25,23 +40,6 @@ header {
   height: 80%;
   margin: auto;
   display: block;
-}
-
-#site-nav {
-  display: flex;
-  align-items: center;
-}
-
-#site-nav > a {
-  display: flex;
-  margin-left: 8px;
-  text-decoration: none;
-  color: inherit;
-  font-size: 28px;
-}
-
-#site-nav .current-page {
-  border-bottom: 2px black solid;
 }
 
 #actions {

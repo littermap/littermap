@@ -12,10 +12,14 @@
 </head>
 <body>
   <header>
-    <nav id="site-nav">
-      <a class="current-page" href="/">Home</a>
-      <a href="/">Contact</a>
-    </nav>
+    <section id="site-nav">
+      <div id="menu">
+        ≡
+      </div>
+      <div id="title">
+        Litter Map
+      </div>
+    </section>
     <a id="logo" href="/">
       <img id="logo-image" src="images/logo.svg" alt="logo">
     </a>
@@ -59,7 +63,7 @@
       var osmStandard = L.tileLayer(
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         {
-          maxZoom: 18,
+          maxZoom: 18
         }
       )
 

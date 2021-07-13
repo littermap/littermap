@@ -1,15 +1,13 @@
 <svg width="400" height="400" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="ocean">
-      <stop stop-color="#b4bdff" offset="0"/>
-      <stop stop-color="#0068c9" offset="1"/>
+      <stop stop-color="#bcf" offset="0"/>
+      <stop stop-color="#07d" offset="1"/>
     </linearGradient>
-    <linearGradient id="l">
-      <stop stop-color="#00e732" offset="0"/>
-      <stop stop-color="#368538" offset="1"/>
+    <linearGradient id="land">
+      <stop stop-color="#0f3" offset="0"/>
+      <stop stop-color="#171" offset="1"/>
     </linearGradient>
-    <linearGradient id="land1" x1="-364.9" x2="-364.9" y1="-2181.2" y2="-1544.3" gradientTransform="matrix(.0022 -1 .59178 .0013 1324 -82)" gradientUnits="userSpaceOnUse" href="#l"/>
-    <linearGradient id="land2" x1="1140.7" x2="1140.7" y1="-172.2" y2="491" gradientTransform="matrix(.00165 -1 .55961 .00092 523 1490)" gradientUnits="userSpaceOnUse" href="#l"/>
     <radialGradient id="bottle">
       <stop stop-color="#fff" offset="0"/>
       <stop stop-color="#444" offset="1"/>
@@ -17,13 +15,15 @@
   </defs>
   <circle cx="400" cy="400" r="387" fill="url(#ocean)" stroke="#000" stroke-width="24"/>
   <g stroke="#000" stroke-width="22">
-    <rect x="332" y="128" width="136" height="56" rx="7" ry="7" fill="none"/>
-    <path d="m504 283l-75-97-59 1-71 95v66l17 20h172l16-20z" fill="url(#bottle)" fill-opacity=".3" stroke-linejoin="round"/>
-    <rect x="294" y="374" width="212" height="82" rx="16" ry="16" fill="url(#bottle)" fill-opacity=".3"/>
-    <rect x="294" y="466" width="212" height="194" rx="30" ry="30" fill="url(#bottle)" fill-opacity=".3"/>
+    <rect x="332" y="128" width="136" height="56" rx="6" ry="6" fill="none"/>
+    <g fill="url(#bottle)" fill-opacity=".3">
+      <path d="m504 283l-75-97-59 1-71 95v66l17 20h172l16-20z" stroke-linejoin="round"/>
+      <rect x="294" y="374" width="212" height="82" rx="16" ry="16"/>
+      <rect x="294" y="466" width="212" height="194" rx="30" ry="30"/>
+    </g>
   </g>
-  <g fill-opacity=".9" stroke="#000" stroke-linejoin="round" stroke-width="24">
-    <path d="m18 339.6c-2 12 100 15 104 17l40 19c17 11 14 31 22 47l28 56c5 9 3 54 4 63 9 47-46 72-24 115 11 22 41 56 80 32 2-1 8-111 53-89 56 28 17-38 26-69 22-71-4-78-8-83-12-13-20-29-34-40-10-8-46-32-45-36 4-19 8-22 20-37 10-14 40-14 40-31 1-21-36-28-38-49-3-30 17-59 24-89 2-12 10-25 5-53-2-15-39-79-41-78A372 372 0 0 0 18 339.6z" fill="url(#land1)"/>
-    <path transform="translate(3 0)" d="m637 97.6c2-21-205 80-222 116 0-7-23 41-19 53-2 26 18 38 22 38 36 15 65 9 95 20 36 13 62 72 62 72 25 62 9 142-57 169-114 59-48 179 9 194 225-54 391-432 110-659z" fill="url(#land2)"/>
+  <g fill="url(#land)" fill-opacity=".9" stroke="#000" stroke-linejoin="round" stroke-width="24">
+    <path d="m18 339.6c-2 12 100 15 104 17l40 19c17 11 14 31 22 47l28 56c5 9 3 54 4 63 9 47-46 72-24 115 11 22 41 56 80 32 2-1 8-111 53-89 56 28 17-38 26-69 22-71-4-78-8-83-12-13-20-29-34-40-10-8-46-32-45-36 4-19 8-22 20-37 10-14 40-14 40-31 1-21-36-28-38-49-3-30 17-59 24-89 2-12 10-25 5-53-2-15-39-79-41-78A372 372 0 0 0 18 339.6z"/>
+    <path d="m640 97.6c2-21-205 80-222 116 0-7-23 41-19 53-2 26 18 38 22 38 36 15 65 9 95 20 36 13 62 72 62 72 25 62 9 142-57 169-114 59-48 179 9 194 225-54 391-432 110-659z"/>
   </g>
 </svg>

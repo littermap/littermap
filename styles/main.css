@@ -32,7 +32,16 @@ header {
   user-select: none;
 }
 
+#menu-toggle-hidden-checkbox {
+  display: none;
+}
+
+#menu-toggle-hidden-checkbox:checked + #menu {
+  visibility: visible;
+}
+
 #menu {
+  font-size: 16px;
   position: absolute;
   min-width: 80px;
   background-color: white;
@@ -40,6 +49,13 @@ header {
   top: 68px;
   left: 4px;
   z-index: 1;
+  visibility: hidden;
+}
+
+#menu ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0
 }
 
 #menu li {

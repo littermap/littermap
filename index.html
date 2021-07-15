@@ -13,9 +13,15 @@
 <body>
   <header>
     <section id="site-nav">
-      <div id="menu-toggle">
-        ≡
-      </div>
+      <label id="menu-toggle" for="menu-toggle-hidden-checkbox">≡</label>
+      <input id="menu-toggle-hidden-checkbox" type="checkbox">
+      <nav id="menu">
+        <ul>
+          <li>Map</li>
+          <li>About</li>
+          <li>Contact</li>
+        </ul>
+      </nav>
       <div id="title">
         Litter Map
       </div>
@@ -32,13 +38,6 @@
       </div>
     </section>
   </header>
-  <section id="menu">
-    <nav>
-      <li>Map</li>
-      <li>About</li>
-      <li>Contact</li>
-    </nav>
-  </section>
   <main id="map">
     <button id="submit-location" onclick="submitLocation()">Submit Location</button>
   </main>

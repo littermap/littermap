@@ -7,6 +7,7 @@ body {
   top: 66px;
   bottom: 0;
   width: 100%;
+  z-index: 0;
 }
 
 #submit-location {

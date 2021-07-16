@@ -1,0 +1,28 @@
+{
+  "name": "litter-map",
+  "version": "1.0.0",
+  "description": "Let people report litter onto a global map",
+  "homepage": "https://littermap.bitbucket.io/",
+  "author": "Ildar Sagdejev",
+  "private": true,
+  "license": "none",
+  "repository": {
+    "type": "git",
+    "url": "earthstewards/littermap"
+  },
+  "bugs": {
+    "url": "https://github.com/earthstewards/littermap/issues"
+  },
+  "scripts": {
+    "build": "gulp build",
+    "watch": "gulp build-and-watch",
+    "clean": "rm -rfv build/"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-data": "^1.3.1",
+    "gulp-pug": "^5.0.0",
+    "gulp-stylus": "^2.7.0",
+    "merge2": "^1.4.1"
+  }
+}

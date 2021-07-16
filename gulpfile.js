@@ -16,6 +16,10 @@ var paths = {
     src: 'styles/**/*.styl',
     out: 'styles'
   },
+  scripts: {
+    src: 'scripts/**/*.js',
+    out: 'scripts'
+  },
   pug: {
     src: '*.pug',
     out: ''
@@ -93,6 +97,7 @@ gulp.task('watch', () => {
 
   gulpWatch(paths.config, gulp.series('build'))
   gulpWatch(dirs.src + paths.styles.src, gulp.series('build'))
+  gulpWatch(dirs.src + paths.scripts.src, gulp.series('pug'))
   gulpWatch(dirs.src + paths.pug.src, gulp.series('pug'))
   gulpWatch(dirs.src + paths.images.src, gulp.series('pug'))
 })

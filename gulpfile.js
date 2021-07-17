@@ -1,17 +1,17 @@
-var gulp   = require('gulp'),
-    stylus = require('gulp-stylus'),
-    data   = require('gulp-data'),
-    pug    = require('gulp-pug'),
-    fs     = require('fs'),
-    glob   = require('glob-base'),
-    expand = require('minimatch').braceExpand
+const gulp = require('gulp')
+const stylus = require('gulp-stylus')
+const data = require('gulp-data')
+const pug = require('gulp-pug')
+const fs = require('fs')
+const glob = require('glob-base')
+const expand = require('minimatch').braceExpand
 
-var dirs = {
+const dirs = {
   src: './src/',
   out: './build/'
 }
 
-var sources = {
+const sources = {
   styles: 'styles/**/*.styl',
   scripts: 'scripts/**/*.js',
   pug: '*.pug',
@@ -22,13 +22,13 @@ var sources = {
 // Site configuration
 //
 
-var config = require('./config.json')
+const config = require('./config.json')
 
 //
 // Construct full source path
 //
 
-var srcPath = (x) => (
+const srcPath = (x) => (
   Array.isArray(x) ?
     x.map(path => dirs.src + path)
     : dirs.src + x
@@ -38,7 +38,7 @@ var srcPath = (x) => (
 // Construct associated output directory for a source path
 //
 
-var outPath = (x) => (
+const outPath = (x) => (
   dirs.out + glob(x).base
 )
 

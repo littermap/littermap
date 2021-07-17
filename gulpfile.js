@@ -3,21 +3,19 @@ var gulp   = require('gulp'),
     data   = require('gulp-data'),
     pug    = require('gulp-pug'),
     fs     = require('fs'),
-    glob   = require('glob-base')
+    glob   = require('glob-base'),
+    expand = require('minimatch').braceExpand
 
 var dirs = {
   src: './src/',
   out: './build/'
 }
 
-var paths = {
+var sources = {
   styles: 'styles/**/*.styl',
   scripts: 'scripts/**/*.js',
   pug: '*.pug',
-  files: [
-    'favicon.ico',
-    '+(images)/**/*'
-  ]
+  files: '{favicon.ico,images/**/*}' // Grouping with {} will expand
 }
 
 //
@@ -49,7 +47,7 @@ function outPath(x) {
 //
 
 gulp.task('files', () => {
-  return gulp.src(srcPath(paths.files))
+  return gulp.src(srcPath(sources.files))
     .pipe(gulp.dest(dirs.out))
 })
 
@@ -58,9 +56,9 @@ gulp.task('files', () => {
 //
 
 gulp.task('styles', () => {
-  return gulp.src(srcPath(paths.styles))
+  return gulp.src(srcPath(sources.styles))
     .pipe(stylus({ compress: true }))
-    .pipe(gulp.dest(outPath(paths.styles)))
+    .pipe(gulp.dest(outPath(sources.styles)))
 })
 
 //
@@ -68,10 +66,10 @@ gulp.task('styles', () => {
 //
 
 gulp.task('pug', () => {
-  return gulp.src(srcPath(paths.pug))
+  return gulp.src(srcPath(sources.pug))
     .pipe(data(config)) // Inject configuration settings into pug context
     .pipe(pug())
-    .pipe(gulp.dest(outPath(paths.pug)))
+    .pipe(gulp.dest(outPath(sources.pug)))
 })
 
 //
@@ -94,10 +92,10 @@ gulp.task('watch', () => {
   }
 
   gulpWatch('./config.json', gulp.series('build'))
-  gulpWatch(srcPath(paths.files), gulp.series('files'))
-  gulpWatch(srcPath(paths.styles), gulp.series('styles'))
-  gulpWatch(srcPath(paths.scripts), gulp.series('pug'))
-  gulpWatch(srcPath(paths.pug), gulp.series('pug'))
+  gulpWatch(srcPath(expand(sources.files)), gulp.series('files'))
+  gulpWatch(srcPath(sources.styles), gulp.series('styles'))
+  gulpWatch(srcPath(sources.scripts), gulp.series('pug'))
+  gulpWatch(srcPath(sources.pug), gulp.series('pug'))
 })
 
 //

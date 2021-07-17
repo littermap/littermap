@@ -11,7 +11,6 @@ var dirs = {
 }
 
 var paths = {
-  config: 'config.json',
   styles: 'styles/**/*.styl',
   scripts: 'scripts/**/*.js',
   pug: '*.pug',
@@ -25,7 +24,7 @@ var paths = {
 // Site configuration
 //
 
-var config = JSON.parse(fs.readFileSync(paths.config))
+var config = require('./config.json')
 
 //
 // Construct full source path
@@ -94,7 +93,7 @@ gulp.task('watch', () => {
       .on('error', () => this.emit('end'))
   }
 
-  gulpWatch(paths.config, gulp.series('build'))
+  gulpWatch('./config.json', gulp.series('build'))
   gulpWatch(srcPath(paths.files), gulp.series('files'))
   gulpWatch(srcPath(paths.styles), gulp.series('styles'))
   gulpWatch(srcPath(paths.scripts), gulp.series('pug'))

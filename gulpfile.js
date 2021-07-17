@@ -1,7 +1,9 @@
 const gulp = require('gulp')
 const stylus = require('gulp-stylus')
+const uglify = require('gulp-uglify')
 const data = require('gulp-data')
 const pug = require('gulp-pug')
+const inject = require('gulp-inject')
 const fs = require('fs')
 const glob = require('glob-base')
 const expand = require('minimatch').braceExpand
@@ -13,7 +15,7 @@ const dirs = {
 
 const sources = {
   styles: 'styles/**/*.styl',
-  scripts: 'scripts/**/*.js',
+  scripts: 'scripts/*.js',
   pug: '*.pug',
   files: '{favicon.ico,images/**/*}' // Grouping with {} will expand
 }
@@ -62,15 +64,22 @@ gulp.task('styles', () => (
 ))
 
 //
-// Build the HTML files from the Pug source files
+// Build the HTML from the Pug source files while injecting minified javascript into the HTML
 //
 
-gulp.task('main', () => (
-  gulp.src(srcPath(sources.pug))
+gulp.task('main', () => {
+  return gulp.src(srcPath(sources.pug))
+    .pipe(inject(
+      gulp.src(srcPath(sources.scripts))
+        .pipe(uglify()
+      ), {
+        transform: (path, file) => '<script>' + file.contents.toString('utf8') + '</script>'
+      }
+    ))
     .pipe(data(config)) // Inject configuration settings into pug context
     .pipe(pug())
     .pipe(gulp.dest(outPath(sources.pug)))
-))
+})
 
 //
 // Task to build the website

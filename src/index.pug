@@ -28,9 +28,6 @@ header
 main#map
   button#submit-location(onclick='submitLocation()') Submit Location
 script(src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js')
-  //
-  // Leaflet API reference: https://leafletjs.com/reference-1.7.1.html
-  //
 script(src='https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.js')
-script
-  include scripts/index.js
+//- inject:js
+//- endinject

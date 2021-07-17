@@ -28,49 +28,49 @@ var config = require('./config.json')
 // Construct full source path
 //
 
-function srcPath(x) {
-  return Array.isArray(x) ?
+var srcPath = (x) => (
+  Array.isArray(x) ?
     x.map(path => dirs.src + path)
     : dirs.src + x
-}
+)
 
 //
 // Construct associated output directory for a source path
 //
 
-function outPath(x) {
-  return dirs.out + glob(x).base
-}
+var outPath = (x) => (
+  dirs.out + glob(x).base
+)
 
 //
 // Static files (just move them)
 //
 
-gulp.task('files', () => {
-  return gulp.src(srcPath(sources.files))
+gulp.task('files', () => (
+  gulp.src(srcPath(sources.files))
     .pipe(gulp.dest(dirs.out))
-})
+))
 
 //
 // Build the CSS from the Stylus source files
 //
 
-gulp.task('styles', () => {
-  return gulp.src(srcPath(sources.styles))
+gulp.task('styles', () => (
+  gulp.src(srcPath(sources.styles))
     .pipe(stylus({ compress: true }))
     .pipe(gulp.dest(outPath(sources.styles)))
-})
+))
 
 //
 // Build the HTML files from the Pug source files
 //
 
-gulp.task('pug', () => {
-  return gulp.src(srcPath(sources.pug))
+gulp.task('pug', () => (
+  gulp.src(srcPath(sources.pug))
     .pipe(data(config)) // Inject configuration settings into pug context
     .pipe(pug())
     .pipe(gulp.dest(outPath(sources.pug)))
-})
+))
 
 //
 // Task to build the website

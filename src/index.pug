@@ -7,26 +7,27 @@ head
   link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css')
   link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.css')
   link(rel='stylesheet' href='styles/index.css')
-header
-  section#site-nav
-    label#menu-toggle(for='menu-toggle-hidden-checkbox') ≡
-    input#menu-toggle-hidden-checkbox(type='checkbox')
-    nav#menu
-      ul
-        li Map
-        li About
-        li Contact
-    #title= title
-  a#logo(href='/')
-    img(src='images/logo.svg' alt='logo')
-  section#info
-    #location-count
-      | retrieving locations
-    div
-      | Become a sponsor
-main#map
-  button#submit-location(onclick='submitLocation()') Submit Location
-script(src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js')
-script(src='https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.js')
-//- inject:js
-//- endinject
+body
+  header
+    section#site-nav
+      label#menu-toggle(for='menu-toggle-hidden-checkbox') ≡
+      input#menu-toggle-hidden-checkbox(type='checkbox')
+      nav#menu
+        ul
+          li Map
+          li About
+          li Contact
+      #title= title
+    a#logo(href='/')
+      img(src='images/logo.svg' alt='logo')
+    section#info
+      #location-count
+        | retrieving locations
+      div
+        | Become a sponsor
+  main#map
+    button#submit-location(onclick='submitLocation()') Submit Location
+  script(src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js')
+  script(src='https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.js')
+  //- inject:js
+  //- endinject

@@ -2,7 +2,8 @@ var gulp   = require('gulp'),
     stylus = require('gulp-stylus'),
     data   = require('gulp-data'),
     pug    = require('gulp-pug'),
-    fs     = require('fs')
+    fs     = require('fs'),
+    glob   = require('glob-base')
 
 var dirs = {
   src: './src/',
@@ -10,19 +11,10 @@ var dirs = {
 }
 
 var paths = {
-  config: './config.json',
-  styles: {
-    src: 'styles/**/*.styl',
-    out: 'styles'
-  },
-  scripts: {
-    src: 'scripts/**/*.js',
-    out: 'scripts'
-  },
-  pug: {
-    src: '*.pug',
-    out: ''
-  },
+  config: 'config.json',
+  styles: 'styles/**/*.styl',
+  scripts: 'scripts/**/*.js',
+  pug: '*.pug',
   files: [
     'favicon.ico',
     '+(images)/**/*'
@@ -39,11 +31,19 @@ var config = JSON.parse(fs.readFileSync(paths.config))
 // Construct full source path
 //
 
-var srcPath = x => (
-  Array.isArray(x) ?
+function srcPath(x) {
+  return Array.isArray(x) ?
     x.map(path => dirs.src + path)
     : dirs.src + x
-)
+}
+
+//
+// Construct associated output directory for a source path
+//
+
+function outPath(x) {
+  return dirs.out + glob(x).base
+}
 
 //
 // Static files (just move them)
@@ -59,9 +59,9 @@ gulp.task('files', () => {
 //
 
 gulp.task('styles', () => {
-  return gulp.src(srcPath(paths.styles.src))
+  return gulp.src(srcPath(paths.styles))
     .pipe(stylus({ compress: true }))
-    .pipe(gulp.dest(dirs.out + paths.styles.out))
+    .pipe(gulp.dest(outPath(paths.styles)))
 })
 
 //
@@ -69,10 +69,10 @@ gulp.task('styles', () => {
 //
 
 gulp.task('pug', () => {
-  return gulp.src(srcPath(paths.pug.src))
+  return gulp.src(srcPath(paths.pug))
     .pipe(data(config)) // Inject configuration settings into pug context
     .pipe(pug())
-    .pipe(gulp.dest(dirs.out + paths.pug.out))
+    .pipe(gulp.dest(outPath(paths.pug)))
 })
 
 //
@@ -96,9 +96,9 @@ gulp.task('watch', () => {
 
   gulpWatch(paths.config, gulp.series('build'))
   gulpWatch(srcPath(paths.files), gulp.series('files'))
-  gulpWatch(srcPath(paths.styles.src), gulp.series('styles'))
-  gulpWatch(srcPath(paths.scripts.src), gulp.series('pug'))
-  gulpWatch(srcPath(paths.pug.src), gulp.series('pug'))
+  gulpWatch(srcPath(paths.styles), gulp.series('styles'))
+  gulpWatch(srcPath(paths.scripts), gulp.series('pug'))
+  gulpWatch(srcPath(paths.pug), gulp.series('pug'))
 })
 
 //

@@ -54,38 +54,39 @@ gulp.task('files', () => (
 ))
 
 //
-// Build the CSS from the Stylus source files
+// Build the HTML from the Pug source files while injecting minified CSS and javascript into the HTML
 //
 
-gulp.task('styles', () => (
-  gulp.src(srcPath(sources.styles))
-    .pipe(stylus({ compress: true }))
-    .pipe(gulp.dest(outPath(sources.styles)))
-))
+const injectContents = (tagName) => (
+  (path, file) => '<' + tagName + '>' + file.contents.toString('utf8') + '</' + tagName + '>'
+)
 
-//
-// Build the HTML from the Pug source files while injecting minified javascript into the HTML
-//
-
-gulp.task('main', () => {
-  return gulp.src(srcPath(sources.pug))
+gulp.task('html', () => (
+  gulp.src(srcPath(sources.pug))
+    .pipe(inject(
+      gulp.src(srcPath(sources.styles))
+        .pipe(stylus({ compress: true })
+      ), {
+        transform: injectContents('style')
+      }
+    ))
     .pipe(inject(
       gulp.src(srcPath(sources.scripts))
         .pipe(uglify()
       ), {
-        transform: (path, file) => '<script>' + file.contents.toString('utf8') + '</script>'
+        transform: injectContents('script')
       }
     ))
     .pipe(data(config)) // Inject configuration settings into pug context
     .pipe(pug())
     .pipe(gulp.dest(outPath(sources.pug)))
-})
+))
 
 //
 // Task to build the website
 //
 
-gulp.task('build', gulp.series('files', 'styles', 'main'))
+gulp.task('build', gulp.series('files', 'html'))
 
 //
 // Task to watch file changes and trigger builds
@@ -102,9 +103,9 @@ gulp.task('watch', () => {
 
   gulpWatch('./config.json', gulp.series('build'))
   gulpWatch(srcPath(expand(sources.files)), gulp.series('files'))
-  gulpWatch(srcPath(sources.styles), gulp.series('styles'))
-  gulpWatch(srcPath(sources.scripts), gulp.series('main'))
-  gulpWatch(srcPath(sources.pug), gulp.series('main'))
+  gulpWatch(srcPath(sources.styles), gulp.series('html'))
+  gulpWatch(srcPath(sources.scripts), gulp.series('html'))
+  gulpWatch(srcPath(sources.pug), gulp.series('html'))
 })
 
 //

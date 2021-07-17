@@ -14,7 +14,7 @@ const dirs = {
 }
 
 const sources = {
-  styles: 'styles/**/*.styl',
+  styles: 'styles/*.styl',
   scripts: 'scripts/*.js',
   pug: '*.pug',
   files: '{favicon.ico,images/**/*}' // Grouping with {} will expand

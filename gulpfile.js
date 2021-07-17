@@ -65,7 +65,7 @@ gulp.task('styles', () => (
 // Build the HTML files from the Pug source files
 //
 
-gulp.task('pug', () => (
+gulp.task('main', () => (
   gulp.src(srcPath(sources.pug))
     .pipe(data(config)) // Inject configuration settings into pug context
     .pipe(pug())
@@ -76,7 +76,7 @@ gulp.task('pug', () => (
 // Task to build the website
 //
 
-gulp.task('build', gulp.series('files', 'styles', 'pug'))
+gulp.task('build', gulp.series('files', 'styles', 'main'))
 
 //
 // Task to watch file changes and trigger builds
@@ -94,8 +94,8 @@ gulp.task('watch', () => {
   gulpWatch('./config.json', gulp.series('build'))
   gulpWatch(srcPath(expand(sources.files)), gulp.series('files'))
   gulpWatch(srcPath(sources.styles), gulp.series('styles'))
-  gulpWatch(srcPath(sources.scripts), gulp.series('pug'))
-  gulpWatch(srcPath(sources.pug), gulp.series('pug'))
+  gulpWatch(srcPath(sources.scripts), gulp.series('main'))
+  gulpWatch(srcPath(sources.pug), gulp.series('main'))
 })
 
 //

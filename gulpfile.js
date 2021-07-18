@@ -1,4 +1,4 @@
-const gulp = require('gulp')
+const {src, dest, task, watch, series} = require('gulp')
 const stylus = require('gulp-stylus')
 const uglify = require('gulp-uglify')
 const data = require('gulp-data')
@@ -48,9 +48,9 @@ const outPath = (x) => (
 // Static files (just move them)
 //
 
-gulp.task('files', () => (
-  gulp.src(srcPath(sources.files))
-    .pipe(gulp.dest(dirs.out))
+task('files', () => (
+  src(srcPath(sources.files))
+    .pipe(dest(dirs.out))
 ))
 
 //
@@ -61,17 +61,17 @@ const injectContents = (tagName) => (
   (path, file) => '<' + tagName + '>' + file.contents.toString('utf8') + '</' + tagName + '>'
 )
 
-gulp.task('html', () => (
-  gulp.src(srcPath(sources.pug))
+task('html', () => (
+  src(srcPath(sources.pug))
     .pipe(inject(
-      gulp.src(srcPath(sources.styles))
+      src(srcPath(sources.styles))
         .pipe(stylus({ compress: true })
       ), {
         transform: injectContents('style')
       }
     ))
     .pipe(inject(
-      gulp.src(srcPath(sources.scripts))
+      src(srcPath(sources.scripts))
         .pipe(uglify()
       ), {
         transform: injectContents('script')
@@ -79,43 +79,43 @@ gulp.task('html', () => (
     ))
     .pipe(data(config)) // Inject configuration settings into pug context
     .pipe(pug())
-    .pipe(gulp.dest(outPath(sources.pug)))
+    .pipe(dest(outPath(sources.pug)))
 ))
 
 //
 // Task to build the website
 //
 
-gulp.task('build', gulp.series('files', 'html'))
+task('build', series('files', 'html'))
 
 //
 // Task to watch file changes and trigger builds
 //
 
-gulp.task('watch', () => {
+task('watch', () => {
   //
-  // Task watch wrapper function that prevents the watch process from quitting due to an error bubbling up
+  // Task watch wrapper function that prevents the gulp process from quitting due to an error
   //
-  function gulpWatch(glob, arg1, arg2) {
-    gulp.watch(glob, arg1, arg2)
+  function _watch(glob, arg1, arg2) {
+    watch(glob, arg1, arg2)
       .on('error', () => this.emit('end'))
   }
 
-  gulpWatch('./config.json', gulp.series('build'))
-  gulpWatch(srcPath(expand(sources.files)), gulp.series('files'))
-  gulpWatch(srcPath(sources.styles), gulp.series('html'))
-  gulpWatch(srcPath(sources.scripts), gulp.series('html'))
-  gulpWatch(srcPath(sources.pug), gulp.series('html'))
+  _watch('./config.json', series('build'))
+  _watch(srcPath(expand(sources.files)), series('files'))
+  _watch(srcPath(sources.styles), series('html'))
+  _watch(srcPath(sources.scripts), series('html'))
+  _watch(srcPath(sources.pug), series('html'))
 })
 
 //
 // Build is the default task
 //
 
-gulp.task('default', gulp.series('build'))
+task('default', series('build'))
 
 //
 // Build and watch task
 //
 
-gulp.task('build-and-watch', gulp.series('build', 'watch'))
+task('build-and-watch', series('build', 'watch'))

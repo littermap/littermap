@@ -27,6 +27,5 @@
     "gulp-stylus": "^2.7.0",
     "gulp-uglify": "^3.0.2",
     "minimatch": "^3.0.4"
-  },
-  "dependencies": {}
+  }
 }

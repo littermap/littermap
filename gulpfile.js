@@ -103,9 +103,7 @@ task('watch', () => {
 
   _watch('./config.json', series('build'))
   _watch(srcPath(expand(sources.files)), series('files'))
-  _watch(srcPath(sources.styles), series('html'))
-  _watch(srcPath(sources.scripts), series('html'))
-  _watch(srcPath(sources.pug), series('html'))
+  _watch(srcPath([sources.styles, sources.scripts, sources.pug], series('html')))
 })
 
 //

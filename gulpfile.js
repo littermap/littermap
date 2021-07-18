@@ -1,4 +1,4 @@
-const {src, dest, task, watch, series} = require('gulp')
+const {src, dest, task, watch, series, parallel} = require('gulp')
 const stylus = require('gulp-stylus')
 const uglify = require('gulp-uglify')
 const data = require('gulp-data')
@@ -86,7 +86,7 @@ task('html', () => (
 // Task to build the website
 //
 
-task('build', series('files', 'html'))
+task('build', parallel('files', 'html'))
 
 //
 // Task to watch file changes and trigger builds

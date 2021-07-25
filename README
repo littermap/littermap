@@ -1,5 +1,5 @@
 yarn
-gulp
+yarn build
 
 open build/index.html
 

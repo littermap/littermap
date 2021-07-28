@@ -1,3 +1,5 @@
+header-height = 66px
+
 html,
 body
   height: 100%
@@ -6,7 +8,7 @@ body
   margin: 0
 
 header
-  height: 66px
+  height: header-height
   display: flex
   justify-content: space-between
 
@@ -41,7 +43,7 @@ header
   min-width: 80px
   background-color: white
   box-shadow: 2px 2px 3px 1px #666
-  top: 68px
+  top: header-height + 2px
   left: 4px
   z-index: 1
   visibility: hidden
@@ -70,7 +72,7 @@ header
   width: 0
 
 #logo > img
-  height: 58px
+  height: header-height - 8px
   margin-left: -29px
 
 #info

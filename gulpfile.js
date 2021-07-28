@@ -14,7 +14,10 @@ const dirs = {
 }
 
 const sources = {
-  styles: 'styles/*.styl',
+  styles: {
+    compile: 'styles/*.styl',
+    watch: 'styles/**/*.styl'
+  },
   scripts: 'scripts/*.js',
   pug: '*.pug',
   files: '{favicon.ico,images/**/*}' // Grouping with {} will expand
@@ -64,7 +67,7 @@ const injectContents = (tagName) => (
 task('html', () => (
   src(srcPath(sources.pug))
     .pipe(inject(
-      src(srcPath(sources.styles))
+      src(srcPath(sources.styles.compile))
         .pipe(stylus({ compress: true })
       ), {
         transform: injectContents('style')
@@ -103,7 +106,9 @@ task('watch', () => {
 
   _watch('./config.json', series('build'))
   _watch(srcPath(expand(sources.files)), series('files'))
-  _watch(srcPath([sources.styles, sources.scripts, sources.pug]), series('html'))
+  _watch(
+    srcPath([sources.styles.watch, sources.scripts, sources.pug]), series('html')
+  )
 })
 
 //

@@ -1,3 +1,4 @@
+@require 'lib/mixins'
 @require 'lib/common'
 
 body
@@ -12,10 +13,13 @@ body
 
 #submit-location
   background: linear-gradient(to right, #4d4e4d 0%, #40877a 80%, #216155 100%)
+  border: none
   color: #e1dcdc
-  cursor: pointer
   position: absolute
-  bottom: 23px
-  right: 9px
+  absolute-centered()
+  bottom: 30px
+  padding: 0 1em
+  height: 3em
+  border-radius: 10000px
+  cursor: pointer
   z-index: 9999
-

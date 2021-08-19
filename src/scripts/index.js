@@ -30,9 +30,20 @@ function initMap() {
     }
   )
 
+  //
+  // Google Maps hybrid layer
+  //
+  var googleMaps = L.tileLayer(
+    "https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}",
+    {
+      subdomains: ['mt0','mt1','mt2','mt3'],
+      maxZoom: 20
+    }
+  )
+
   // Create the map
   map = L.map('map', {
-    layers: [mapboxStreets]
+    layers: [googleMaps]
   })
 
   // Show Raleigh-Durham area by default
@@ -41,10 +52,11 @@ function initMap() {
   // Add layer switcher control
   L.control.layers(
     {
+      "Google Maps": googleMaps,
       "Mapbox Streets": mapboxStreets,
       "OpenStreetMap Standard": osmStandard
     },
-    null // Overlays (none yet)
+    null // No overlays (yet)
   ).addTo(map)
 
   // Add "locate me" control
@@ -56,8 +68,8 @@ function initMap() {
     }
   }).addTo(map)
 
-  // Remove the default 'Leaflet' prefix from the attribution line and mention OpenStreetMap
-  map.attributionControl.setPrefix().addAttribution("Map data from OpenStreetMap")
+  // Customize the attribution line
+  map.attributionControl.setPrefix().addAttribution("Map data from map provider")
 }
 
 async function loadLocations() {

@@ -1,12 +1,12 @@
 const {src, dest, task, watch, series, parallel} = require('gulp')
 const stylus = require('gulp-stylus')
 const uglify = require('gulp-uglify')
-const data = require('gulp-data')
 const pug = require('gulp-pug')
+const data = require('gulp-data')
 const inject = require('gulp-inject')
 const fs = require('fs')
 const glob = require('glob-base')
-const expand = require('minimatch').braceExpand
+const { braceExpand } = require('minimatch')
 
 const dirs = {
   src: './src/',
@@ -19,8 +19,11 @@ const sources = {
     watch: 'styles/**/*.styl'
   },
   scripts: 'scripts/*.js',
-  pug: '*.pug',
-  files: '{favicon.ico,images/**/*}' // Grouping with {} will expand
+  pug: {
+    compile: '*.pug',
+    watch: '{*.pug,lib/**/*.pug}'
+  },
+  files: '{favicon.ico,images/**/*}' // Braces {} can be expanded into an array with braceExpand()
 }
 
 //
@@ -65,7 +68,7 @@ const injectContents = (tagName) => (
 )
 
 task('html', () => (
-  src(srcPath(sources.pug))
+  src(srcPath(sources.pug.compile))
     .pipe(inject(
       src(srcPath(sources.styles.compile))
         .pipe(stylus({ compress: true })
@@ -82,7 +85,7 @@ task('html', () => (
     ))
     .pipe(data(config)) // Inject configuration settings into pug context
     .pipe(pug())
-    .pipe(dest(outPath(sources.pug)))
+    .pipe(dest(outPath(sources.pug.compile)))
 ))
 
 //
@@ -105,9 +108,9 @@ task('watch', () => {
   }
 
   _watch('./config.json', series('build'))
-  _watch(srcPath(expand(sources.files)), series('files'))
+  _watch(srcPath(braceExpand(sources.files)), series('files'))
   _watch(
-    srcPath([sources.styles.watch, sources.scripts, sources.pug]), series('html')
+    srcPath([sources.styles.watch, sources.scripts, ...braceExpand(sources.pug.watch)]), series('html')
   )
 })
 

@@ -9,23 +9,7 @@ head
   //- inject:css
   //- endinject
 body
-  header
-    section#site-nav
-      label#menu-toggle(for='menu-toggle-hidden-checkbox') ≡
-      input#menu-toggle-hidden-checkbox(type='checkbox')
-      nav#menu
-        ul
-          li Map
-          li About
-          li Contact
-      #title= title
-    a#logo(href='/')
-      img(src='images/logo.svg' alt='logo')
-    section#info
-      #location-count
-        | retrieving locations
-      div
-        | Become a sponsor
+  include lib/header.pug
   main#map
     button#submit-location(onclick='submitLocation()') Add Location
   script(src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js')

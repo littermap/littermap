@@ -13,13 +13,19 @@ body
 
 #submit-location
   background linear-gradient(to right, #4d4e4d 0%, #40877a 80%, #216155 100%)
-  border none
+  box-shadow 0 0 20px 3px #333
+  border 1px #363636 solid
+  pill-shape()
   color #e1dcdc
   position absolute
   absolute-centered()
   bottom 30px
   padding 0 1em
   height 3em
-  border-radius 10000px
   cursor pointer
   z-index 9999
+  &:hover
+    background linear-gradient(to right, lighten(#4d4e4d, 5%) 0%, lighten(#40877a, 5%) 80%, lighten(#216155, 5%) 100%)
+    box-shadow 0 0 5px 1px #666
+    color #fff
+    transform scale(1.012)

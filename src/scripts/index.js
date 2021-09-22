@@ -70,20 +70,36 @@ function initMap() {
 
   // Customize the attribution line
   map.attributionControl.setPrefix().addAttribution("Map data from map provider")
+
+  map.on("moveend", loadLocations)
+}
+
+function getViewRadius() {
+  let bounds = map.getBounds()
+
+  let x = (bounds._northEast.lng - bounds._southWest.lng) / 2
+  let y = (bounds._northEast.lat - bounds._southWest.lat) / 2
+
+  return Math.sqrt(x*x + y*y)
 }
 
 async function loadLocations() {
-  let url = "https://web.fulcrumapp.com/shares/58738b7d41051b7d.geojson"
+  let { lat, lng } = map.getCenter()
+  let radius = getViewRadius()
+
+  console.log("View radius: " + radius)
+
+  let url = `/radius/?lat=${lat}&lon=${lng}&r=${radius}&format=geojson`
 
   console.log("Fetching litter locations...")
-  let res = await fetch(url)
+  let res = await fetch(config.backend + url)
 
   if (res.ok) {
-    console.log("Received litter location data")
     let json = await res.json()
     let count = json.features.length
     let countInfo = count + ((count !== 1) ? " locations" : " location")
 
+    console.log("Received " + countInfo)
     document.getElementById("location-count").innerText = countInfo
 
     if (markers)
@@ -93,9 +109,6 @@ async function loadLocations() {
   } else
     console.log("Failed to fetch litter locations: " + res.status)
 }
-
-initMap()
-loadLocations()
 
 function submitLocation() {
   if (navigator.geolocation)
@@ -108,17 +121,18 @@ function submitLocation() {
     let lon = position.coords.longitude
 
     let request = new XMLHttpRequest()
-    request.open('POST', 'https://42904.wayscript.io/')
+    request.open('POST', config.backend + '/add')
 
     let data = JSON.stringify({lat, lon})
-    alert("Submitting: " + data)
     request.send(data)
 
     request.onload = () => {
-      alert("Thank you for submitting this point.")
-      alert("Help us crowd source environmental cleanup by building a knowledgebase of locations that need litter and or plastic pollution cleanup. Become a part of the process to clean up the planet and restore it to its natural beauty with the ease of “spotting” locations that others can attend to. If you are one of the thousands of cleanup enthusiasts, use the map to locate your next cleanup.")
+      alert("Thank you for submitting this point.\n\nHelp us crowd source environmental cleanup by building a knowledge base of locations that need litter and/or plastic pollution cleanup. Become a part of the process to clean up the planet and restore it to its natural beauty with the ease of “spotting” locations that others can attend to. If you are one of the thousands of cleanup enthusiasts worldwide, use the map to locate your next cleanup.")
 
       loadLocations()
     }
   }
 }
+
+initMap()
+loadLocations()

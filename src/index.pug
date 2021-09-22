@@ -14,5 +14,9 @@ body
     button#submit-location(onclick='submitLocation()') Add Location
   script(src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js')
   script(src='https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.js')
+  script.
+    var config = {
+      backend: '!{backend.baseUrl}'
+    }
   //- inject:js
   //- endinject

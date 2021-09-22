@@ -1,8 +1,0 @@
-yarn
-yarn build
-
-open build/index.html
-
-To see list of scripts you can run:
-
-yarn run

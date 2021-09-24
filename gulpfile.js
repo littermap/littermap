@@ -5,7 +5,7 @@ const terser = require('gulp-terser-js')
 const gulpif = require('gulp-if')
 const source = require('vinyl-source-stream')
 const buffer = require('gulp-buffer')
-const lazypipe = require('lazypipe')
+const through2 = require('through2')
 const browserify = require('browserify')
 const browserifyCSS = require('browserify-css')
 const data = require('gulp-data')
@@ -39,6 +39,11 @@ const sources = {
 //
 // Site configuration
 //
+
+if (!fs.existsSync('./config.json')) {
+  console.error(c.red('!!'), 'config.json needs to be present')
+  process.exit()
+}
 
 const config = require('./config.json')
 
@@ -99,7 +104,8 @@ task('html', () => (
       // Package the scripts with all of their dependencies as a single bundle
       //
       browserify(glob.sync(srcPath(sources.scripts)), {
-        debug: config.development // generate source maps in development builds
+        // Generate source maps in development builds
+        debug: config.development
       })
         //
         // Integrate CSS used by the script dependencies into the bundle
@@ -108,11 +114,15 @@ task('html', () => (
         //
         .transform(browserifyCSS, {
           autoInjectOptions: {
-            verbose: false // opt out of adding an extra attribute when inserting the styles into the page document at runtime
+            // Opt out of adding an extra attribute when inserting the styles into the page document at runtime
+            verbose: false
           },
-          rootDir: './node_modules/', // represent relative paths to external files as if already in the 'node_modules/' directory
+          // Represent relative paths to external files as if already in the 'node_modules/' directory
+          rootDir: './node_modules/',
           stripComments: true,
-          inlineImages: false, // don't convert image urls to inline data because Leaflet uses unconventional methods to manipulate the urls at runtime and it doesn't work with inline data
+          // Don't convert image urls to inline data because Leaflet uses unconventional methods to
+          // manipulate the urls at runtime and it doesn't work with inline data urls
+          inlineImages: false,
           processRelativeUrl: (url) => {
             //
             // External files referenced by the CSS that haven't been inlined will be added to the build as static files
@@ -133,14 +143,16 @@ task('html', () => (
         })
         .on("bundle", () => { log("Bundling runtime dependencies with browserify...") })
         .bundle()
-        .pipe(source('bundle.js')) // convert into a gulp stream
-        .pipe(buffer()) // the bundle created by browserify must be further processed in its complete form
+        // Convert into a gulp stream
+        .pipe(source('bundle.js'))
+        // The bundle created by browserify must be further processed in its complete form
+        .pipe(buffer())
         .on("data", () => { log('Script bundle built') })
         .pipe(
           gulpif(
             !config.development,
-            lazypipe()
-              .pipe(terser)()
+            through2.obj()
+              .pipe(terser())
               .on("data", () => { log("Scripts have been minified") })
           )
         ),

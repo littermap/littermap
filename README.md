@@ -1,6 +1,6 @@
 Web front-end for the Litter Map project.
 
-## Built with...
+## Technologies
 
 - Interactive map built with [leaflet](https://leafletjs.com/)
 - Build system written in [gulp](https://github.com/gulpjs/gulp)
@@ -28,9 +28,9 @@ Launch the app in a browser:
 
 ## Development
 
-To see list of available scripts:
+Build and then watch source files for changes to trigger a rebuild:
 
-- `yarn run`
+- `yarn watch`
 
 ### Dependencies
 

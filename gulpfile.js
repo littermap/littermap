@@ -8,7 +8,6 @@ const buffer = require('gulp-buffer')
 const through2 = require('through2')
 const browserify = require('browserify')
 const browserifyCSS = require('browserify-css')
-const data = require('gulp-data')
 const inject = require('gulp-inject')
 const fs = require('fs')
 const path = require('path')
@@ -36,16 +35,22 @@ const sources = {
   files: '{favicon.ico,images/**/*}' // Braces {} can be expanded into an array with braceExpand()
 }
 
+function abort(message) {
+  console.error(c.red('!!'), message)
+  process.exit(1)
+}
+
 //
 // Site configuration
 //
 
-if (!fs.existsSync('./config.json')) {
-  console.error(c.red('!!'), 'config.json needs to be present')
-  process.exit()
-}
+if (!fs.existsSync('./config.json'))
+  abort("config.json needs to be present")
 
 const config = require('./config.json')
+
+if (config.backend.base_url === '')
+  abort("Please configure the server endpoint in config.json")
 
 //
 // Construct full source path
@@ -85,8 +90,14 @@ const injectFileContents = (tag) => (
 
 task('html', () => (
   src(srcPath(sources.pug.compile))
-    .pipe(data(config)) // Inject configuration settings into pug context
-    .pipe(pug())
+    .pipe(
+      pug({
+        // Make configuration settings available as local pug variables
+        locals: config,
+        // Namespace provided local variables as `self.*`
+        self: true
+      })
+    )
     .pipe(inject(
       //
       // Compile stylus and set the minified CSS to be injected into the HTML document
@@ -190,9 +201,17 @@ task('watch', () => {
   }
 
   _watch('./config.json', series('build'))
-  _watch(srcPath(braceExpand(sources.files)), series('files'))
   _watch(
-    srcPath([sources.styles.watch, sources.scripts, ...braceExpand(sources.pug.watch)]), series('html')
+    srcPath(braceExpand(sources.files)),
+    series('files')
+  )
+  _watch(
+    srcPath([
+        sources.styles.watch,
+        sources.scripts,
+        ...braceExpand(sources.pug.watch)
+    ]),
+    series('html')
   )
 
   console.log("\nWatching paths:\n\n" + watching.flat().join('\n') + '\n')

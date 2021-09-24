@@ -2,7 +2,7 @@ doctype html
 html
   head
     meta(charset='utf-8')
-    title= title
+    title= self.title
     link(rel='shortcut icon' href='favicon.ico' type='image/x-icon')
     // inject:css
     // endinject
@@ -12,8 +12,8 @@ html
       button#submit-location(onclick='submitLocation()') Add Location
     script.
       var config = {
-        backend: '!{backend.base_url}',
-        development: '!{development}'
+        backend: '!{self.backend.base_url}',
+        development: '!{self.development}'
       }
     // inject:js
     // endinject

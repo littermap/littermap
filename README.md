@@ -42,7 +42,9 @@ Install them with `yarn` and `require()` them in the scripts. The build system i
 
 ## Caveats
 
-- Leaflet performs unconventional tricks with the image URLs in its styles at runtime which prevents a dependency bundler from pulling in all of the image files into the build, so the current solution is to automatically apply a patch from this [pull request](https://github.com/Leaflet/Leaflet/pull/6951) as a post-install step after installing Leaflet
+- Leaflet performs unconventional tricks with the image URLs in its styles at runtime which prevents a dependency bundler from pulling in all of the image files into the build, so the current solution is to automatically apply a patch from this [pull request](https://github.com/Leaflet/Leaflet/pull/6951) after installing Leaflet
+  - If the package manager resets Leaflet without re-patching it, just run:
+    - `yarn patch`
 - Since Windows uses back slashes (`\`) as path separators (which can be traced to a feature of MS-DOS 2.0), the build script might need significant [modifications](https://shapeshed.com/writing-cross-platform-node/#use-pathresolve-to-traverse-the-filesystem) to its path handling in order to run properly on Windows
 
 ## Knowledge resources

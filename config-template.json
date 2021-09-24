@@ -1,6 +1,7 @@
 {
   "title": "Litter Map",
+  "development": true,
   "backend": {
-    "baseUrl": ""
+    "base_url": "https://{PASTE-BACKEND-URL-HERE}"
   }
 }

@@ -1,12 +1,22 @@
 const {src, dest, task, watch, series, parallel} = require('gulp')
 const stylus = require('gulp-stylus')
-const uglify = require('gulp-uglify')
 const pug = require('gulp-pug')
+const terser = require('gulp-terser-js')
+const gulpif = require('gulp-if')
+const source = require('vinyl-source-stream')
+const buffer = require('gulp-buffer')
+const lazypipe = require('lazypipe')
+const browserify = require('browserify')
+const browserifyCSS = require('browserify-css')
 const data = require('gulp-data')
 const inject = require('gulp-inject')
 const fs = require('fs')
-const glob = require('glob-base')
+const path = require('path')
+const glob = require('glob')
+const globBase = require('glob-parent')
 const { braceExpand } = require('minimatch')
+const c = require('ansi-colors')
+const log = require('fancy-log')
 
 const dirs = {
   src: './src/',
@@ -47,7 +57,7 @@ const srcPath = (x) => (
 //
 
 const outPath = (x) => (
-  dirs.out + glob(x).base
+  dirs.out + globBase(x)
 )
 
 //
@@ -60,31 +70,86 @@ task('files', () => (
 ))
 
 //
-// Build the HTML from the Pug source files while injecting minified CSS and javascript into the HTML
+// Build the HTML from the Pug source files and then inline the minified styles and scripts into the HTML document
 //
 
-const injectContents = (tagName) => (
-  (path, file) => '<' + tagName + '>' + file.contents.toString('utf8') + '</' + tagName + '>'
+const injectFileContents = (tag) => (
+  (path, file) =>
+    (tag ? '<' + tag + '>' : '') + file.contents.toString('utf8') + (tag ? '</' + tag + '>' : '')
 )
 
 task('html', () => (
   src(srcPath(sources.pug.compile))
-    .pipe(inject(
-      src(srcPath(sources.styles.compile))
-        .pipe(stylus({ compress: true })
-      ), {
-        transform: injectContents('style')
-      }
-    ))
-    .pipe(inject(
-      src(srcPath(sources.scripts))
-        .pipe(uglify()
-      ), {
-        transform: injectContents('script')
-      }
-    ))
     .pipe(data(config)) // Inject configuration settings into pug context
     .pipe(pug())
+    .pipe(inject(
+      //
+      // Compile stylus and set the minified CSS to be injected into the HTML document
+      //
+      src(srcPath(sources.styles.compile))
+        .pipe(stylus({ compress: true })),
+      {
+        transform: injectFileContents('style'),
+        removeTags: true,
+        quiet: true
+      }
+    ))
+    .pipe(inject(
+      //
+      // Package the scripts with all of their dependencies as a single bundle
+      //
+      browserify(glob.sync(srcPath(sources.scripts)), {
+        debug: config.development // generate source maps in development builds
+      })
+        //
+        // Integrate CSS used by the script dependencies into the bundle
+        //
+        // (the bundle will include script code that will insert the CSS into the document at runtime)
+        //
+        .transform(browserifyCSS, {
+          autoInjectOptions: {
+            verbose: false // opt out of adding an extra attribute when inserting the styles into the page document at runtime
+          },
+          rootDir: './node_modules/', // represent relative paths to external files as if already in the 'node_modules/' directory
+          stripComments: true,
+          inlineImages: false, // don't convert image urls to inline data because Leaflet uses unconventional methods to manipulate the urls at runtime and it doesn't work with inline data
+          processRelativeUrl: (url) => {
+            //
+            // External files referenced by the CSS that haven't been inlined will be added to the build as static files
+            //
+
+            // Strip URL parameters from the relative path
+            url = url.split('?')[0].split('#')[0]
+
+            console.log(c.yellow("Including external file referenced by a front-end dependency:"), url)
+
+            let srcFile = './node_modules/' + url
+            let destFile = path.join(dirs.out, 'vendor/', path.dirname(url), path.basename(url))
+
+            fs.cpSync(srcFile, destFile)
+
+            return 'vendor/' + url
+          }
+        })
+        .on("bundle", () => { log("Bundling runtime dependencies with browserify...") })
+        .bundle()
+        .pipe(source('bundle.js')) // convert into a gulp stream
+        .pipe(buffer()) // the bundle created by browserify must be further processed in its complete form
+        .on("data", () => { log('Script bundle built') })
+        .pipe(
+          gulpif(
+            !config.development,
+            lazypipe()
+              .pipe(terser)()
+              .on("data", () => { log("Scripts have been minified") })
+          )
+        ),
+      {
+        transform: injectFileContents('script'),
+        removeTags: true,
+        quiet: true
+      }
+    ))
     .pipe(dest(outPath(sources.pug.compile)))
 ))
 
@@ -99,12 +164,17 @@ task('build', parallel('files', 'html'))
 //
 
 task('watch', () => {
+  let watching = []
+
   //
   // Task watch wrapper function that prevents the gulp process from quitting due to an error
   //
-  function _watch(glob, arg1, arg2) {
-    watch(glob, arg1, arg2)
+  function _watch(paths, arg1, arg2) {
+    // Paths can be an array of path definitions or a single string and those definitions can have globs
+    watch(paths, arg1, arg2)
       .on('error', () => this.emit('end'))
+
+    watching.push(paths)
   }
 
   _watch('./config.json', series('build'))
@@ -112,6 +182,8 @@ task('watch', () => {
   _watch(
     srcPath([sources.styles.watch, sources.scripts, ...braceExpand(sources.pug.watch)]), series('html')
   )
+
+  console.log("\nWatching paths:\n\n" + watching.flat().join('\n') + '\n')
 })
 
 //

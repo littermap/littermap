@@ -1,3 +1,10 @@
+// CSS included with dependencies will be picked up by the browserify-css transform
+require('./index.css')
+
+var L = require('leaflet')
+
+require('leaflet.locatecontrol')
+
 var map, markers = null
 
 function initMap() {
@@ -72,6 +79,11 @@ function initMap() {
   map.attributionControl.setPrefix().addAttribution("Map data from map provider")
 
   map.on("moveend", loadLocations)
+
+  // Allow interaction with the map object from the console in development builds
+  if (config.development) {
+    global.map = map
+  }
 }
 
 function getViewRadius() {

@@ -1,14 +1,10 @@
-const {src, dest, task, watch, series, parallel} = require('gulp')
+const { src, dest, task, watch, series, parallel } = require('gulp')
 const stylus = require('gulp-stylus')
 const pug = require('gulp-pug')
-const terser = require('gulp-terser-js')
-const gulpif = require('gulp-if')
-const source = require('vinyl-source-stream')
-const buffer = require('gulp-buffer')
-const through2 = require('through2')
-const browserify = require('browserify')
-const browserifyCSS = require('browserify-css')
+const merge = require('merge2')
+const filter = require('gulp-filter')
 const inject = require('gulp-inject')
+const { createGulpEsbuild } = require('gulp-esbuild')
 const fs = require('fs')
 const path = require('path')
 const glob = require('glob')
@@ -83,13 +79,14 @@ task('files', () => (
 // Build the HTML from the Pug source files and then inline the minified styles and scripts into the HTML document
 //
 
-const injectFileContents = (tag) => (
-  (path, file) =>
-    (tag ? '<' + tag + '>' : '') + file.contents.toString('utf8') + (tag ? '</' + tag + '>' : '')
-)
+const esbuild = createGulpEsbuild({
+  piping: true
+})
 
-task('html', () => (
-  src(srcPath(sources.pug.compile))
+task('html', () => {
+  const assetsFilter = filter('vendor/**', {restore: true})
+
+  return src(srcPath(sources.pug.compile))
     .pipe(
       pug({
         // Make configuration settings available as local pug variables
@@ -99,82 +96,56 @@ task('html', () => (
       })
     )
     .pipe(inject(
-      //
-      // Compile stylus and set the minified CSS to be injected into the HTML document
-      //
-      src(srcPath(sources.styles.compile))
-        .pipe(stylus({ compress: true })),
-      {
-        transform: injectFileContents('style'),
-        removeTags: true,
-        quiet: true
-      }
-    ))
-    .pipe(inject(
-      //
-      // Package the scripts with all of their dependencies as a single bundle
-      //
-      browserify(glob.sync(srcPath(sources.scripts)), {
-        // Generate source maps in development builds
-        debug: config.development
-      })
+      merge([
         //
-        // Integrate CSS used by the script dependencies into the bundle
+        // Build local styles and be ready to inject them into the HTML document
         //
-        // (the bundle will include script code that will insert the CSS into the document at runtime)
+        src(srcPath(sources.styles.compile))
+          .pipe(stylus({ compress: true })),
+
         //
-        .transform(browserifyCSS, {
-          autoInjectOptions: {
-            // Opt out of adding an extra attribute when inserting the styles into the page document at runtime
-            verbose: false
-          },
-          // Represent relative paths to external files as if already in the 'node_modules/' directory
-          rootDir: './node_modules/',
-          stripComments: true,
-          // Don't convert image urls to inline data because Leaflet uses unconventional methods to
-          // manipulate the urls at runtime and it doesn't work with inline data urls
-          inlineImages: false,
-          processRelativeUrl: (url) => {
-            //
-            // External files referenced by the CSS that haven't been inlined will be added to the build as static files
-            //
-
-            // Strip URL parameters from the relative path
-            url = url.split('?')[0].split('#')[0]
-
-            console.log(c.yellow("Including external file referenced by a front-end dependency:"), url)
-
-            let srcFile = './node_modules/' + url
-            let destFile = path.join(dirs.out, 'vendor/', path.dirname(url), path.basename(url))
-
-            fs.cpSync(srcFile, destFile)
-
-            return 'vendor/' + url
-          }
-        })
-        .on("bundle", () => { log("Bundling runtime dependencies with browserify...") })
-        .bundle()
-        // Convert into a gulp stream
-        .pipe(source('bundle.js'))
-        // The bundle created by browserify must be further processed in its complete form
-        .pipe(buffer())
-        .on("data", () => { log('Script bundle built') })
-        .pipe(
-          gulpif(
-            !config.development,
-            through2.obj()
-              .pipe(terser())
-              .on("data", () => { log("Scripts have been minified") })
+        // Build script and style bundles and be ready to inject them into the HTML document
+        //
+        src(srcPath(sources.scripts))
+          .pipe(esbuild({
+              outfile: 'bundle.js',
+              bundle: true,
+              loader: {
+                // Treat these as static files required by dependencies
+                '.png': 'file',
+                '.woff': 'file',
+                '.woff2': 'file',
+                '.ttf': 'file',
+                '.eot': 'file',
+                '.svg': 'file'
+              },
+              // If we add '-[hash]' to the file name template it will prevent possible name collisions, however
+              // it will also break leaflet's unconventional manipulation of asset urls at runtime
+              assetNames: 'vendor/[name]',
+              sourcemap: config.development ? 'inline' : false,
+              sourcesContent: true,
+              minify: !config.development
+            })
           )
-        ),
+          // Take just the asset files and put them in the output directory
+          .pipe(assetsFilter)
+          .on("data", (file) => {
+            console.log(c.yellow("Including third-party file:"), "vendor/" + file.basename)
+          })
+          .pipe(dest(dirs.out))
+          // Bring back the bundles built by esbuild for injection into the HTML
+          .pipe(assetsFilter.restore)
+      ]),
       {
-        transform: injectFileContents('script'),
-        removeTags: true,
-        quiet: true
+        // Inline file contents into the correct place in the rendered HTML (automatically based on file extension)
+        transform: (path, file) => file.contents.toString('utf8'),
+        // Remove placeholder tags when finished
+        removeTags: true
       }
     ))
+    .on("data", (file) => { console.log(c.yellow("Built:"), file.basename) } )
     .pipe(dest(outPath(sources.pug.compile)))
-))
+})
 
 //
 // Task to build the website

@@ -4,8 +4,8 @@ html
     meta(charset='utf-8')
     title= self.title
     link(rel='shortcut icon' href='favicon.ico' type='image/x-icon')
-    // inject:css
-    // endinject
+    style.
+      <!-- inject:css --><!-- endinject -->
   body
     include lib/header.pug
     main#map
@@ -15,5 +15,5 @@ html
         backend: '!{self.backend.base_url}',
         development: '!{self.development}'
       }
-    // inject:js
-    // endinject
+    script.
+      <!-- inject:js --><!-- endinject -->

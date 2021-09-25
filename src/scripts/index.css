@@ -1,5 +1,7 @@
 /*
- * Third-party CSS includes
+ * Third-party CSS includes will be picked up by esbuild
+ *
+ * https://esbuild.github.io/content-types/#css-from-js
  */
 
 @import url("../../node_modules/leaflet/dist/leaflet.css");

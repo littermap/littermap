@@ -14,7 +14,7 @@
     "url": "https://github.com/earthstewards/littermap/issues"
   },
   "scripts": {
-    "install": "npm run patch",
+    "postinstall": "npm run patch",
     "build": "rm -rf build/ && gulp build",
     "watch": "rm -rf build/ && gulp build-and-watch",
     "clean": "rm -rfv build/",
@@ -22,21 +22,18 @@
   },
   "devDependencies": {
     "ansi-colors": "^4.1.1",
-    "browserify": "^17.0.0",
-    "browserify-css": "^0.15.0",
+    "esbuild": "^0.13.2",
     "fancy-log": "^1.3.3",
     "glob": "^7.2.0",
     "glob-parent": "^6.0.1",
     "gulp": "^4.0.2",
-    "gulp-buffer": "^0.0.2",
-    "gulp-if": "^3.0.0",
+    "gulp-esbuild": "^0.9.0",
+    "gulp-filter": "^7.0.0",
     "gulp-inject": "^5.0.5",
     "gulp-pug": "^5.0.0",
     "gulp-stylus": "^2.7.0",
-    "gulp-terser-js": "^5.2.2",
-    "minimatch": "^3.0.4",
-    "through2": "^4.0.2",
-    "vinyl-source-stream": "^2.0.0"
+    "merge2": "^1.4.1",
+    "minimatch": "^3.0.4"
   },
   "dependencies": {
     "font-awesome": "^4.7.0",

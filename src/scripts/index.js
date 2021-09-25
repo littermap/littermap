@@ -1,9 +1,6 @@
-// CSS included with dependencies will be picked up by the browserify-css transform
-require('./index.css')
-
-var L = require('leaflet')
-
-require('leaflet.locatecontrol')
+import L from 'leaflet'
+import locate from 'leaflet.locatecontrol'
+import styles from './index.css'
 
 var map, markers = null
 
@@ -82,7 +79,7 @@ function initMap() {
 
   // Allow interaction with the map object from the console in development builds
   if (config.development) {
-    global.map = map
+    window.map = map
   }
 }
 

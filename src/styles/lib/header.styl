@@ -56,12 +56,8 @@ header
 #logo
   position absolute
   absolute-centered()
-  margin-top 4px
-  width 0
-
-#logo > img
   height header-height - 8px
-  margin-left -29px
+  top 4px
 
 #info
   text-align right
@@ -69,3 +65,12 @@ header
   display flex
   justify-content center
   flex-direction column
+
+#avatar
+  width header-height
+  height header-height
+  cursor pointer
+  &.logged-out
+    background-color #ccc
+  &> img
+    width 100%

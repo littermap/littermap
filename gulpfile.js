@@ -5,6 +5,7 @@ const merge = require('merge2')
 const filter = require('gulp-filter')
 const inject = require('gulp-inject')
 const { createGulpEsbuild } = require('gulp-esbuild')
+const { solidPlugin } = require('esbuild-plugin-solid')
 const fs = require('fs')
 const path = require('path')
 const glob = require('glob')
@@ -23,12 +24,15 @@ const sources = {
     compile: 'styles/*.styl',
     watch: 'styles/**/*.styl'
   },
-  scripts: 'scripts/*.js',
+  scripts: {
+    compile: 'scripts/*.js*',
+    watch: 'scripts/**/*'
+  },
   pug: {
     compile: '*.pug',
     watch: '{*.pug,lib/**/*.pug}'
   },
-  files: '{favicon.ico,images/**/*}' // Braces {} can be expanded into an array with braceExpand()
+  files: '{favicon.ico,images/**/*}'
 }
 
 function abort(message) {
@@ -106,10 +110,13 @@ task('html', () => {
         //
         // Build script and style bundles and be ready to inject them into the HTML document
         //
-        src(srcPath(sources.scripts))
+        src(srcPath(sources.scripts.compile))
           .pipe(esbuild({
-              outfile: 'bundle.js',
+              outdir: './',
               bundle: true,
+              plugins: [
+                solidPlugin()
+              ],
               loader: {
                 // Treat these as static files required by dependencies
                 '.png': 'file',
@@ -144,6 +151,8 @@ task('html', () => {
       }
     ))
     .on("data", (file) => { console.log(c.yellow("Built:"), file.basename) } )
+    // Prevents errors from crashing the watch task
+    .on('error', (e) => e.end())
     .pipe(dest(outPath(sources.pug.compile)))
 })
 
@@ -160,26 +169,25 @@ task('build', parallel('files', 'html'))
 task('watch', () => {
   let watching = []
 
-  //
-  // Task watch wrapper function that prevents the gulp process from quitting due to an error
-  //
-  function _watch(paths, arg1, arg2) {
-    // Paths can be an array of path definitions or a single string and those definitions can have globs
-    watch(paths, arg1, arg2)
-      .on('error', () => this.emit('end'))
+  // Paths can be an array of path definitions or a single string and those definitions can have globs
+  function _watch(paths, task) {
+    watch(paths, { events: "all" }, task)
+      // Print which file has been modified
+      .on('change', (file) => { console.log('\n', c.green('!! File touched:'), file, '\n') })
 
     watching.push(paths)
   }
 
   _watch('./config.json', series('build'))
   _watch(
+    // Braces {} are expanded into an array with braceExpand()
     srcPath(braceExpand(sources.files)),
     series('files')
   )
   _watch(
     srcPath([
         sources.styles.watch,
-        sources.scripts,
+        sources.scripts.watch,
         ...braceExpand(sources.pug.watch)
     ]),
     series('html')

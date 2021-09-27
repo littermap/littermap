@@ -109,7 +109,7 @@ async function loadLocations() {
     let countInfo = count + ((count !== 1) ? " locations" : " location")
 
     console.log("Received " + countInfo)
-    document.getElementById("location-count").innerText = countInfo
+    document.getElementById("location-count").innerText = countInfo + " visible"
 
     if (markers)
       map.removeLayer(markers)
@@ -120,28 +120,23 @@ async function loadLocations() {
 }
 
 function submitLocation() {
-  if (navigator.geolocation)
-    navigator.geolocation.getCurrentPosition(sendPosition)
-  else
-    alert("Geolocation API is not supported by this browser.")
+  let { lat, lng } = map.getCenter()
 
-  function sendPosition(position) {
-    let lat = position.coords.latitude
-    let lon = position.coords.longitude
+  let request = new XMLHttpRequest()
+  request.open('POST', config.backend + '/add')
+  request.withCredentials = true
 
-    let request = new XMLHttpRequest()
-    request.open('POST', config.backend + '/add')
+  let data = JSON.stringify({lat, lon: lng})
+  request.send(data)
 
-    let data = JSON.stringify({lat, lon})
-    request.send(data)
+  request.onload = () => {
+    alert("Thank you for submitting this point.\n\nHelp us crowd source environmental cleanup by building a knowledge base of locations that need litter and/or plastic pollution cleanup. Become a part of the process to clean up the planet and restore it to its natural beauty with the ease of “spotting” locations that others can attend to. If you are one of the thousands of cleanup enthusiasts worldwide, use the map to locate your next cleanup.")
 
-    request.onload = () => {
-      alert("Thank you for submitting this point.\n\nHelp us crowd source environmental cleanup by building a knowledge base of locations that need litter and/or plastic pollution cleanup. Become a part of the process to clean up the planet and restore it to its natural beauty with the ease of “spotting” locations that others can attend to. If you are one of the thousands of cleanup enthusiasts worldwide, use the map to locate your next cleanup.")
-
-      loadLocations()
-    }
+    loadLocations()
   }
 }
 
 initMap()
 loadLocations()
+
+window.submitLocation = submitLocation

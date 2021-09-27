@@ -2,7 +2,8 @@ Web front-end for the Litter Map project.
 
 ## Technologies
 
-- Interactive map built with [leaflet](https://leafletjs.com/)
+- Interactive map powered by [leaflet](https://leafletjs.com/)
+- User interface built with [solid](https://www.solidjs.com/)
 - Build system written in [gulp](https://github.com/gulpjs/gulp)
 - Scripts and runtime dependencies bundled with [esbuild](https://esbuild.github.io/)
 
@@ -22,9 +23,14 @@ Build the product:
 
 - `yarn build`
 
-Launch the app in a browser:
+Disable cross-origin resource sharing protection in your browser:
 
-- `open build/index.html`
+- Add-on for: [Firefox](https://github.com/spenibus/cors-everywhere-firefox-addon) | [Chrome](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf)
+- This disables the browser preventing cross-domain requests with session cookies when testing locally
+
+Start local server to test the app:
+
+- `yarn serve`
 
 ## Development
 
@@ -34,7 +40,7 @@ Build and then watch source files for changes to trigger a rebuild:
 
 ### Dependencies
 
-Install them with `yarn` and `import` them in the scripts. The build system is going to automatically roll everything into a self-contained bundle and insert it into the end product.
+Install them with `yarn` and just `import` them in the scripts. The build system is going to automatically roll everything into a self-contained bundle and insert it into the end product.
 
 ## Known issues
 
@@ -50,8 +56,17 @@ Install them with `yarn` and `import` them in the scripts. The build system is g
 
 ## Knowledge resources
 
+### General
+
 - [Using source maps for debugging](https://developer.mozilla.org/docs/Tools/Debugger/How_to/Use_a_source_map)
 - [Node package managers: NPM vs Yarn vs PNPM](https://javascript.plainenglish.io/npm-yarn-pnpm-which-node-js-package-manager-should-you-use-a2a1378694f7)
+
+### UI
+
+- [A look at solid](https://codechips.me/solidjs-first-look/)
+- [solid: documentation](https://www.solidjs.com/docs/latest)
+- [solid: examples](https://github.com/solidjs/solid/blob/main/documentation/resources/examples.md)
+- [Learn to code reactive front-ends with Solid](https://www.youtube.com/watch?v=j8ANWdE7wfY&list=PLkHoRc4IcLDqAAvA1y8cT8CXkgfBbhRp3) (playlist)
 
 ### Build system
 

@@ -7,13 +7,13 @@ html
     style.
       <!-- inject:css --><!-- endinject -->
   body
-    include lib/header.pug
-    main#map
-      button#submit-location(onclick='submitLocation()') Add Location
+    #map.main
+    #app
     script.
       var config = {
         backend: '!{self.backend.base_url}',
-        development: '!{self.development}'
+        development: '!{self.development}',
+        title: '!{self.title}'
       }
     script.
       <!-- inject:js --><!-- endinject -->

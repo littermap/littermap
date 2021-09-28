@@ -9,16 +9,20 @@ export function Provider(props) {
   let profile
 
   const [state, setState] = createStore({
-      get profile() {
-        return profile()
-      }
-    })
+    get profile() {
+      return profile()
+    },
+    menuVisible: false
+  })
 
-  const actions = {}
+  const actions = {
+    hideMenu() { setState({ menuVisible: false }) },
+    toggleMenu() { setState({ menuVisible: !state.menuVisible }) }
+  }
   const store = [state, actions]
   const agent = createAgent(store)
 
-  profile = createUserProfile(agent, actions, setState)
+  profile = createUserProfile(agent, actions)
 
   return (
     <StoreContext.Provider value={store}>

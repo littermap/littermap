@@ -2,6 +2,7 @@ header
   height header-height
   display flex
   justify-content space-between
+  user-select none
 
 #site-nav,
 #logo,
@@ -16,28 +17,27 @@ header
   overflow-x visible
 
 #menu-toggle
-  margin-left 8px
-  margin-right 10px
-  padding 0 4px
+  font-size 35px
+  padding 0 20px
+  height 100%
+  line-height header-height - 6px
   cursor pointer
   user-select none
-
-#menu-toggle-hidden-checkbox
-  display none
-
-#menu-toggle-hidden-checkbox:checked + #menu
-  visibility visible
+  &:hover
+    background-color #eee
 
 #menu
-  font-size 16px
+  font-size 20px
   position absolute
-  min-width 80px
+  min-width 160px
   background-color white
   box-shadow 2px 2px 3px 1px #666
   top header-height + 2px
   left 4px
-  z-index 1
-  visibility hidden
+  z-index 101
+  & > a
+    color inherit
+    text-decoration none
 
 #menu ul
   list-style-type none
@@ -49,9 +49,8 @@ header
   padding 2px 4px
   cursor pointer
   user-select none
-
-#menu li:hover
-  color #666
+  &:hover
+    color #999
 
 #logo
   position absolute

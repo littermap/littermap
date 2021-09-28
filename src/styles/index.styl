@@ -5,11 +5,23 @@
 body
   overflow hidden
 
-#map
+.main
   position absolute
   top header-height
   bottom 0
   width 100%
+  z-index 1
+
+.page
+  background-color white
+  .content
+    font-family Arial
+    margin 20px
+    h1
+      font-size 20px
+      text-align center
+
+#map
   z-index 0
 
 #submit-location

@@ -15,13 +15,13 @@ Set up the configuration file:
 
 Edit `config.json` and configure the base URL of the back-end service.
 
-Install dependencies:
+Install dependencies with [pnpm](https://pnpm.io/):
 
-- `yarn`
+- `pnpm`
 
 Build the product:
 
-- `yarn build`
+- `pnpm build`
 
 Disable cross-origin resource sharing protection in your browser:
 
@@ -30,17 +30,23 @@ Disable cross-origin resource sharing protection in your browser:
 
 Start local server to test the app:
 
-- `yarn serve`
+- `pnpm serve`
 
 ## Development
 
 Build and then watch source files for changes to trigger a rebuild:
 
-- `yarn watch`
+- `pnpm watch`
+
+### Tips
+
+Check which packages depend on a node package:
+
+- `pnpm ll --depth 999 <package>`
 
 ### Dependencies
 
-Install them with `yarn` and just `import` them in the scripts. The build system is going to automatically roll everything into a self-contained bundle and insert it into the end product.
+Install them with `pnpm` and just `import` them in the scripts. The build system is going to automatically roll everything into a self-contained bundle and insert it into the end product.
 
 ## Known issues
 
@@ -48,9 +54,7 @@ Install them with `yarn` and just `import` them in the scripts. The build system
 
 ## Caveats
 
-- Leaflet performs unconventional rewriting tricks with the image URLs in its styles at runtime which prevents a dependency bundler from pulling in all of the image files into the build, so the current solution is to automatically apply a patch from this [pull request](https://github.com/Leaflet/Leaflet/pull/6951) after installing Leaflet
-
-  If the package manager resets Leaflet without re-patching it (such as after removing a package with `yarn remove`), just run: `yarn patch`
+- Leaflet performs unconventional tricks manipulating the image URLs in its style sheets at runtime, which prevents a dependency bundler from pulling in all of the relevant image files into the build. The current solution is to automatically apply a patch from this [pull request](https://github.com/Leaflet/Leaflet/pull/6951) after installing Leaflet. If for whatever reason the patch is not applied, just run: `pnpm patch`
 
 - Since Windows uses back slashes (`\`) as path separators (which can be traced to a feature of MS-DOS 2.0), the build script might need significant [modifications](https://shapeshed.com/writing-cross-platform-node/#use-pathresolve-to-traverse-the-filesystem) to its path handling in order to run properly on Windows
 
@@ -61,7 +65,7 @@ Install them with `yarn` and just `import` them in the scripts. The build system
 - [Using source maps for debugging](https://developer.mozilla.org/docs/Tools/Debugger/How_to/Use_a_source_map)
 - [Node package managers: NPM vs Yarn vs PNPM](https://javascript.plainenglish.io/npm-yarn-pnpm-which-node-js-package-manager-should-you-use-a2a1378694f7)
 
-### UI
+### User interface
 
 - [A look at solid](https://codechips.me/solidjs-first-look/)
 - [solid: documentation](https://www.solidjs.com/docs/latest)

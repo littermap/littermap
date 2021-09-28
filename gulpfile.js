@@ -25,7 +25,7 @@ const sources = {
     watch: 'styles/**/*.styl'
   },
   scripts: {
-    compile: 'scripts/*.js*',
+    compile: 'scripts/render.jsx',
     watch: 'scripts/**/*'
   },
   pug: {
@@ -44,13 +44,21 @@ function abort(message) {
 // Site configuration
 //
 
-if (!fs.existsSync('./config.json'))
-  abort("config.json needs to be present")
+let config
 
-const config = require('./config.json')
+const readConfig = () => {
+  if (!fs.existsSync('./config.json'))
+    abort("config.json needs to be present")
 
-if (config.backend.base_url === '')
-  abort("Please configure the server endpoint in config.json")
+  config = JSON.parse(
+    fs.readFileSync('./config.json')
+  )
+
+  if (config.backend.base_url === '')
+    abort("Please configure the server endpoint in config.json")
+}
+
+readConfig()
 
 //
 // Construct full source path
@@ -170,15 +178,21 @@ task('watch', () => {
   let watching = []
 
   // Paths can be an array of path definitions or a single string and those definitions can have globs
-  function _watch(paths, task) {
+  function _watch(paths, task, onChanged) {
     watch(paths, { events: "all" }, task)
-      // Print which file has been modified
-      .on('change', (file) => { console.log('\n', c.green('!! File touched:'), file, '\n') })
+      .on('change', (file) => {
+        onChanged && onChanged()
+
+        // Print which file has been modified
+        console.log('\n', c.green('!! File touched:'), file, '\n')
+      })
 
     watching.push(paths)
   }
 
-  _watch('./config.json', series('build'))
+  // Use a glob to force directory level watching (bug in 'chokidar' 2.x, see issue #237)
+  // When 'glob-watcher' switches to 'chokidar' 3.x this workaround won't be necessary (see issue #49)
+  _watch('./config.json*', series('build'), readConfig)
   _watch(
     // Braces {} are expanded into an array with braceExpand()
     srcPath(braceExpand(sources.files)),

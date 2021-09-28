@@ -1,7 +1,7 @@
 {
   "name": "litter-map",
   "version": "1.0.0",
-  "description": "Let people report litter onto a global map",
+  "description": "Let people report litter on a global map",
   "homepage": "https://littermap.bitbucket.io/",
   "author": "Ildar Sagdejev",
   "private": true,
@@ -17,7 +17,7 @@
     "postinstall": "npm run patch",
     "build": "rm -rf build/ && gulp build",
     "watch": "rm -rf build/ && gulp build-and-watch",
-    "serve": "http-server -c-1 build/",
+    "serve": "superstatic build/ --debug",
     "clean": "rm -rfv build/",
     "patch": "patch -d node_modules/leaflet/ -p1 --forward -r - < patches/leaflet-pr-6951.patch 2>/dev/null || exit 0"
   },
@@ -34,14 +34,15 @@
     "gulp-inject": "^5.0.5",
     "gulp-pug": "^5.0.0",
     "gulp-stylus": "^2.7.0",
-    "http-server": "^13.0.2",
     "merge2": "^1.4.1",
-    "minimatch": "^3.0.4"
+    "minimatch": "^3.0.4",
+    "superstatic": "^7.1.0"
   },
   "dependencies": {
     "font-awesome": "^4.7.0",
     "leaflet": "^1.7.1",
     "leaflet.locatecontrol": "^0.74.0",
+    "solid-app-router": "^0.1.7",
     "solid-js": "^1.1.5"
   }
 }

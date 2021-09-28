@@ -1,6 +1,6 @@
 import L from 'leaflet'
 import locate from 'leaflet.locatecontrol'
-import styles from './index.css'
+import styles from './bundled.css'
 
 var map, markers = null
 
@@ -119,7 +119,7 @@ async function loadLocations() {
     console.log("Failed to fetch litter locations: " + res.status)
 }
 
-function submitLocation() {
+export function submitLocation() {
   let { lat, lng } = map.getCenter()
 
   let request = new XMLHttpRequest()

@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js"
 
-export default (agent, actions, setState) => {
+export default (agent, actions) => {
   const [getProfile, setProfile] = createSignal()
 
   Object.assign(actions, {

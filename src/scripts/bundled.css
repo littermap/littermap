@@ -1,9 +1,0 @@
-/*
- * Third-party CSS includes will be picked up by esbuild
- *
- * https://esbuild.github.io/content-types/#css-from-js
- */
-
-@import url("../../node_modules/leaflet/dist/leaflet.css");
-@import url("../../node_modules/leaflet.locatecontrol/dist/L.Control.Locate.css");
-@import url("../../node_modules/font-awesome/css/font-awesome.css");

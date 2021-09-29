@@ -11,9 +11,14 @@ html
     #app
     script.
       var config = {
+        title: '!{self.title}',
         backend: '!{self.backend.base_url}',
-        development: '!{self.development}',
-        title: '!{self.title}'
+        development: !{self.development},
+        map: {
+          default_zoom: !{self.map.default_zoom},
+          update_debounce: !{self.map.update_debounce}
+        }
       }
     script.
       <!-- inject:js --><!-- endinject -->
+    script(src=`https://maps.googleapis.com/maps/api/js?key=${self.map.google.api_key}&v=weekly&callback=initMap`)

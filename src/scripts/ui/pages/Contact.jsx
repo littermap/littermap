@@ -10,7 +10,12 @@ export default () => {
     <div class="main page">
       <div class="content">
         <h1>Contact Us</h1>
-        Contact us on Instagram, Twitter and TikTok. We love you.
+        <p>
+          Contact us on Instagram, Twitter and TikTok.
+        </p>
+        <p>
+          We love you.
+        </p>
       </div>
     </div>
   )

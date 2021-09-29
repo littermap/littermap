@@ -3,5 +3,12 @@
   "development": true,
   "backend": {
     "base_url": ""
+  },
+  "map": {
+    "google": {
+      "api_key": ""
+    },
+    "default_zoom": 7,
+    "update_debounce": 1200
   }
 }

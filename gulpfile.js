@@ -134,9 +134,7 @@ task('html', () => {
                 '.eot': 'file',
                 '.svg': 'file'
               },
-              // If we add '-[hash]' to the file name template it will prevent possible name collisions, however
-              // it will also break leaflet's unconventional manipulation of asset urls at runtime
-              assetNames: 'vendor/[name]',
+              assetNames: 'vendor/[name]-[hash]',
               sourcemap: config.development ? 'inline' : false,
               sourcesContent: true,
               minify: !config.development

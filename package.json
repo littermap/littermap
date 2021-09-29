@@ -18,8 +18,7 @@
     "build": "rm -rf build/ && gulp build",
     "watch": "rm -rf build/ && gulp build-and-watch",
     "serve": "superstatic build/ --debug",
-    "clean": "rm -rfv build/",
-    "patch": "patch -d node_modules/leaflet/ -p1 --forward -r - < patches/leaflet-pr-6951.patch 2>/dev/null || exit 0"
+    "clean": "rm -rfv build/"
   },
   "devDependencies": {
     "ansi-colors": "^4.1.1",
@@ -39,9 +38,6 @@
     "superstatic": "^7.1.0"
   },
   "dependencies": {
-    "font-awesome": "^4.7.0",
-    "leaflet": "^1.7.1",
-    "leaflet.locatecontrol": "^0.74.0",
     "solid-app-router": "^0.1.7",
     "solid-js": "^1.1.5"
   }

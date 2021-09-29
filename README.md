@@ -2,7 +2,7 @@ Web front-end for the Litter Map project.
 
 ## Technologies
 
-- Interactive map powered by [leaflet](https://leafletjs.com/)
+- Interactive map powered by [Google Maps](https://developers.google.com/maps/documentation/javascript/)
 - User interface built with [solid](https://www.solidjs.com/)
 - Build system written in [gulp](https://github.com/gulpjs/gulp)
 - Scripts and runtime dependencies bundled with [esbuild](https://esbuild.github.io/)
@@ -13,7 +13,7 @@ Set up the configuration file:
 
 - `cp config-template.json config.json`
 
-Edit `config.json` and configure the base URL of the back-end service.
+Edit `config.json` and configure back-end endpoint and Google Maps API key.
 
 Install dependencies with [pnpm](https://pnpm.io/):
 
@@ -54,7 +54,7 @@ Install them with `pnpm` and just `import` them in the scripts. The build system
 
 ## Caveats
 
-- Leaflet performs unconventional tricks manipulating the image URLs in its style sheets at runtime, which prevents a dependency bundler from pulling in all of the relevant image files into the build. The current solution is to automatically apply a patch from this [pull request](https://github.com/Leaflet/Leaflet/pull/6951) after installing Leaflet. If for whatever reason the patch is not applied, just run: `pnpm patch`
+- There appears to be no obvious way to enable keyboard input on the map without first clicking it. See open issue: https://issuetracker.google.com/issues/35825194
 
 - Since Windows uses back slashes (`\`) as path separators (which can be traced to a feature of MS-DOS 2.0), the build script might need significant [modifications](https://shapeshed.com/writing-cross-platform-node/#use-pathresolve-to-traverse-the-filesystem) to its path handling in order to run properly on Windows
 
@@ -71,6 +71,13 @@ Install them with `pnpm` and just `import` them in the scripts. The build system
 - [solid: documentation](https://www.solidjs.com/docs/latest)
 - [solid: examples](https://github.com/solidjs/solid/blob/main/documentation/resources/examples.md)
 - [Learn to code reactive front-ends with Solid](https://www.youtube.com/watch?v=j8ANWdE7wfY&list=PLkHoRc4IcLDqAAvA1y8cT8CXkgfBbhRp3) (playlist)
+
+### Google Maps API
+
+- [API reference](https://developers.google.com/maps/documentation/javascript/reference)
+- [Choosing the Google Maps API release channel](https://developers.google.com/maps/documentation/javascript/versions)
+- [Accessibility features in Google Maps API](https://cloud.google.com/blog/products/maps-platform/improved-accessibility-maps-javascript-api)
+- [Google Maps API feature requests and issue tracker](https://issuetracker.google.com/issues?q=componentid:188853)
 
 ### Build system
 

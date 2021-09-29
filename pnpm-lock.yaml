@@ -5,7 +5,6 @@ specifiers:
   esbuild: ^0.13.2
   esbuild-plugin-solid: ^0.4.0
   fancy-log: ^1.3.3
-  font-awesome: ^4.7.0
   glob: ^7.2.0
   glob-parent: ^6.0.1
   gulp: ^4.0.2
@@ -14,8 +13,6 @@ specifiers:
   gulp-inject: ^5.0.5
   gulp-pug: ^5.0.0
   gulp-stylus: ^2.7.0
-  leaflet: ^1.7.1
-  leaflet.locatecontrol: ^0.74.0
   merge2: ^1.4.1
   minimatch: ^3.0.4
   solid-app-router: ^0.1.7
@@ -23,9 +20,6 @@ specifiers:
   superstatic: ^7.1.0
 
 dependencies:
-  font-awesome: 4.7.0
-  leaflet: 1.7.1
-  leaflet.locatecontrol: 0.74.0
   solid-app-router: 0.1.7_solid-js@1.1.5
   solid-js: 1.1.5
 
@@ -1867,11 +1861,6 @@ packages:
       readable-stream: 2.3.7
     dev: true
 
-  /font-awesome/4.7.0:
-    resolution: {integrity: sha1-j6jPBBGhoxr9B7BtKQK7n8gVoTM=}
-    engines: {node: '>=0.10.3'}
-    dev: false
-
   /for-in/1.0.2:
     resolution: {integrity: sha1-gQaNKVqBQuwKxybG4iAMMPttXoA=}
     engines: {node: '>=0.10.0'}
@@ -2832,14 +2821,6 @@ packages:
     dependencies:
       flush-write-stream: 1.1.1
     dev: true
-
-  /leaflet.locatecontrol/0.74.0:
-    resolution: {integrity: sha512-Rs4u2ZH9SeEB4IBLhBT3yPWaN81CtFq4XWT6gTCZeqVOImMJKpwqkVn9FKxge9Z5JFBRJHFFquYEdwR3mxgHxg==}
-    dev: false
-
-  /leaflet/1.7.1:
-    resolution: {integrity: sha512-/xwPEBidtg69Q3HlqPdU3DnrXQOvQU/CCHA1tcDQVzOwm91YMYaILjNp7L4Eaw5Z4sOYdbBz6koWyibppd8Zqw==}
-    dev: false
 
   /liftoff/3.1.0:
     resolution: {integrity: sha512-DlIPlJUkCV0Ips2zf2pJP0unEoT1kwYhiiPUGF3s/jtxTCjziNLoiVVh+jqWOWeFi6mmwQ5fNxvAUyPad4Dfog==}

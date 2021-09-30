@@ -14,7 +14,6 @@
     "url": "https://github.com/earthstewards/littermap/issues"
   },
   "scripts": {
-    "postinstall": "npm run patch",
     "build": "rm -rf build/ && gulp build",
     "watch": "rm -rf build/ && gulp build-and-watch",
     "serve": "superstatic build/ --debug",

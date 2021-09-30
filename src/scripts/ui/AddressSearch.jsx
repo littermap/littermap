@@ -47,12 +47,16 @@ export default () => {
     setSearchInput(event.target.value)
   }
 
-  // Clear the search
-  const resetSearch = () => {
-    inputElement = document.getElementById("address-input").value = ''
-
+  // Stop showing the search results
+  const closeSearchResults = () => {
     setSearchQuery("")
     setSelected(null)
+  }
+
+  // Clear the search including the search field
+  const resetSearch = () => {
+    inputElement = document.getElementById("address-input").value = ''
+    closeSearchResults()
   }
 
   // Navigate search results with the keyboard
@@ -118,6 +122,9 @@ export default () => {
 
   return (
     <>
+      <Show when={searchResults().length > 0}>
+        <div class="click-screen" onclick={closeSearchResults} />
+      </Show>
       <div id="address-search" onkeydown={keydown}>
         <form onsubmit={submitInput}>
           <input id="address-input" type="text" oninput={inputChanged} placeholder="🔍" />

@@ -9,8 +9,7 @@ export default () => {
     <>
       <header>
         <section id="site-nav">
-          <div id="menu-toggle" onclick={toggleMenu}
-            style={store.menuVisible ? "z-index: 102" : ""}>
+          <div id="menu-toggle" onclick={toggleMenu} style={store.menuVisible ? "z-index: 102" : ""}>
             ≡
           </div>
           <div id="title">{window.config.title}</div>

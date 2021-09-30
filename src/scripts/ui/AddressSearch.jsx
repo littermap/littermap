@@ -37,7 +37,9 @@ export default () => {
 
   // Perform search
   const submitInput = (event) => {
-    setSearchQuery(event.target.value)
+    var inputElement = document.getElementById("address-input")
+    setSearchQuery(inputElement.value)
+    event.preventDefault()
   }
 
   // Store current input value
@@ -47,8 +49,9 @@ export default () => {
 
   // Clear the search
   const resetSearch = () => {
+    inputElement = document.getElementById("address-input").value = ''
+
     setSearchQuery("")
-    setSearchInput("")
     setSelected(null)
   }
 
@@ -116,7 +119,9 @@ export default () => {
   return (
     <>
       <div id="address-search" onkeydown={keydown}>
-        <input id="address-input" type="text" onchange={submitInput} oninput={inputChanged} value={searchInput()} placeholder="🔍" />
+        <form onsubmit={submitInput}>
+          <input id="address-input" type="text" oninput={inputChanged} placeholder="🔍" />
+        </form>
         <div id="search-results">
           <For each={searchResults()}>
             {(result, i) => (
@@ -158,6 +163,7 @@ async function lookUpAddress(input) {
 
   let url = `${api}/${input}.json?access_token=${config.credentials.mapbox.access_token}&proximity=${lon},${lat}`
 
+  console.log('Address search:', input)
   let response = await fetch(url)
 
   try {

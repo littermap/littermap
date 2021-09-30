@@ -28,7 +28,7 @@ export default function createAgent([state, actions]) {
     } catch (err) {
       console.error("server error: ", err.message)
 
-      return err
+      return null
     }
   }
 

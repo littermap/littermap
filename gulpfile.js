@@ -25,7 +25,10 @@ const sources = {
     watch: 'styles/**/*.styl'
   },
   scripts: {
-    compile: 'scripts/render.jsx',
+    compile: [
+      'scripts/general.js',
+      'scripts/render.jsx'
+    ],
     watch: 'scripts/**/*'
   },
   pug: {

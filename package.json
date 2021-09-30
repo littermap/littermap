@@ -22,11 +22,11 @@
   },
   "devDependencies": {
     "ansi-colors": "^4.1.1",
-    "esbuild": "^0.13.2",
+    "esbuild": "^0.13.3",
     "esbuild-plugin-solid": "^0.4.0",
     "fancy-log": "^1.3.3",
     "glob": "^7.2.0",
-    "glob-parent": "^6.0.1",
+    "glob-parent": "^6.0.2",
     "gulp": "^4.0.2",
     "gulp-esbuild": "^0.9.0",
     "gulp-filter": "^7.0.0",

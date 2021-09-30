@@ -63,6 +63,7 @@ Install them with `pnpm` and just `import` them in the scripts. The build system
 ### General
 
 - [Using source maps for debugging](https://developer.mozilla.org/docs/Tools/Debugger/How_to/Use_a_source_map)
+- [Debugging on mobile with Firefox](https://developer.mozilla.org/docs/Tools/about:debugging)
 - [Node package managers: NPM vs Yarn vs PNPM](https://javascript.plainenglish.io/npm-yarn-pnpm-which-node-js-package-manager-should-you-use-a2a1378694f7)
 
 ### User interface
@@ -72,6 +73,7 @@ Install them with `pnpm` and just `import` them in the scripts. The build system
 - [solid: examples](https://github.com/solidjs/solid/blob/main/documentation/resources/examples.md)
 - [Learn to code reactive front-ends with Solid](https://www.youtube.com/watch?v=j8ANWdE7wfY&list=PLkHoRc4IcLDqAAvA1y8cT8CXkgfBbhRp3) (playlist)
 - [JSX syntax in-depth](https://reactjs.org/docs/jsx-in-depth.html)
+- [Dealing with sticky :hover effects on mobile](http://www.javascriptkit.com/dhtmltutors/sticky-hover-issue-solutions.shtml)
 
 ### Google Maps API
 

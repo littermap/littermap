@@ -13,6 +13,11 @@ html
       var config = {
         title: '!{self.title}',
         backend: '!{self.backend.base_url}',
+        credentials: {
+          mapbox: {
+            access_token: '!{self.map.mapbox.access_token}',
+          }
+        },
         development: !{self.development},
         map: {
           default_zoom: !{self.map.default_zoom},

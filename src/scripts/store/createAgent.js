@@ -1,5 +1,5 @@
 const apis = {
-  littermap: window.config.backend
+  littermap: config.backend
 }
 
 export default function createAgent([state, actions]) {
@@ -11,8 +11,8 @@ export default function createAgent([state, actions]) {
     const opts = {
       method,
       headers,
-      // Allow including cookie and other credential headers even when contacting another domain
-      credentials: 'include'
+      // Allow including cookie and other credential headers when communicating across domains while testing
+      credentials: config.development ? 'include' : 'same-origin'
     }
 
     if (data) {

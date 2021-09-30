@@ -24,6 +24,30 @@ body
 #map
   z-index 0
 
+#address-search
+  position absolute
+  top header-height + 16px
+  right 64px
+  min-width 260px
+
+#address-input
+  font-size 17px
+  width 180px
+  float right
+  &::placeholder
+    text-align right
+
+#search-results
+  font-size 16px
+  background-color white
+  user-select none
+  clear right
+  .result
+    padding 1px 4px
+    cursor pointer
+    &:hover, &.selected
+      background-color #ccf
+
 #submit-location
   background linear-gradient(to right, #4d4e4d 0%, #40877a 80%, #216155 100%)
   box-shadow 0 0 20px 3px #333

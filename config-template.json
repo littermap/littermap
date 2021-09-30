@@ -8,6 +8,9 @@
     "google": {
       "api_key": ""
     },
+    "mapbox": {
+      "access_token": ""
+    },
     "default_zoom": 7,
     "update_debounce": 1200
   }

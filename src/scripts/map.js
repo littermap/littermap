@@ -1,4 +1,6 @@
-var map, points = []
+var map, popup, points = []
+
+export { map }
 
 export function initMap() {
   //
@@ -15,6 +17,14 @@ export function initMap() {
     mapTypeId: google.maps.MapTypeId.HYBRID,
     fullscreenControl: true,
     gestureHandling: "greedy" // React to all touch and scroll events
+  })
+
+  popup = new google.maps.InfoWindow({
+    content: "Someone has reported seeing litter here."
+  })
+
+  map.addListener("click", () => {
+    popup.close()
   })
 
   map.addListener("bounds_changed", boundsChanged)
@@ -65,13 +75,7 @@ async function loadLocations() {
     console.log("Received " + countInfo)
     document.getElementById("location-count").innerText = countInfo + " visible"
 
-    // if (markers)
-    //   map.removeLayer(markers)
-
-    // markers = L.geoJson(json).addTo(map).bindPopup("Someone has reported seeing litter here.")
-
     renderLocations(json.features)
-
   } else
     console.log("Failed to fetch litter locations: " + res.status)
 }
@@ -96,8 +100,18 @@ function renderLocations(features) {
 
       let marker = new google.maps.Marker({
         position: new google.maps.LatLng(coords[1], coords[0]),
-        // icon: "root://icons/palette-4.png?x=0&y=32&h=32&w=32",
+        // icon: {
+        //   url: "favicon.ico",
+        //   scaledSize: new google.maps.Size(30, 30)
+        // },
         map
+      })
+
+      marker.addListener("click", () => {
+        popup.open({
+          anchor: marker,
+          map
+        })
       })
 
       let point = {
@@ -128,7 +142,14 @@ function renderLocations(features) {
   }
 }
 
-function getCenter() {
+export function goTo({ lat, lon, zoom}) {
+  map.setCenter({lat, lng: lon})
+
+  if (zoom)
+    map.setZoom(zoom)
+}
+
+export function getCenter() {
   let { lat, lng } = map.getCenter()
 
   return {

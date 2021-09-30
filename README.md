@@ -13,7 +13,7 @@ Set up the configuration file:
 
 - `cp config-template.json config.json`
 
-Edit `config.json` and configure back-end endpoint and Google Maps API key.
+Edit `config.json` and configure back-end endpoint and third party access credentials.
 
 Install dependencies with [pnpm](https://pnpm.io/):
 
@@ -71,6 +71,7 @@ Install them with `pnpm` and just `import` them in the scripts. The build system
 - [solid: documentation](https://www.solidjs.com/docs/latest)
 - [solid: examples](https://github.com/solidjs/solid/blob/main/documentation/resources/examples.md)
 - [Learn to code reactive front-ends with Solid](https://www.youtube.com/watch?v=j8ANWdE7wfY&list=PLkHoRc4IcLDqAAvA1y8cT8CXkgfBbhRp3) (playlist)
+- [JSX syntax in-depth](https://reactjs.org/docs/jsx-in-depth.html)
 
 ### Google Maps API
 

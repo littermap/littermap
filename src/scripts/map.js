@@ -15,7 +15,7 @@ export function initMap() {
     center: new google.maps.LatLng(35.899532, -79.056473),
     zoom: config.map.default_zoom,
     mapTypeId: google.maps.MapTypeId.HYBRID,
-    fullscreenControl: true,
+    fullscreenControl: false,
     gestureHandling: "greedy" // React to all touch and scroll events
   })
 
@@ -168,6 +168,19 @@ function getViewRadius() {
   let y = (ne.lat() - sw.lat()) / 2
 
   return Math.sqrt(x*x + y*y)
+}
+
+export function geolocateMe() {
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const pos = {
+        lat: position.coords.latitude,
+        lon: position.coords.longitude
+      }
+
+      goTo({ ...pos, zoom: 16 })
+    }
+  )
 }
 
 export function submitLocation() {

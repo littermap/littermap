@@ -21,7 +21,7 @@ const dirs = {
 
 const sources = {
   styles: {
-    compile: 'styles/*.styl',
+    compile: 'styles/main.styl',
     watch: 'styles/**/*.styl'
   },
   scripts: {

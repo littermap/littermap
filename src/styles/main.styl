@@ -1,0 +1,23 @@
+@require 'lib/mixins'
+@require 'lib/common'
+@require 'header'
+@require 'map'
+
+body
+  overflow hidden
+
+.main
+  position absolute
+  top header-height
+  bottom 0
+  width 100%
+  z-index 1
+
+.page
+  background-color white
+  .content
+    font-family Arial
+    margin 20px
+    h1
+      font-size 20px
+      text-align center

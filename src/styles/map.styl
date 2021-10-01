@@ -1,33 +1,10 @@
-@require 'lib/mixins'
-@require 'lib/common'
-@require 'lib/header'
-
-body
-  overflow hidden
-
-.main
-  position absolute
-  top header-height
-  bottom 0
-  width 100%
-  z-index 1
-
-.page
-  background-color white
-  .content
-    font-family Arial
-    margin 20px
-    h1
-      font-size 20px
-      text-align center
-
 #map
   z-index 0
 
 #address-search
   position absolute
   top header-height + 16px
-  right 64px
+  right 7px
   min-width 260px
   z-foreground()
 
@@ -48,6 +25,25 @@ body
     cursor pointer
     &:hover, &.selected
       background-color #ccf
+
+#geolocate
+  all unset
+  font-size 30px
+  width 20px
+  right 10px
+  top 125px
+  padding-left 6px
+  padding-right 15px
+  padding-bottom 2px
+  color #666
+  background-color white
+  position absolute
+  text-align center
+  border-radius 2px
+  user-select none
+  cursor pointer
+  &:hover
+    color black
 
 #submit-location
   background linear-gradient(to right, #4d4e4d 0%, #40877a 80%, #216155 100%)

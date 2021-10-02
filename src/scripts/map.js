@@ -2,7 +2,7 @@ var map, popup, points = []
 
 export { map }
 
-export function initMap() {
+function initMap() {
   //
   // Google Maps API
   //
@@ -15,8 +15,10 @@ export function initMap() {
     center: new google.maps.LatLng(35.899532, -79.056473),
     zoom: config.map.default_zoom,
     mapTypeId: google.maps.MapTypeId.HYBRID,
+    mapTypeControl: false,
     fullscreenControl: false,
-    gestureHandling: "greedy" // React to all touch and scroll events
+    // React to all touch and scroll events
+    gestureHandling: "greedy"
   })
 
   popup = new google.maps.InfoWindow({
@@ -33,6 +35,53 @@ export function initMap() {
   if (config.development) {
     window.map = map
   }
+}
+
+export function goTo({ lat, lon, zoom}) {
+  map.setCenter({lat, lng: lon})
+
+  if (zoom)
+    map.setZoom(zoom)
+}
+
+export function getCenter() {
+  let { lat, lng } = map.getCenter()
+
+  return {
+    lat: lat(),
+    lon: lng()
+  }
+}
+
+function getViewRadius() {
+  let bounds = map.getBounds()
+
+  let ne = bounds.getNorthEast()
+  let sw = bounds.getSouthWest()
+
+  let x = (ne.lng() - sw.lng()) / 2
+  let y = (ne.lat() - sw.lat()) / 2
+
+  return Math.sqrt(x*x + y*y)
+}
+
+export function toggleBaseLayer() {
+  map.setMapTypeId(
+    map.getMapTypeId() === "hybrid" ? "roadmap" : "hybrid"
+  )
+}
+
+export function geolocateMe() {
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const pos = {
+        lat: position.coords.latitude,
+        lon: position.coords.longitude
+      }
+
+      goTo({ ...pos, zoom: 16 })
+    }
+  )
 }
 
 let debouncing = false
@@ -140,47 +189,6 @@ function renderLocations(features) {
   if (config.development) {
     window.points = points
   }
-}
-
-export function goTo({ lat, lon, zoom}) {
-  map.setCenter({lat, lng: lon})
-
-  if (zoom)
-    map.setZoom(zoom)
-}
-
-export function getCenter() {
-  let { lat, lng } = map.getCenter()
-
-  return {
-    lat: lat(),
-    lon: lng()
-  }
-}
-
-function getViewRadius() {
-  let bounds = map.getBounds()
-
-  let ne = bounds.getNorthEast()
-  let sw = bounds.getSouthWest()
-
-  let x = (ne.lng() - sw.lng()) / 2
-  let y = (ne.lat() - sw.lat()) / 2
-
-  return Math.sqrt(x*x + y*y)
-}
-
-export function geolocateMe() {
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const pos = {
-        lat: position.coords.latitude,
-        lon: position.coords.longitude
-      }
-
-      goTo({ ...pos, zoom: 16 })
-    }
-  )
 }
 
 export function submitLocation() {

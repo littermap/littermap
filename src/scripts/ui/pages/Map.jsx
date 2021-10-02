@@ -1,6 +1,6 @@
 import { createEffect } from 'solid-js'
 import { useStore } from '../../store'
-import { geolocateMe, submitLocation } from '../../map'
+import { toggleBaseLayer, geolocateMe, submitLocation } from '../../map'
 import AddressSearch from '../AddressSearch'
 
 export default () => {
@@ -11,8 +11,11 @@ export default () => {
   return (
     <>
       <AddressSearch />
+      <button id="switch-layers" class="map-control" onclick={toggleBaseLayer}>
+        ▱
+      </button>
       <Show when={navigator.geolocation}>
-        <button id="geolocate" onclick={geolocateMe}>
+        <button id="geolocate" class="map-control" onclick={geolocateMe}>
           ⊚
         </button>
       </Show>

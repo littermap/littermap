@@ -13,7 +13,7 @@ export default () => {
       <AddressSearch />
       <Show when={navigator.geolocation}>
         <button id="geolocate" onclick={geolocateMe}>
-          ⦿
+          ⊚
         </button>
       </Show>
       <button id="submit-location" onclick={submitLocation}>

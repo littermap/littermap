@@ -126,7 +126,7 @@ export default () => {
         <div class="click-screen" onclick={closeSearchResults} />
       </Show>
       <div id="address-search" onkeydown={keydown}>
-        <form onsubmit={submitInput}>
+        <form id="address-input-form" onsubmit={submitInput}>
           <input id="address-input" type="text" oninput={inputChanged} placeholder="🔍" />
         </form>
         <div id="search-results">

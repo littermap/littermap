@@ -4,23 +4,28 @@
 #address-search
   position absolute
   top header-height + 16px
-  right 7px
-  min-width 260px
+  width 100%
   z-foreground()
   pointer-events none
   & > *
     pointer-events all
 
+#address-input-form
+  padding 0 7px
+
 #address-input
   font-size 17px
-  width 180px
   float right
+  width 210px
+  max-width 100%
+  box-sizing border-box
   &::placeholder
     text-align right
 
 #search-results
   font-size 16px
   background-color white
+  margin-right 7px
   user-select none
   clear right
   .result

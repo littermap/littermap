@@ -1,4 +1,4 @@
-var map, popup, points = []
+var map, infoPopup, askSubmitPopup, points = []
 
 export { map }
 
@@ -21,20 +21,83 @@ function initMap() {
     gestureHandling: "greedy"
   })
 
-  popup = new google.maps.InfoWindow({
+  infoPopup = new google.maps.InfoWindow({
     content: "Someone has reported seeing litter here."
   })
 
-  map.addListener("click", () => {
-    popup.close()
+  askSubmitPopup = new google.maps.InfoWindow({
+    content: '<span id="add-location" onclick="submitLocation()" style="font-weight: bold">Add litter location?</span>'
   })
 
+  map.addListener("click", () => {
+    infoPopup.close()
+  })
+
+  // Tap into mouse events to detect long clicks
+  map.addListener("mousedown", mapMouseDown)
+  map.addListener("mouseup", mapMouseUp)
+
+  // Respond to changes in map bounds
   map.addListener("bounds_changed", boundsChanged)
 
-  // Allow interaction with the map object from the console in development builds
+  // Allow interaction with the map object from the console (in development)
   if (config.development) {
     window.map = map
   }
+}
+
+let downState
+
+function mapMouseDown(event) {
+  where = event.latLng
+
+  where = {
+    lat: where.lat(),
+    lon: where.lng()
+  }
+
+  if (downState)
+    clearTimeout(downState.timer)
+
+  downState = {
+    center: getCenter(),
+    timer: setTimeout(() => {
+      checkLongClicked(where, 700)
+    }, config.map.long_click_interval)
+  }
+
+}
+
+function mapMouseUp() {
+  if (downState) {
+    clearTimeout(downState.timer)
+    downState = null
+  }
+}
+
+function checkLongClicked({lat, lon}) {
+  let center = getCenter()
+
+  // If the map center has moved, this is not a long click
+  if (downState.center.lat === center.lat && downState.center.lon === center.lon)
+    if (map.getZoom() >= config.map.min_add_location_zoom)
+     offerToAddLocation({lat, lon})
+
+  downState = null
+}
+
+let candidateLocation
+
+function offerToAddLocation({lat, lon}) {
+  candidateLocation = {lat, lon}
+
+  askSubmitPopup.setPosition(
+    new google.maps.LatLng(lat, lon)
+  )
+
+  askSubmitPopup.open({
+    map
+  })
 }
 
 export function goTo({ lat, lon, zoom}) {
@@ -84,10 +147,17 @@ export function geolocateMe() {
   )
 }
 
+function boundsChanged() {
+  requestLocations()
+
+  if (window.onBoundsChanged)
+    window.onBoundsChanged()
+}
+
 let debouncing = false
 let needToUpdate = false
 
-function boundsChanged() {
+function requestLocations() {
   if (!debouncing) {
     debouncing = true
     loadLocations()
@@ -101,7 +171,7 @@ function boundsChanged() {
           loadLocations()
         }
       },
-      config.map.update_debounce
+      config.map.data_update_debounce
     )
   } else
     needToUpdate = true
@@ -157,7 +227,7 @@ function renderLocations(features) {
       })
 
       marker.addListener("click", () => {
-        popup.open({
+        infoPopup.open({
           anchor: marker,
           map
         })
@@ -192,7 +262,9 @@ function renderLocations(features) {
 }
 
 export function submitLocation() {
-  let data = JSON.stringify(getCenter())
+  askSubmitPopup.close()
+
+  let data = JSON.stringify(candidateLocation)
 
   let request = new XMLHttpRequest()
   request.open('POST', config.backend + '/add')
@@ -205,6 +277,11 @@ export function submitLocation() {
     loadLocations()
   }
 }
+
+//
+// This is to make it accessible from the submit confirmation info window
+//
+window.submitLocation = submitLocation
 
 //
 // This is to let the Google Maps script trigger initMap()

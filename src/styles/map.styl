@@ -62,21 +62,26 @@
   padding-right 10px
   line-height 2px
 
-#submit-location
-  background linear-gradient(to right, #4d4e4d 0%, #40877a 80%, #216155 100%)
+#add-location
+  cursor pointer
+  &:hover
+    color blue
+
+#hint
+  background linear-gradient(to bottom, #555 0%, #191818 80%, #216155 100%)
   box-shadow 0 0 20px 3px #333
   border 1px #363636 solid
+  color #eee
+  text-shadow 1px 1px 2px black
   pill-shape()
-  color #e1dcdc
   position absolute
-  absolute-centered()
+  left 50%
+  transform: translateX(-50%)
   bottom 30px
   padding 0 1em
-  height 3em
+  text-align center
+  white-space nowrap
+  font-size 14px
+  opacity 0.8
   cursor pointer
-  z-index 9999
-  &:hover
-    background linear-gradient(to right, lighten(#4d4e4d, 5%) 0%, lighten(#40877a, 5%) 80%, lighten(#216155, 5%) 100%)
-    box-shadow 0 0 5px 1px #666
-    color #fff
-    transform scale(1.012)
+  pointer-events none

@@ -1,7 +1,12 @@
+//
+// This is the center piece of the internal data model that the user interface reflects
+//
+
 import { createContext, useContext } from "solid-js"
 import { createStore } from "solid-js/store"
 import createAgent from "./createAgent"
 import createUserProfile from "./createUserProfile"
+import { map } from "../map.js"
 
 const StoreContext = createContext()
 
@@ -12,17 +17,27 @@ export function Provider(props) {
     get profile() {
       return profile()
     },
+    mapZoom: 0,
     menuVisible: false
   })
 
+  // Actions that modify the internal state of the application
   const actions = {
     hideMenu() { setState({ menuVisible: false }) },
     toggleMenu() { setState({ menuVisible: !state.menuVisible }) }
   }
+
+  // External interface of the data store (read current state, perform actions that change the state)
   const store = [state, actions]
+
+  // Asynchronous requests module
   const agent = createAgent(store)
 
   profile = createUserProfile(agent, actions)
+
+  window.onBoundsChanged = () => {
+    setState({ mapZoom: map.getZoom() })
+  }
 
   return (
     <StoreContext.Provider value={store}>
@@ -31,6 +46,7 @@ export function Provider(props) {
   )
 }
 
+// Gives access to the data store
 export function useStore() {
   return useContext(StoreContext)
 }

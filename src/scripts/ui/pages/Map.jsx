@@ -8,6 +8,10 @@ export default () => {
 
   createEffect(hideMenu)
 
+  const suggestion = () => (
+    store.mapZoom < config.map.min_add_location_zoom ? "Zoom in" : "Tap and hold"
+  )
+
   return (
     <>
       <AddressSearch />
@@ -19,9 +23,11 @@ export default () => {
           ⊚
         </button>
       </Show>
-      <button id="submit-location" onclick={submitLocation}>
-        Add Location
-      </button>
+      <div id="hint">
+        <p>
+          {suggestion()} to add a littered location
+        </p>
+      </div>
     </>
   )
 }

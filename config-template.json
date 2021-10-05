@@ -12,6 +12,8 @@
       "access_token": ""
     },
     "default_zoom": 7,
-    "update_debounce": 1200
+    "min_add_location_zoom": 17,
+    "long_click_interval": 800,
+    "data_update_debounce": 1200
   }
 }

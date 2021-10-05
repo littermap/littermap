@@ -48,6 +48,14 @@ Check which packages depend on a node package:
 
 Install them with `pnpm` and just `import` them in the scripts. The build system is going to automatically roll everything into a self-contained bundle and insert it into the end product.
 
+### Local testing
+
+Use [ngrok](https://ngrok.com/) as a proxy to the local server started with `pnpm serve` for HTTPS support:
+
+- `ngrok http 3474`
+
+For example, certain browsers may silently [refuse to perform geolocation](https://www.ghacks.net/2017/03/14/firefox-55-geolocation-requires-secure-origin/) in an insecure context.
+
 ## Known issues
 
 - Firefox currently has a [bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1400856) which prevents source maps from working for scripts inlined inside the HTML document
@@ -78,6 +86,8 @@ Install them with `pnpm` and just `import` them in the scripts. The build system
 ### Google Maps API
 
 - [API reference](https://developers.google.com/maps/documentation/javascript/reference)
+- [API reference: Info windows](https://developers.google.com/maps/documentation/javascript/infowindows)
+- [API reference: Street View](https://developers.google.com/maps/documentation/javascript/streetview)
 - [Choosing the Google Maps API release channel](https://developers.google.com/maps/documentation/javascript/versions)
 - [Accessibility features in Google Maps API](https://cloud.google.com/blog/products/maps-platform/improved-accessibility-maps-javascript-api)
 - [Google Maps API feature requests and issue tracker](https://issuetracker.google.com/issues?q=componentid:188853)

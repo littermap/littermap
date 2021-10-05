@@ -18,6 +18,7 @@ export function Provider(props) {
       return profile()
     },
     mapZoom: 0,
+    showingStreetView: false,
     menuVisible: false
   })
 
@@ -37,6 +38,10 @@ export function Provider(props) {
 
   window.onBoundsChanged = () => {
     setState({ mapZoom: map.getZoom() })
+  }
+
+  window.onEnterExitStreetView = (entered) => {
+    setState({ showingStreetView: entered })
   }
 
   return (

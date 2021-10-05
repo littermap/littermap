@@ -9,23 +9,30 @@ export default () => {
   createEffect(hideMenu)
 
   const suggestion = () => (
-    store.mapZoom < config.map.min_add_location_zoom ? "Zoom in" : "Tap and hold"
+    store.showingStreetView
+      ? "Take a closer look"
+      : (
+          (store.mapZoom < config.map.min_add_location_zoom ? "Zoom in" : "Tap and hold")
+          + " to add a littered location"
+        )
   )
 
   return (
     <>
-      <AddressSearch />
-      <button id="switch-layers" class="map-control" onclick={toggleBaseLayer}>
-        ▱
-      </button>
-      <Show when={navigator.geolocation}>
-        <button id="geolocate" class="map-control" onclick={geolocateMe}>
-          ⊚
+      <Show when={!store.showingStreetView}>
+        <AddressSearch />
+        <button id="switch-layers" class="map-control" onclick={toggleBaseLayer}>
+          ⿻
         </button>
+        <Show when={navigator.geolocation}>
+          <button id="geolocate" class="map-control" onclick={geolocateMe}>
+            ⊚
+          </button>
+        </Show>
       </Show>
       <div id="hint">
         <p>
-          {suggestion()} to add a littered location
+          {suggestion()}
         </p>
       </div>
     </>

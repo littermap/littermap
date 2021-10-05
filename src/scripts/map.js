@@ -21,6 +21,13 @@ function initMap() {
     gestureHandling: "greedy"
   })
 
+  const streetView = map.getStreetView()
+
+  // Hide the full screen control in street view mode
+  streetView.setOptions({
+    fullscreenControl: false
+  })
+
   infoPopup = new google.maps.InfoWindow({
     content: "Someone has reported seeing litter here."
   })
@@ -39,6 +46,14 @@ function initMap() {
 
   // Respond to changes in map bounds
   map.addListener("bounds_changed", boundsChanged)
+
+  // Respond to entering and exiting street view mode
+  google.maps.event.addListener(streetView, "visible_changed",
+    function() {
+      if (window.onEnterExitStreetView)
+        window.onEnterExitStreetView(this.getVisible())
+    }
+  )
 
   // Allow interaction with the map object from the console (in development)
   if (config.development) {

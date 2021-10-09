@@ -17,6 +17,7 @@ export default (agent, actions) => {
 
       try {
         await agent.profile.logout()
+        alert("You've been logged out")
       } catch(e) {
         console.error("Error logging out:", e.message)
       }

@@ -13,36 +13,34 @@ Set up the configuration file:
 
 - `cp config-template.json config.json`
 
-Edit `config.json` and configure back-end endpoint and third party access credentials.
+Edit `config.json` and:
+
+- Adjust the api host if necessary
+- Fill in third party service access credentials
 
 Install dependencies with [pnpm](https://pnpm.io/):
 
-- `pnpm`
+- `pnpm i`
 
-Build the product:
+Build the app:
 
 - `pnpm build`
 
-Disable cross-origin resource sharing protection in your browser:
-
-- Add-on for: [Firefox](https://github.com/spenibus/cors-everywhere-firefox-addon) | [Chrome](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf)
-- This disables the browser preventing cross-domain requests with session cookies when testing locally
-
-Start local server to test the app:
+Start local server:
 
 - `pnpm serve`
 
+In a separate terminal, start the proxy that combines the front-end and back-end services under one host URL:
+
+- `pnpm proxy`
+
+The app should now be available at http://localhost:9999
+
 ## Development
 
-Build and then watch source files for changes to trigger a rebuild:
+Build and then watch source files for changes that automatically trigger a rebuild:
 
 - `pnpm watch`
-
-### Tips
-
-Check which packages depend on a node package:
-
-- `pnpm ll --depth 999 <package>`
 
 ### Dependencies
 
@@ -50,11 +48,17 @@ Install them with `pnpm` and just `import` them in the scripts. The build system
 
 ### Local testing
 
-Use [ngrok](https://ngrok.com/) as a proxy to the local server started with `pnpm serve` for HTTPS support:
+Use [ngrok](https://ngrok.com/) as an internet HTTPS proxy to the local HTTP proxy started with `pnpm proxy` for HTTPS support:
 
-- `ngrok http 3474`
+- `ngrok http 9999`
 
 For example, certain browsers may silently [refuse to perform geolocation](https://www.ghacks.net/2017/03/14/firefox-55-geolocation-requires-secure-origin/) in an insecure context.
+
+### Tips
+
+Check which packages depend on a node package:
+
+- `pnpm ll --depth 999 <package>`
 
 ## Known issues
 

@@ -1,15 +1,18 @@
 {
   "title": "Litter Map",
   "development": true,
+  "dev": {
+    "api_host": "https://2lrvdv0r03.execute-api.us-east-1.amazonaws.com"
+  },
   "backend": {
-    "base_url": ""
+    "base_url": "/api"
   },
   "map": {
     "google": {
-      "api_key": ""
+      "api_key": "FILL-THIS-IN"
     },
     "mapbox": {
-      "access_token": ""
+      "access_token": "FILL-THIS-IN"
     },
     "default_zoom": 7,
     "min_add_location_zoom": 17,

@@ -6,8 +6,6 @@ import AddressSearch from '../AddressSearch'
 export default () => {
   const [store, { hideMenu } ] = useStore()
 
-  createEffect(hideMenu)
-
   const suggestion = () => (
     store.showingStreetView
       ? "Take a closer look"

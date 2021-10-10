@@ -29,49 +29,50 @@ header
     background-color #eee
 
 #menu
-  font-size 20px
+  font-size 24px
   position absolute
-  min-width 160px
   background-color white
-  box-shadow 2px 2px 3px 1px #666
-  top header-height + 2px
-  left 4px
+  width 100%
+  text-align center
+  top header-height
+  box-shadow 0 6px 8px 0px #aaa
+  user-select none
   z-foreground(2)
-  & > a
+  & a
     color inherit
     text-decoration none
-
-#menu ul
-  list-style-type none
-  padding-left 0
-  margin 0
-
-#menu li
-  width 100%
-  padding 2px 4px
-  cursor pointer
-  user-select none
-  &:hover
-    color #999
+  & ul
+    list-style-type none
+    padding-left 0
+    margin 0 0
+  & li
+    padding 12px 0
+    cursor pointer
+    &:hover
+      background-color #eaeaea
 
 #logo
   position absolute
   fixed-width-absolute-centered()
   height header-height - 8px
   top 4px
+  @media (max-width: 478px)
+    display none 
 
 #info
+  font-size 13px
   text-align right
   margin-right 5px
   display flex
   justify-content center
   flex-direction column
+  @media (max-width: 408px)
+    display none
 
 #avatar
   width header-height
   height header-height
+  display flex
   cursor pointer
   &.logged-out
     background-color #ccc
-  &> img
-    width 100%

@@ -5,8 +5,6 @@ import { useStore } from '../../store'
 export default () => {
   const [store, { hideMenu } ] = useStore()
 
-  createEffect(hideMenu)
-
   return (
     <div class="main page">
       <div class="content">

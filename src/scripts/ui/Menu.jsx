@@ -8,15 +8,17 @@ export default () => {
     <>
       <div onclick={hideMenu} class="click-screen" />
       <nav id="menu">
-        <Link href="/">
-          <li>Map</li>
-        </Link>
-        <Link href="/about">
-          <li>About</li>
-        </Link>
-        <Link href="/contact">
-          <li>Contact</li>
-        </Link>
+        <ul>
+          <Link href="/">
+            <li onclick={hideMenu}>Map</li>
+          </Link>
+          <Link href="/about">
+            <li onclick={hideMenu}>About</li>
+          </Link>
+          <Link href="/contact">
+            <li onclick={hideMenu}>Contact</li>
+          </Link>
+        </ul>
       </nav>
     </>
   )

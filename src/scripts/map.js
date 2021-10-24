@@ -1,6 +1,15 @@
-var map, infoPopup, askSubmitPopup, points = []
+var map, infoPopup, submitPopup, points = []
 
 export { map }
+
+const submitPopupContent = {
+  ask: '<span id="add-location" onclick="editNewLocation()" style="font-weight: bold">Add litter location?</span>',
+  edit: '<div id="edit-new-location"></div>'
+}
+
+const infoPopupContent = {
+  view: '<div id="view-location"></div>'
+}
 
 function initMap() {
   //
@@ -29,14 +38,21 @@ function initMap() {
   })
 
   infoPopup = new google.maps.InfoWindow({
-    content: "Someone has reported seeing litter here."
+    content: infoPopupContent.view
   })
 
-  askSubmitPopup = new google.maps.InfoWindow({
-    content: '<span id="add-location" onclick="submitLocation()" style="font-weight: bold">Add litter location?</span>'
+  google.maps.event.addListener(infoPopup, 'closeclick', () => {
+    window.showViewLocation(false)
+  })
+
+  submitPopup = new google.maps.InfoWindow()
+
+  google.maps.event.addListener(submitPopup, 'closeclick', () => {
+    window.showEditNewLocation(false)
   })
 
   map.addListener("click", () => {
+    window.showViewLocation(false)
     infoPopup.close()
   })
 
@@ -80,7 +96,6 @@ function mapMouseDown(event) {
       checkLongClicked(where, 700)
     }, config.map.long_click_interval)
   }
-
 }
 
 function mapMouseUp() {
@@ -93,7 +108,7 @@ function mapMouseUp() {
 function checkLongClicked({lat, lon}) {
   let center = getCenter()
 
-  // If the map center has moved, this is not a long click
+  // If the map center has moved, this is a drag and not a long click
   if (downState.center.lat === center.lat && downState.center.lon === center.lon)
     if (map.getZoom() >= config.map.min_add_location_zoom)
      offerToAddLocation({lat, lon})
@@ -106,13 +121,31 @@ let candidateLocation
 function offerToAddLocation({lat, lon}) {
   candidateLocation = {lat, lon}
 
-  askSubmitPopup.setPosition(
+  submitPopup.setPosition(
     new google.maps.LatLng(lat, lon)
   )
 
-  askSubmitPopup.open({
+  submitPopup.setContent(
+    submitPopupContent.ask
+  )
+
+  window.showEditNewLocation(false)
+
+  submitPopup.open({
     map
   })
+}
+
+function editNewLocation() {
+  submitPopup.setContent(
+    submitPopupContent.edit
+  )
+
+  window.showEditNewLocation(true)
+}
+
+function hideEditNewLocation() {
+  submitPopup.close()
 }
 
 export function goTo({ lat, lon, zoom}) {
@@ -241,13 +274,6 @@ function renderLocations(features) {
         map
       })
 
-      marker.addListener("click", () => {
-        infoPopup.open({
-          anchor: marker,
-          map
-        })
-      })
-
       let point = {
         data: item.properties,
         hash: item.properties.hash,
@@ -257,6 +283,17 @@ function renderLocations(features) {
         },
         marker
       }
+
+      marker.addListener("click", () => {
+        infoPopup.open({
+          anchor: marker,
+          map
+        })
+
+        setTimeout(() => {
+          window.showViewLocation(true, point.data)
+        })
+      })
 
       newPoints.push(point)
     }
@@ -276,15 +313,19 @@ function renderLocations(features) {
   }
 }
 
-export function submitLocation() {
-  askSubmitPopup.close()
+export function submitLocation({description, level}) {
+  submitPopup.close()
 
-  let data = JSON.stringify(candidateLocation)
+  let data = {
+    ...candidateLocation,
+    description,
+    level
+  }
 
   let request = new XMLHttpRequest()
   request.open('POST', config.backend + '/add')
   request.withCredentials = true
-  request.send(data)
+  request.send(JSON.stringify(data))
 
   request.onload = () => {
     alert("Thank you for submitting this point.\n\nHelp us crowd source environmental cleanup by building a knowledge base of locations that need litter and/or plastic pollution cleanup. Become a part of the process to clean up the planet and restore it to its natural beauty with the ease of “spotting” locations that others can attend to. If you are one of the thousands of cleanup enthusiasts worldwide, use the map to locate your next cleanup.")
@@ -294,11 +335,13 @@ export function submitLocation() {
 }
 
 //
-// This is to make it accessible from the submit confirmation info window
+// Exposing these functions enables them to be invoked by events associated with DOM elements
 //
+window.editNewLocation = editNewLocation
+window.hideEditNewLocation = hideEditNewLocation
 window.submitLocation = submitLocation
 
 //
-// This is to let the Google Maps script trigger initMap()
+// Expose initMap() so the Google Maps API script can invoke it
 //
 window.initMap = initMap

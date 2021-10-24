@@ -1,12 +1,12 @@
 //
-// This is the center piece of the internal data model that the user interface reflects
+// This is the center piece of the internal data model that the user interface reacts to
 //
 
 import { createContext, useContext } from "solid-js"
 import { createStore } from "solid-js/store"
 import createAgent from "./createAgent"
 import createUserProfile from "./createUserProfile"
-import { map } from "../map.js"
+import { map } from "../../map"
 
 const StoreContext = createContext()
 
@@ -19,13 +19,20 @@ export function Provider(props) {
     },
     mapZoom: 0,
     showingStreetView: false,
-    menuVisible: false
+    menuVisible: false,
+    currentLocation: null,
+    viewingLocation: false,
+    editingNewLocation: false
   })
 
   // Actions that modify the internal state of the application
   const actions = {
     hideMenu() { setState({ menuVisible: false }) },
-    toggleMenu() { setState({ menuVisible: !state.menuVisible }) }
+    toggleMenu() { setState({ menuVisible: !state.menuVisible }) },
+    hideEditNewLocation() {
+      setState({ editingNewLocation: false })
+      window.hideEditNewLocation()
+    }
   }
 
   // External interface of the data store (read current state, perform actions that change the state)
@@ -36,12 +43,27 @@ export function Provider(props) {
 
   profile = createUserProfile(agent, actions)
 
+  //
+  // Actions that are accessible by DOM level script code
+  //
+
   window.onBoundsChanged = () => {
     setState({ mapZoom: map.getZoom() })
   }
 
   window.onEnterExitStreetView = (entered) => {
     setState({ showingStreetView: entered })
+  }
+
+  window.showViewLocation = (value, data) => {
+    setState({
+      viewingLocation: value,
+      currentLocation: data || null
+    })
+  }
+
+  window.showEditNewLocation = (value) => {
+    setState({ editingNewLocation: value })
   }
 
   return (

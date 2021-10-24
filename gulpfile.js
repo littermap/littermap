@@ -27,7 +27,7 @@ const sources = {
   scripts: {
     compile: [
       'scripts/general.js',
-      'scripts/render.jsx'
+      'scripts/ui/render.jsx'
     ],
     watch: 'scripts/**/*'
   },

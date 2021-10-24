@@ -1,9 +1,8 @@
 import { lazy } from 'solid-js'
 import { Router, useRoutes } from 'solid-app-router'
-import Header from './Header'
-
-// This ensures that the code in '../map.js' gets initialized so that the Google Maps script can call initMap()
-import {} from '../map'
+import Header from './parts/Header'
+import ViewLocation from './parts/ViewLocation'
+import EditNewLocation from './parts/EditNewLocation'
 
 const routes = [ {
   path: "/",
@@ -26,6 +25,9 @@ export default () => {
     <>
       <Header />
       <Routes />
+      {/* UI components detached from the main tree */}
+      <ViewLocation />
+      <EditNewLocation />
     </>
   )
 }

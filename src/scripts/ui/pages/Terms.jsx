@@ -1,9 +1,6 @@
 import { createEffect } from 'solid-js'
-import { useStore } from '../../store'
 
 export default () => {
-  const [store, { hideMenu } ] = useStore()
-
   return (
     <div class="main page">
       <div class="content">

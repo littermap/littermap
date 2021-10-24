@@ -1,5 +1,5 @@
 import { createSignal, createResource, For } from 'solid-js'
-import { goTo, getCenter } from '../map'
+import { goTo, getCenter } from '../../map'
 
 //
 // Zoom defaults by Mapbox place type

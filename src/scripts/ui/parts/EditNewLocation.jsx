@@ -1,8 +1,9 @@
 import { createSignal } from 'solid-js'
 import { useStore } from '../store'
+import { submitLocation } from '../../map'
 
 export default () => {
-  const [store, {hideEditNewLocation}] = useStore()
+  const [store, {closeEditNewLocation}] = useStore()
 
   const [getDescription, setDescription] = createSignal('')
   const [getLevel, setLevel] = createSignal(1)
@@ -16,9 +17,9 @@ export default () => {
   }
 
   const submit = (event) => {
-    hideEditNewLocation()
+    closeEditNewLocation()
 
-    window.submitLocation({
+    submitLocation({
       description: getDescription(),
       level: getLevel()
     })
@@ -40,7 +41,7 @@ export default () => {
           <input type="range" id="input-litter-level" name="level" min="1" max="100" value="1"  onchange={levelChanged} />
         </section>
         <div class="buttons">
-          <button onclick={hideEditNewLocation}>
+          <button onclick={closeEditNewLocation}>
             Cancel
           </button>
           <button onclick={submit}>

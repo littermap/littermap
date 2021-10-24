@@ -1,12 +1,12 @@
 import { render } from 'solid-js/web'
 import { Router } from 'solid-app-router'
-import { Provider } from './store'
+import { StoreProvider } from './store'
 import Main from './Main'
 
 render(() => (
   <Router>
-    <Provider>
+    <StoreProvider>
       <Main />
-    </Provider>
+    </StoreProvider>
   </Router>
 ), document.getElementById('app'))

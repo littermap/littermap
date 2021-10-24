@@ -1,6 +1,4 @@
-var map, infoPopup, submitPopup, points = []
-
-export { map }
+let map, infoPopup, submitPopup, points = []
 
 const submitPopupContent = {
   ask: '<span id="add-location" onclick="editNewLocation()" style="font-weight: bold">Add litter location?</span>',
@@ -18,9 +16,7 @@ function initMap() {
   // Documentation: https://developers.google.com/maps/documentation/javascript/reference/
   //
 
-  element = document.getElementById('map')
-
-  map = new google.maps.Map(element, {
+  map = new google.maps.Map(document.getElementById('map'), {
     center: new google.maps.LatLng(35.899532, -79.056473),
     zoom: config.map.default_zoom,
     mapTypeId: google.maps.MapTypeId.HYBRID,
@@ -42,17 +38,17 @@ function initMap() {
   })
 
   google.maps.event.addListener(infoPopup, 'closeclick', () => {
-    window.showViewLocation(false)
+    window.actions.updateShowingLocation(false)
   })
 
   submitPopup = new google.maps.InfoWindow()
 
   google.maps.event.addListener(submitPopup, 'closeclick', () => {
-    window.showEditNewLocation(false)
+    window.actions.updateEditingNewLocation(false)
   })
 
   map.addListener("click", () => {
-    window.showViewLocation(false)
+    window.actions.updateShowingLocation(false)
     infoPopup.close()
   })
 
@@ -65,9 +61,8 @@ function initMap() {
 
   // Respond to entering and exiting street view mode
   google.maps.event.addListener(streetView, "visible_changed",
-    function() {
-      if (window.onEnterExitStreetView)
-        window.onEnterExitStreetView(this.getVisible())
+    () => {
+      window.actions.updateShowingStreetView(streetView.getVisible())
     }
   )
 
@@ -129,7 +124,7 @@ function offerToAddLocation({lat, lon}) {
     submitPopupContent.ask
   )
 
-  window.showEditNewLocation(false)
+  window.actions.updateEditingNewLocation(false)
 
   submitPopup.open({
     map
@@ -141,21 +136,21 @@ function editNewLocation() {
     submitPopupContent.edit
   )
 
-  window.showEditNewLocation(true)
+  window.actions.updateEditingNewLocation(true)
 }
 
-function hideEditNewLocation() {
+function closeSubmitPopup() {
   submitPopup.close()
 }
 
-export function goTo({ lat, lon, zoom}) {
+function goTo({ lat, lon, zoom}) {
   map.setCenter({lat, lng: lon})
 
   if (zoom)
     map.setZoom(zoom)
 }
 
-export function getCenter() {
+function getCenter() {
   let { lat, lng } = map.getCenter()
 
   return {
@@ -176,13 +171,13 @@ function getViewRadius() {
   return Math.sqrt(x*x + y*y)
 }
 
-export function toggleBaseLayer() {
+function toggleBaseLayer() {
   map.setMapTypeId(
     map.getMapTypeId() === "hybrid" ? "roadmap" : "hybrid"
   )
 }
 
-export function geolocateMe() {
+function geolocateMe() {
   navigator.geolocation.getCurrentPosition(
     (position) => {
       const pos = {
@@ -197,9 +192,7 @@ export function geolocateMe() {
 
 function boundsChanged() {
   requestLocations()
-
-  if (window.onBoundsChanged)
-    window.onBoundsChanged()
+  window.actions.updateZoom(map.getZoom())
 }
 
 let debouncing = false
@@ -240,7 +233,6 @@ async function loadLocations() {
     let countInfo = count + ((count !== 1) ? " locations" : " location")
 
     console.log("Received " + countInfo)
-    document.getElementById("location-count").innerText = countInfo + " visible"
 
     renderLocations(json.features)
   } else
@@ -291,7 +283,7 @@ function renderLocations(features) {
         })
 
         setTimeout(() => {
-          window.showViewLocation(true, point.data)
+          window.actions.updateShowingLocation(true, point.data)
         })
       })
 
@@ -313,7 +305,7 @@ function renderLocations(features) {
   }
 }
 
-export function submitLocation({description, level}) {
+function submitLocation({description, level}) {
   submitPopup.close()
 
   let data = {
@@ -334,14 +326,22 @@ export function submitLocation({description, level}) {
   }
 }
 
-//
-// Exposing these functions enables them to be invoked by events associated with DOM elements
-//
-window.editNewLocation = editNewLocation
-window.hideEditNewLocation = hideEditNewLocation
-window.submitLocation = submitLocation
+export {
+  map,
+  goTo,
+  getCenter,
+  toggleBaseLayer,
+  geolocateMe,
+  closeSubmitPopup,
+  submitLocation
+}
 
 //
-// Expose initMap() so the Google Maps API script can invoke it
+// Expose this so it can be invoked from the popup event handler
+//
+window.editNewLocation = editNewLocation
+
+//
+// Expose this so the Google Maps API script can invoke it
 //
 window.initMap = initMap

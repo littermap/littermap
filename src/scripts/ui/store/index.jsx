@@ -4,13 +4,13 @@
 
 import { createContext, useContext } from "solid-js"
 import { createStore } from "solid-js/store"
+import { closeSubmitPopup } from "../../map"
 import createAgent from "./createAgent"
 import createUserProfile from "./createUserProfile"
-import { map } from "../../map"
 
 const StoreContext = createContext()
 
-export function Provider(props) {
+export function StoreProvider(props) {
   let profile
 
   const [state, setState] = createStore({
@@ -25,46 +25,42 @@ export function Provider(props) {
     editingNewLocation: false
   })
 
-  // Actions that modify the internal state of the application
+  // Actions meant to be invoked by UI components
   const actions = {
     hideMenu() { setState({ menuVisible: false }) },
     toggleMenu() { setState({ menuVisible: !state.menuVisible }) },
-    hideEditNewLocation() {
+    closeEditNewLocation() {
       setState({ editingNewLocation: false })
-      window.hideEditNewLocation()
+      closeSubmitPopup()
     }
   }
 
-  // External interface of the data store (read current state, perform actions that change the state)
+  // Actions meant to be invoked by global script code
+  window.actions = {
+    updateZoom(zoomLevel) {
+      setState({ mapZoom: zoomLevel })
+    },
+    updateShowingStreetView(value) {
+      setState({ showingStreetView: value })
+    },
+    updateShowingLocation(value, data) {
+      setState({
+        viewingLocation: value,
+        currentLocation: data || null
+      })
+    },
+    updateEditingNewLocation(value) {
+      setState({ editingNewLocation: value })
+    }
+  }
+
+  // Interface to the data store (read current state, perform actions that change the state)
   const store = [state, actions]
 
-  // Asynchronous requests module
+  // Asynchronous requests agent
   const agent = createAgent(store)
 
   profile = createUserProfile(agent, actions)
-
-  //
-  // Actions that are accessible by DOM level script code
-  //
-
-  window.onBoundsChanged = () => {
-    setState({ mapZoom: map.getZoom() })
-  }
-
-  window.onEnterExitStreetView = (entered) => {
-    setState({ showingStreetView: entered })
-  }
-
-  window.showViewLocation = (value, data) => {
-    setState({
-      viewingLocation: value,
-      currentLocation: data || null
-    })
-  }
-
-  window.showEditNewLocation = (value) => {
-    setState({ editingNewLocation: value })
-  }
 
   return (
     <StoreContext.Provider value={store}>

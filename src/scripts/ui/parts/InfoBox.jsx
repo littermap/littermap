@@ -7,11 +7,8 @@ export default () => {
   return (
     <>
       <section id="info">
-        <div id="location-count">
-          ...
-        </div>
         <div>
-          {store.profile ? store.profile.name : '\u00A0'}
+          {store.profile ? store.profile.name : 'Logged out'}
         </div>
       </section>
       <ProfileMenu />

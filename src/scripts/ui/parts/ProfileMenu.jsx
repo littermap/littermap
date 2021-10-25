@@ -2,9 +2,7 @@ import { Switch, Match } from 'solid-js'
 import { useStore } from '../store'
 
 export default () => {
-  const [store, { fetchProfile, logout } ] = useStore()
-
-  fetchProfile()
+  const [store, { logout } ] = useStore()
 
   return (
     <Switch>

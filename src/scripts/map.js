@@ -105,8 +105,11 @@ function checkLongClicked({lat, lon}) {
 
   // If the map center has moved, this is a drag and not a long click
   if (downState.center.lat === center.lat && downState.center.lon === center.lon)
-    if (map.getZoom() >= config.map.min_add_location_zoom)
-     offerToAddLocation({lat, lon})
+    // If logged in
+    if (window.state.profile)
+      // If zoomed in enough
+      if (map.getZoom() >= config.map.min_add_location_zoom)
+        offerToAddLocation({lat, lon})
 
   downState = null
 }

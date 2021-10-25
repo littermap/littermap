@@ -10,8 +10,12 @@ export default () => {
     store.showingStreetView
       ? "Take a closer look"
       : (
-          (store.mapZoom < config.map.min_add_location_zoom ? "Zoom in" : "Tap and hold")
-          + " to add a littered location"
+          !store.profileLoading ?
+            (!store.profile ? "Log in" :
+              (store.mapZoom < config.map.min_add_location_zoom ? "Zoom in" : "Tap and hold")
+            )
+            + " to add a littered location"
+          : null
         )
   )
 
@@ -28,11 +32,13 @@ export default () => {
           </button>
         </Show>
       </Show>
-      <div id="hint">
-        <p>
-          {suggestion()}
-        </p>
-      </div>
+      <Show when={suggestion()}>
+        <div id="hint">
+          <p>
+            {suggestion()}
+          </p>
+        </div>
+      </Show>
     </>
   )
 }

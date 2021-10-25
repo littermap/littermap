@@ -17,6 +17,9 @@ export function StoreProvider(props) {
     get profile() {
       return profile()
     },
+    get profileLoading() {
+      return profile.loading
+    },
     mapZoom: 0,
     showingStreetView: false,
     menuVisible: false,
@@ -53,6 +56,9 @@ export function StoreProvider(props) {
       setState({ editingNewLocation: value })
     }
   }
+
+  // Make application state available to global script code
+  window.state = state
 
   // Interface to the data store (read current state, perform actions that change the state)
   const store = [state, actions]

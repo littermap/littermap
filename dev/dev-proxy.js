@@ -27,3 +27,5 @@ let proxy = httpProxy.createProxyMiddleware({
 const server = express()
 server.use('/', proxy)
 server.listen(9999)
+
+console.info("\nUse the app:", "http://localhost:9999")

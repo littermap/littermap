@@ -1,28 +1,20 @@
-import { createSignal } from "solid-js"
+import { createResource } from "solid-js"
 
 export default (agent, actions) => {
-  const [getProfile, setProfile] = createSignal()
+  const [profile, {mutate}] = createResource(agent.profile.get)
 
   Object.assign(actions, {
-    async fetchProfile() {
-      try {
-        let profile = await agent.profile.get()
-        setProfile(profile)
-      } catch(e) {
-        console.error("Error fetching profile:", e.message)
-      }
-    },
     async logout() {
-      setProfile(false)
+      mutate(false)
 
       try {
         await agent.profile.logout()
-        alert("You've been logged out")
+        console.info("Logged out")
       } catch(e) {
         console.error("Error logging out:", e.message)
       }
     }
   })
 
-  return getProfile
+  return profile
 }

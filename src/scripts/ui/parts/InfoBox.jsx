@@ -8,7 +8,7 @@ export default () => {
     <>
       <section id="info">
         <div>
-          {store.profile ? store.profile.name : 'Logged out'}
+          {store.profileLoading ? '' : (store.profile ? store.profile.name : 'Logged out')}
         </div>
       </section>
       <ProfileMenu />

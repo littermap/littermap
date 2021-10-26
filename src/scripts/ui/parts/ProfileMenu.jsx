@@ -1,14 +1,17 @@
 import { Switch, Match } from 'solid-js'
-import { useStore } from '../store'
+import Store from '../store'
 
 export default () => {
-  const [store, { logout } ] = useStore()
+  const [store, { logout }] = Store()
 
   return (
     <Switch>
-      <Match when={!store.profile}>
+      <Match when={store.profileLoading}>
+        <div id="avatar" />
+      </Match>
+      <Match when={!store.profile && !store.profileLoading}>
         <a href={config.backend + '/login/google'}>
-          <div id="avatar" class="logged-out">
+          <div id="avatar">
             <svg viewBox="-50 -50 100 100">
               <g fill="#aaa">
                 <circle cx="0" cy="-8" r="20" />
@@ -19,7 +22,7 @@ export default () => {
         </a>
       </Match>
       <Match when={store.profile}>
-        <div id="avatar" onclick={logout}>
+        <div id="avatar" class="logged-in" onclick={logout}>
           <img src={avatarURL(store.profile.avatar)} />
         </div>
       </Match>

@@ -1,5 +1,5 @@
 //
-// This is the center piece of the internal data model that the user interface reacts to
+// The internal data store that the dynamic user interface reacts to
 //
 
 import { createContext, useContext } from "solid-js"
@@ -76,6 +76,6 @@ export function StoreProvider(props) {
 }
 
 // Gives access to the data store
-export function useStore() {
+export default function useStore() {
   return useContext(StoreContext)
 }

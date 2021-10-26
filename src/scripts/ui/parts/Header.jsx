@@ -1,9 +1,9 @@
-import { useStore } from '../store'
 import InfoBox from './InfoBox'
 import Menu from './Menu'
+import Store from '../store'
 
 export default () => {
-  const [store, { toggleMenu }] = useStore()
+  const [store, { toggleMenu }] = Store()
 
   return (
     <>

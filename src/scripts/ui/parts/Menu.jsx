@@ -1,8 +1,8 @@
 import { Link } from 'solid-app-router'
-import { useStore } from '../store'
+import Store from '../store'
 
 export default () => {
-  const [store, {hideMenu}] = useStore()
+  const [store, { hideMenu }] = Store()
 
   return (
     <>

@@ -1,7 +1,7 @@
-import { useStore } from '../store'
+import Store from '../store'
 
 export default () => {
-  const [store] = useStore()
+  const [store] = Store()
 
   return (
     <Show when={store.viewingLocation}>

@@ -1,14 +1,14 @@
-import { useStore } from '../store'
 import ProfileMenu from './ProfileMenu'
+import Store from '../store'
 
 export default () => {
-  const [store] = useStore()
+  const [store] = Store()
 
   return (
     <>
       <section id="info">
         <div>
-          {store.profileLoading ? '' : (store.profile ? store.profile.name : 'Logged out')}
+          {store.profile ? store.profile.name : ''}
         </div>
       </section>
       <ProfileMenu />

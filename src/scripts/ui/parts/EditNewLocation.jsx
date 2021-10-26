@@ -1,9 +1,9 @@
 import { createSignal } from 'solid-js'
-import { useStore } from '../store'
 import { submitLocation } from '../../map'
+import Store from '../store'
 
 export default () => {
-  const [store, {closeEditNewLocation}] = useStore()
+  const [store, { closeEditNewLocation }] = Store()
 
   const [getDescription, setDescription] = createSignal('')
   const [getLevel, setLevel] = createSignal(1)

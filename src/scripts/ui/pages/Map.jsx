@@ -1,10 +1,10 @@
 import { createEffect } from 'solid-js'
-import { useStore } from '../store'
 import { toggleBaseLayer, geolocateMe, submitLocation } from '../../map'
 import AddressSearch from '../parts/AddressSearch'
+import Store from '../store'
 
 export default () => {
-  const [store] = useStore()
+  const [store] = Store()
 
   const suggestion = () => (
     store.showingStreetView

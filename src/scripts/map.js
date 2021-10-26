@@ -38,7 +38,7 @@ function initMap() {
   })
 
   google.maps.event.addListener(infoPopup, 'closeclick', () => {
-    window.actions.updateShowingLocation(false)
+    window.actions.updateViewingLocation(null)
   })
 
   submitPopup = new google.maps.InfoWindow()
@@ -48,7 +48,7 @@ function initMap() {
   })
 
   map.addListener("click", () => {
-    window.actions.updateShowingLocation(false)
+    window.actions.updateViewingLocation(null)
     infoPopup.close()
   })
 
@@ -288,7 +288,7 @@ function renderLocations(features) {
         })
 
         setTimeout(() => {
-          window.actions.updateShowingLocation(true, point.data)
+          window.actions.updateViewingLocation(point.data)
         })
       })
 

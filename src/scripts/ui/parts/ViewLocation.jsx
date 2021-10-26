@@ -11,7 +11,7 @@ export default () => {
             What's going on at this location
           </label>
           <div class="value">
-            {store.currentLocation.description}
+            {store.viewingLocation.description}
           </div>
         </section>
         <section>
@@ -19,11 +19,11 @@ export default () => {
             Litter level
           </label>
           <div class="value">
-            {store.currentLocation.level}
+            {store.viewingLocation.level}
           </div>
         </section>
         <p class="info">
-          Submitted by {store.currentLocation.created_by || "someone"} at {store.currentLocation.created_at}
+          Submitted by {store.viewingLocation.created_by || "someone"} at {store.viewingLocation.created_at}
         </p>
       </Portal>
     </Show>

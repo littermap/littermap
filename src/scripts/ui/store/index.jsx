@@ -24,8 +24,7 @@ export function StoreProvider(props) {
     mapZoom: 0,
     showingStreetView: false,
     menuVisible: false,
-    currentLocation: null,
-    viewingLocation: false,
+    viewingLocation: null,
     editingNewLocation: false
   })
 
@@ -54,11 +53,8 @@ export function StoreProvider(props) {
     updateShowingStreetView(value) {
       setState({ showingStreetView: value })
     },
-    updateShowingLocation(value, data) {
-      setState({
-        viewingLocation: value,
-        currentLocation: data || null
-      })
+    updateViewingLocation(value) {
+      setState({ viewingLocation: value })
     },
     updateEditingNewLocation(value) {
       setState({ editingNewLocation: value })

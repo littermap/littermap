@@ -1,7 +1,7 @@
 import { createResource } from "solid-js"
 
 export default (agent, actions) => {
-  const [profile, {mutate}] = createResource(agent.profile.get)
+  const [profile, { mutate }] = createResource(agent.profile.get)
 
   Object.assign(actions, {
     async logout() {

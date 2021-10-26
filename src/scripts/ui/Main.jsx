@@ -1,5 +1,5 @@
 import { lazy } from 'solid-js'
-import { Router, useRoutes } from 'solid-app-router'
+import { useRoutes } from 'solid-app-router'
 import Header from './parts/Header'
 import ViewLocation from './parts/ViewLocation'
 import EditNewLocation from './parts/EditNewLocation'
@@ -25,7 +25,7 @@ export default () => {
     <>
       <Header />
       <Routes />
-      {/* UI components detached from the main tree */}
+      {/* Detached UI components */}
       <ViewLocation />
       <EditNewLocation />
     </>

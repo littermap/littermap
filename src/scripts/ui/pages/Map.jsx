@@ -1,5 +1,5 @@
 import { createEffect } from 'solid-js'
-import { toggleBaseLayer, geolocateMe, submitLocation } from '../../map'
+import { toggleBaseLayer, geolocateMe } from '../../map'
 import AddressSearch from '../parts/AddressSearch'
 import Store from '../store'
 
@@ -10,7 +10,7 @@ export default () => {
     store.showingStreetView
       ? "Take a closer look"
       : (
-          !store.profileLoading ?
+          !store.profileLoading && !store.editingNewLocation ?
             (!store.profile ? "Log in" :
               (store.mapZoom < config.map.min_add_location_zoom ? "Zoom in" : "Tap and hold")
             )

@@ -21,23 +21,27 @@ export default () => {
 
   return (
     <>
-      <Show when={!store.showingStreetView}>
-        <AddressSearch />
-        <button id="switch-layers" class="map-control" onclick={toggleBaseLayer}>
-          ⿻
-        </button>
-        <Show when={navigator.geolocation}>
-          <button id="geolocate" class="map-control" onclick={geolocateMe}>
-            ⊚
-          </button>
-        </Show>
-      </Show>
-      <Show when={suggestion()}>
-        <div id="hint">
-          <p>
-            {suggestion()}
-          </p>
-        </div>
+      <Show when={store.mapLoaded}>
+        <Portal mount={document.getElementById('map')}>
+          <Show when={!store.showingStreetView}>
+            <AddressSearch />
+            <button id="switch-layers" class="map-control" onclick={toggleBaseLayer}>
+              ⿻
+            </button>
+            <Show when={navigator.geolocation}>
+              <button id="geolocate" class="map-control" onclick={geolocateMe}>
+                ⊚
+              </button>
+            </Show>
+          </Show>
+          <Show when={suggestion()}>
+            <div id="hint">
+              <p>
+                {suggestion()}
+              </p>
+            </div>
+          </Show>
+        </Portal>
       </Show>
     </>
   )

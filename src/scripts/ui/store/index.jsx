@@ -1,5 +1,5 @@
 //
-// The internal data store that the dynamic user interface reacts to
+// The internal data store that the user interface reacts to
 //
 
 import { createContext, useContext } from "solid-js"
@@ -20,6 +20,7 @@ export function StoreProvider(props) {
     get profileLoading() {
       return profile.loading
     },
+    mapLoaded: false,
     mapZoom: 0,
     showingStreetView: false,
     menuVisible: false,
@@ -30,8 +31,12 @@ export function StoreProvider(props) {
 
   // Actions meant to be invoked by UI components
   const actions = {
-    hideMenu() { setState({ menuVisible: false }) },
-    toggleMenu() { setState({ menuVisible: !state.menuVisible }) },
+    hideMenu() {
+      setState({ menuVisible: false })
+    },
+    toggleMenu() {
+      setState({ menuVisible: !state.menuVisible })
+    },
     closeEditNewLocation() {
       setState({ editingNewLocation: false })
       closeSubmitPopup()
@@ -40,6 +45,9 @@ export function StoreProvider(props) {
 
   // Actions meant to be invoked by global script code
   window.actions = {
+    setMapLoaded() {
+      setState({ mapLoaded: true })
+    },
     updateZoom(zoomLevel) {
       setState({ mapZoom: zoomLevel })
     },

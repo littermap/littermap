@@ -22,7 +22,7 @@ function initMap() {
     mapTypeId: google.maps.MapTypeId.HYBRID,
     mapTypeControl: false,
     fullscreenControl: false,
-    // React to all touch and scroll events
+    // Enable all touch and scroll events
     gestureHandling: "greedy"
   })
 
@@ -65,6 +65,8 @@ function initMap() {
       window.actions.updateShowingStreetView(streetView.getVisible())
     }
   )
+
+  window.actions.setMapLoaded()
 
   // Allow interaction with the map object from the console (in development)
   if (config.development) {

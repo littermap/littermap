@@ -6,13 +6,13 @@ body
   margin 0
 
 //
-// The invisible click screen covers the viewport to temporarily prevent click events from
-// propagating to the elements under it. Elements can implement z-foreground() to rise
-// above it and stay interactive.
+// The (invisible) click screen is used to cover the viewport to temporarily prevent click
+// events from propagating to the elements under it. Elements can implement z-modal()
+// to rise above it and remain interactive.
 //
 Z-SCREEN = 100
 
-z-foreground(level = 1)
+z-modal(level = 1)
   z-index Z-SCREEN + level
 
 .click-screen

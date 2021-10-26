@@ -3,12 +3,13 @@
 
 #address-search
   position absolute
-  top header-height + 16px
+  top 16px
   width 100%
-  z-foreground()
   pointer-events none
   & > *
     pointer-events all
+  .click-screen ~ &
+    z-modal()
 
 #address-input-form
   padding 0 7px
@@ -52,12 +53,12 @@
     color black
 
 #switch-layers
-  top 125px
+  top 54px
   font-size 24px
   line-height 2px
 
 #geolocate
-  top 176px
+  top 54px + 51px
   line-height 2px
 
 #hint

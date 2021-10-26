@@ -12,13 +12,13 @@ const infoPopupContent = {
 function initMap() {
   //
   // Google Maps API
-  //
-  // Documentation: https://developers.google.com/maps/documentation/javascript/reference/
+  //   https://developers.google.com/maps/documentation/javascript/reference/
   //
 
   map = new google.maps.Map(document.getElementById('map'), {
     center: new google.maps.LatLng(35.899532, -79.056473),
     zoom: config.map.default_zoom,
+    minZoom: 2,
     mapTypeId: google.maps.MapTypeId.HYBRID,
     mapTypeControl: false,
     fullscreenControl: false,
@@ -148,8 +148,8 @@ function closeSubmitPopup() {
   submitPopup.close()
 }
 
-function goTo({ lat, lon, zoom}) {
-  map.setCenter({lat, lng: lon})
+function goTo({ lat, lon, zoom }) {
+  map.setCenter({ lat, lng: lon })
 
   if (zoom)
     map.setZoom(zoom)

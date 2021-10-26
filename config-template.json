@@ -2,7 +2,8 @@
   "title": "Litter Map",
   "development": true,
   "dev": {
-    "api_host": "https://2lrvdv0r03.execute-api.us-east-1.amazonaws.com"
+    "api_host": "https://2lrvdv0r03.execute-api.us-east-1.amazonaws.com",
+    "serve_port": 9999
   },
   "backend": {
     "base_url": "/api"

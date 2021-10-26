@@ -11,10 +11,14 @@
 // Use this proxy when serving the app locally during testing.
 //
 
+const config = require('../config.json')
+
 const express = require('express')
 const httpProxy = require('http-proxy-middleware')
+const createCert = require('create-cert')
+const https = require('https')
 
-const config = require('../config.json')
+const port = config.dev.serve_port || 9999
 
 let proxy = httpProxy.createProxyMiddleware({
   target: 'http://localhost:3474',
@@ -24,8 +28,19 @@ let proxy = httpProxy.createProxyMiddleware({
   changeOrigin: true
 })
 
-const server = express()
-server.use('/', proxy)
-server.listen(9999)
+console.log()
 
-console.info("\nUse the app:", "http://localhost:9999")
+;(async () => {
+  console.info("Generating self-signed SSL certificate...\n")
+  const keys = await createCert()
+
+  const app = express()
+  app.use('/', proxy)
+
+  https.createServer(keys, app).listen(
+    port,
+    () => {
+      console.info("Launch the app:", `https://localhost:${port}`)
+    }
+  )
+})()

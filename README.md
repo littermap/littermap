@@ -54,6 +54,18 @@ Use [ngrok](https://ngrok.com/) as an internet HTTPS proxy to the local HTTP pro
 
 For example, certain browsers may silently [refuse to perform geolocation](https://www.ghacks.net/2017/03/14/firefox-55-geolocation-requires-secure-origin/) in an insecure context.
 
+For Google Sign-in to work, the OAuth URL will need to be white-listed in the Google OAuth client profile settings (see backend documentation).
+
+#### Testing on an Android device while serving from another machine
+
+While the website can be loaded from another machine serving it over a network, Google Sign-in will refuse to log you in if the redirect URL is not from an approved domain. Google OAuth will refuse to white-list a local IP, so the solution is to specify `localhost` as the redirect target (which it will accept) and then to use a local forwarding proxy to fetch the website over the network.
+
+- Install `termux` from the [F-Droid](https://f-droid.org/) repository
+- Run `pkg install nodejs openssl-tool`
+- Run `npm i -g https-proxy-cli`
+- Run `https-proxy -p 9999 -t https://<IP-OF-SERVER-MACHINE>:9999`
+- Load website via https://localhost:9999
+
 ### Tips
 
 Check which packages depend on a node package:

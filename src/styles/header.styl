@@ -9,7 +9,7 @@ header
 #site-nav,
 #logo,
 #actions
-  flex 1
+  flex auto
 
 #site-nav
   font 28px bold sans-serif
@@ -52,8 +52,7 @@ header
       background-color #eaeaea
 
 #logo
-  position absolute
-  fixed-width-absolute-centered()
+  absolute-centered-fixed-width()
   height header-height - 8px
   top 4px
   @media (max-width: 478px)

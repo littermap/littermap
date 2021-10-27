@@ -1,8 +1,6 @@
-import { createEffect } from 'solid-js'
-
 export default () => {
   return (
-    <div class="main page">
+    <div class="page">
       <div class="content">
         <h1>Terms of Service</h1>
         <p>
@@ -12,7 +10,7 @@ export default () => {
           By reading this page you hereby agree...
         </p>
         <h6>
-          [ small print regarding all your rights are belong to someone else ]
+          [ small print regarding how all your rights belong to someone else ]
         </h6>
         <p>
           You are asked to abide by these responsibilities:

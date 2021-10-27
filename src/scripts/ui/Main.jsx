@@ -1,13 +1,11 @@
 import { lazy } from 'solid-js'
 import { useRoutes } from 'solid-app-router'
 import Header from './parts/Header'
+import MapControls from './parts/MapControls'
 import ViewLocation from './parts/ViewLocation'
 import EditNewLocation from './parts/EditNewLocation'
 
 const routes = [ {
-  path: "/",
-  component: lazy(() => import('./pages/Map'))
-}, {
   path: "/about",
   component: lazy(() => import('./pages/About'))
 }, {
@@ -19,15 +17,20 @@ const routes = [ {
 } ]
 
 export default () => {
-  const Routes = useRoutes(routes)
+  const Page = useRoutes(routes)
 
   return (
     <>
       <Header />
-      <Routes />
-      {/* Detached UI components */}
-      <ViewLocation />
-      <EditNewLocation />
+      <main>
+        <div id="map">
+          <MapControls />
+          {/* Components rendered inside the map */}
+          <ViewLocation />
+          <EditNewLocation />
+        </div>
+        <Page />
+      </main>
     </>
   )
 }

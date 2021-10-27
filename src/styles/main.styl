@@ -1,22 +1,29 @@
 @require 'lib/mixins'
 @require 'lib/common'
 @require 'header'
-@require 'map'
-@require 'map-infobox'
+@require 'map-controls'
+@require 'map-content'
 
 body
   overflow hidden
 
-.main
-  position absolute
-  top header-height
-  bottom 0
-  width 100%
-  z-index 1
+#app
+  display flex
+  flex-flow column
+  height 100%
+
+main
+  flex auto
+  display flex
+  position relative
+
+#map
+  fill-parent()
 
 .page
+  fill-parent()
   background-color white
-  overflow-y scroll
+  overflow-y auto
   .content
     font-family Arial
     margin 20px

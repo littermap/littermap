@@ -1,4 +1,3 @@
-import { createEffect } from 'solid-js'
 import { toggleBaseLayer, geolocateMe } from '../../map'
 import AddressSearch from '../parts/AddressSearch'
 import Store from '../store'

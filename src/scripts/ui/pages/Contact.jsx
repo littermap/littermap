@@ -1,8 +1,6 @@
-import { createEffect } from 'solid-js'
-
 export default () => {
   return (
-    <div class="main page">
+    <div class="page">
       <div class="content">
         <h1>Contact Us</h1>
         <p>

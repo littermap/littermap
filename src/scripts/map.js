@@ -276,6 +276,13 @@ function renderLocations(features) {
   }
 }
 
+export function getNWandSE() {
+  let bounds = map.getBounds();
+  let ne = bounds.getNorthEast();
+  let sw = bounds.getSouthWest();
+  return ([sw.lng(), ne.lat(), ne.lng(), sw.lat()])
+}
+
 export function submitLocation() {
   askSubmitPopup.close()
 

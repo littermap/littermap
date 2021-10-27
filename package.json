@@ -34,12 +34,14 @@
     "gulp-inject": "^5.0.5",
     "gulp-pug": "^5.0.0",
     "gulp-stylus": "^2.7.0",
-    "http-proxy-middleware": "^2.0.1",
+"http-proxy-middleware": "^2.0.1",
     "merge2": "^1.4.1",
     "minimatch": "^3.0.4",
     "superstatic": "^7.1.0"
   },
   "dependencies": {
+    "axios": "^0.23.0",
+    "read-excel-file": "^5.2.17",
     "solid-app-router": "^0.1.8",
     "solid-js": "^1.1.6"
   }

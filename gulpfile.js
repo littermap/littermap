@@ -9,7 +9,6 @@ const { solidPlugin } = require('esbuild-plugin-solid')
 const fs = require('fs')
 const path = require('path')
 const glob = require('glob')
-const globBase = require('glob-parent')
 const { braceExpand } = require('minimatch')
 const c = require('ansi-colors')
 const log = require('fancy-log')
@@ -29,8 +28,8 @@ const sources = {
     watch: 'scripts/**/*'
   },
   pug: {
-    compile: '*.pug',
-    watch: '{*.pug,lib/**/*.pug}'
+    compile: 'index.pug',
+    watch: '*.pug'
   },
   files: '{favicon.ico,images/**/*}'
 }
@@ -53,9 +52,6 @@ const readConfig = () => {
   config = JSON.parse(
     fs.readFileSync('./config.json')
   )
-
-  if (config.backend.base_url === '')
-    abort("Please configure the server endpoint in config.json")
 }
 
 readConfig()
@@ -68,14 +64,6 @@ const srcPath = (x) => (
   Array.isArray(x) ?
     x.map(path => dirs.src + path)
     : dirs.src + x
-)
-
-//
-// Construct associated output directory for a source path
-//
-
-const outPath = (x) => (
-  dirs.out + globBase(x)
 )
 
 //
@@ -159,7 +147,7 @@ task('html', () => {
     .on("data", (file) => { console.log(c.yellow("Built:"), file.basename) } )
     // Prevents errors from crashing the watch task
     .on('error', (e) => e.end())
-    .pipe(dest(outPath(sources.pug.compile)))
+    .pipe(dest(dirs.out))
 })
 
 //
@@ -192,7 +180,7 @@ task('watch', () => {
   // When 'glob-watcher' switches to 'chokidar' 3.x this workaround won't be necessary (see issue #49)
   _watch('./config.json*', series('build'), readConfig)
   _watch(
-    // Braces {} are expanded into an array with braceExpand()
+    // Expand braces {} into an array of paths with braceExpand()
     srcPath(braceExpand(sources.files)),
     series('files')
   )
@@ -200,7 +188,7 @@ task('watch', () => {
     srcPath([
         sources.styles.watch,
         sources.scripts.watch,
-        ...braceExpand(sources.pug.watch)
+        sources.pug.watch
     ]),
     series('html')
   )

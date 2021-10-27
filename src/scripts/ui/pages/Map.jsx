@@ -1,10 +1,27 @@
-import { createEffect } from 'solid-js'
+import { createEffect, createSignal } from 'solid-js'
 import { useStore } from '../../store'
-import { toggleBaseLayer, geolocateMe, submitLocation } from '../../map'
+import { toggleBaseLayer, geolocateMe, submitLocation, getNWandSE } from '../../map'
+import HeatMapOverlay from '../heatMapComponents/HeatMapOverlay'
 import AddressSearch from '../AddressSearch'
+import getWeights from '../../predict'
 
 export default () => {
   const [store, { hideMenu } ] = useStore()
+  const [heatMapActive, setHeatMapActive] = createSignal(false);
+  const [weightMatrix, setWeightMatrix] = createSignal(new Array(400));
+
+  const toggleHeatMap = () => { 
+    alert("testing36, rn we swtiching from " + heatMapActive()); 
+    let NWandSE = getNWandSE();
+    console.log(NWandSE);
+    // console.log(getWeights(NWandSE[0], NWandSE[1], NWandSE[2], NWandSE[3], 60))
+    // let w = getWeights(NWandSE[0], NWandSE[1], NWandSE[2], NWandSE[3], 60).then((result) => {
+    //   setWeightMatrix(w);
+    //   console.log(weightMatrix());
+    // })
+    setWeightMatrix(getWeights(NWandSE[0], NWandSE[1], NWandSE[2], NWandSE[3], 60));
+    setHeatMapActive(!heatMapActive());
+  };
 
   const suggestion = () => (
     store.showingStreetView
@@ -14,6 +31,8 @@ export default () => {
           + " to add a littered location"
         )
   )
+
+  
 
   return (
     <>
@@ -27,6 +46,10 @@ export default () => {
             ⊚
           </button>
         </Show>
+      </Show>
+      <button id="heatmap-button" class="map-control" onclick={toggleHeatMap}>Toggle Heat Map</button>
+      <Show when={heatMapActive()}>
+        <HeatMapOverlay weightMatrix={weightMatrix()}/>
       </Show>
       <div id="hint">
         <p>

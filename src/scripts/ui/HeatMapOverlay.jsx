@@ -9,10 +9,6 @@ export default (props) => {
         mat.push(row);
     }
 
-    // function getRedWeight(weight) {
-    //     return ();
-    // }
-
     return (
         <div>
             <table id="heatmap-table" class="heatmap-table">

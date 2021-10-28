@@ -13,6 +13,7 @@ const globBase = require('glob-parent')
 const { braceExpand } = require('minimatch')
 const c = require('ansi-colors')
 const log = require('fancy-log')
+const { platform } = require('os')
 
 const dirs = {
   src: './src/',
@@ -95,7 +96,8 @@ task('files', () => (
 //
 
 const esbuild = createGulpEsbuild({
-  piping: true
+  piping: true,
+  platform: "neutral"
 })
 
 task('html', () => {

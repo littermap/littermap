@@ -4,6 +4,8 @@ import Header from './Header'
 
 // This ensures that the code in '../map.js' gets initialized so that the Google Maps script can call initMap()
 import {} from '../map'
+// This ensures that the code in '../predict.js' gets initialized so that the fetch works on browser side
+import {} from '../predict'
 
 const routes = [ {
   path: "/",

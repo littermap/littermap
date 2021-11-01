@@ -1,4 +1,4 @@
-// TODO If the box area is too lto suearge, we might have to download Planet.osm and put it on our backend
+// TODO If the box area is too large, we might have to download Planet.osm and put it on our backend
 export default async function getWeights(x1, y1, x2, y2, timeout, r, c) {
 
     let tagWeights = readTagWeights();
@@ -6,11 +6,10 @@ export default async function getWeights(x1, y1, x2, y2, timeout, r, c) {
     // TODO figure out what the radius is (since if it's too large, the API call won't work)
     let rad = 0; rad /= 5280; // Size of the largest radius in the spreadsheet (in feet)
 
-    let nodes = []; 
-    // TODO something here does not work, needs to be tested localy, fetch call mgiht be wrong?
+    let nodes = []; // y2, x1, y1, x2
     let getNodes = async () => {
         try {
-            let response = await fetch(`https://www.overpass-api.de/api/interpreter?data=[out:json][timeout:${timeout}]%20[bbox:${y2 - rad},${x1 - rad},${y1 + rad},${x2 + rad}];node(if:count_tags()%20%3E%200);out%20meta;`, {
+            let response = await fetch(`https://www.overpass-api.de/api/interpreter?data=[out:json][timeout:${timeout}]%20[bbox:${x2 - rad},${y1 - rad},${x1 + rad},${y2 + rad}];node(if:count_tags()%20%3E%200);out%20meta;`, {
                 method: 'GET'
             });
             nodes = await response.json().elements;
@@ -19,7 +18,6 @@ export default async function getWeights(x1, y1, x2, y2, timeout, r, c) {
         } 
     }
     getNodes();
-    console.log("nodes are", nodes)
 
     // Create flattened matrix to store tag frequencies for each grid cell
     let tagMatrix = []; // tagMatrix[0] = (x1, y1) = top-left
@@ -45,9 +43,7 @@ export default async function getWeights(x1, y1, x2, y2, timeout, r, c) {
     return calculateWeights(tagWeights, tagMatrix, r, c, weightR, weightC);
 };
 
-// used to read from an excel file but constantly errored, so data is just manually uploaded here.
-// Should prolly be put into another file and just be imported to make this file cleaner in future
-// async function readTagWeights(){
+// async 
 function readTagWeights() {
     let tagWeights = new Map([
         ['24_hour_business', [ 0.022727272727272728, 7 ]],
@@ -192,25 +188,6 @@ function readTagWeights() {
     return tagWeights;
 }
 
-//  old code for pulling from and xlsx. just rewrote it by hand cause gulp-es does not let you use like any damn import, making this way way hard
-//     let xlsxFile = require('read-excel-file/node');
-//     let tagWeights = new Map();
-    // await xlsxFile('../OSMTags.xlsx').then((rows) => {
-    //     for(let row in rows) {
-    //         if(rows[row][1] !== null &&
-    //            rows[row][1] !== "feature" &&
-    //            rows[row][4] !== null &&
-    //            rows[row][5] !== null){
-    //             let tagName = rows[row][1].split(' ').join('_');
-    //             let radiusAndWeight = [rows[row][4], rows[row][5]];
-    //             tagWeights.set(tagName, radiusAndWeight);
-    //         }
-    //     }
-    // });
- 
-//     return tagWeights;
-// }
-
 function calculateWeights(tagWeights, tagMatrix, r, c, weightR, weightC){
 
     // Initialize weight matrix
@@ -225,19 +202,6 @@ function calculateWeights(tagWeights, tagMatrix, r, c, weightR, weightC){
             tag = tag.split(':')[0];
             let radius = tagWeights.has(tag) ? tagWeights.get(tag)[0] : 0;
             let weight = tagWeights.has(tag) ? 1/tagWeights.get(tag)[1] : 0;
-
-            /* // Circle check for the future
-            for(x = xCenter - radius ; x <= xCenter; x++){
-                for(y = yCenter - radius ; y <= yCenter; y++){
-                    // we don't have to take the square root, it's slow
-                    if((x - xCenter)*(x - xCenter) + (y - yCenter)*(y - yCenter) <= r*r){
-                        xSym = xCenter - (x - xCenter);
-                        ySym = yCenter - (y - yCenter);
-                        // (x, y), (x, ySym), (xSym , y), (xSym, ySym) are in the circle
-                    }
-                }
-            }
-            */ 
 
             // Calculate the amount that the tag contributes to the current cell's weight
             for(let j = 0; j < weightMatrix.length; j++){

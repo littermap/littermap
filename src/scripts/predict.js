@@ -1,24 +1,13 @@
 // TODO If the box area is too large, we might have to download Planet.osm and put it on our backend
 export default async function getWeights(x1, y1, x2, y2, timeout, r, c) {
 
-    let tagWeights = readTagWeights();
-
     // TODO figure out what the radius is (since if it's too large, the API call won't work)
     let rad = 0; rad /= 5280; // Size of the largest radius in the spreadsheet (in feet)
-
-    let nodes = []; // y2, x1, y1, x2
-    let getNodes = async () => {
-        try {
-            let response = await fetch(`https://www.overpass-api.de/api/interpreter?data=[out:json][timeout:${timeout}]%20[bbox:${x2 - rad},${y1 - rad},${x1 + rad},${y2 + rad}];node(if:count_tags()%20%3E%200);out%20meta;`, {
-                method: 'GET'
-            });
-            nodes = await response.json().elements;
-        } catch(error) {
-            console.log(error)
-        } 
-    }
-    getNodes();
-
+    
+    let tagWeights = readTagWeights();
+    let nodes = await fetch(`https://www.overpass-api.de/api/interpreter?data=[out:json][timeout:${timeout}][bbox:${y2 - rad},${x1 - rad},${y1 + rad},${x2 + rad}];node(if:count_tags()%20%3E%200);out%20meta;`)
+    .then(response => response.json()).then(data => data.elements); 
+    
     // Create flattened matrix to store tag frequencies for each grid cell
     let tagMatrix = []; // tagMatrix[0] = (x1, y1) = top-left
     if(r == null || r < 1){ r = 20; } r += 2 * Math.ceil(rad / ((y1 - y2) / r));
@@ -193,7 +182,7 @@ function calculateWeights(tagWeights, tagMatrix, r, c, weightR, weightC){
     // Initialize weight matrix
     let weightMatrix = new Array(weightR * weightC); // weightMatrix will be smaller than tagMatrix because of the buffer zone from the radius
     for(let i = 0; i < weightMatrix.length; i++){
-        weightMatrix[i] = 0; // 0
+        weightMatrix[i] = 0; 
     }
 
     // Tag first

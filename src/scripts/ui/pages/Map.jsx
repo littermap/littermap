@@ -9,16 +9,10 @@ export default () => {
   const [store, { hideMenu } ] = useStore()
   const [heatMapActive, setHeatMapActive] = createSignal(false);
   const [weightMatrix, setWeightMatrix] = createSignal(new Array(400));
-
-  const toggleHeatMap = () => { 
-    // gets coords
+  
+  const toggleHeatMap = () => {
     let NWandSE = getNWandSE();
-    //gets and set wieghts for heat map
-    getWeights(NWandSE[0], NWandSE[1], NWandSE[2], NWandSE[3], 60).then((matrix) => {
-      setWeightMatrix(matrix);
-      console.log("weight matrix is", weightMatrix());
-      setHeatMapActive(!heatMapActive());
-    });
+    heatMapActive() ? setHeatMapActive(false) : getWeights(NWandSE[0], NWandSE[1], NWandSE[2], NWandSE[3], 60).then((matrix) => {setWeightMatrix(matrix); setHeatMapActive(true);}); 
   };
 
   const suggestion = () => (
@@ -29,9 +23,7 @@ export default () => {
           + " to add a littered location"
         )
   )
-
   
-
   return (
     <>
       <Show when={!store.showingStreetView}>

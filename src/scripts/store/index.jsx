@@ -20,12 +20,14 @@ export function Provider(props) {
     mapZoom: 0,
     showingStreetView: false,
     menuVisible: false,
+    heatMapActive: false
   })
 
   // Actions that modify the internal state of the application
   const actions = {
     hideMenu() { setState({ menuVisible: false }) },
-    toggleMenu() { setState({ menuVisible: !state.menuVisible }) }
+    toggleMenu() { setState({ menuVisible: !state.menuVisible }) },
+    toggleHeatMapActive() { setState({ heatMapActive: !state.heatMapActive})}
   }
 
   // External interface of the data store (read current state, perform actions that change the state)

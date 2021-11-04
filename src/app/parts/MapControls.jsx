@@ -1,4 +1,4 @@
-import { toggleBaseLayer, geolocateMe } from '../../map'
+import { toggleBaseLayer, geolocateMe } from '../map'
 import AddressSearch from '../parts/AddressSearch'
 import Store from '../store'
 

@@ -12,18 +12,27 @@ html
     script.
       var config = {
         title: '!{self.title}',
-        backend: '!{self.backend.base_url}',
+        backend: {
+          api: '!{self.backend.api}',
+          media: '!{self.backend.media}',
+        },
         credentials: {
           mapbox: {
             access_token: '!{self.map.mapbox.access_token}',
           }
         },
         development: !{self.development},
+        debug: {
+          upload_info: !{self.dev.upload_debug}
+        },
         map: {
           default_zoom: !{self.map.default_zoom},
           min_add_location_zoom: !{self.map.min_add_location_zoom},
           long_click_interval: !{self.map.long_click_interval},
           data_update_debounce: !{self.map.data_update_debounce}
+        },
+        location: {
+          max_uploads: !{self.location.max_uploads}
         }
       }
     script.

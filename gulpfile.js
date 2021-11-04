@@ -24,8 +24,8 @@ const sources = {
     watch: 'styles/**/*.styl'
   },
   scripts: {
-    compile: 'scripts/ui/render.jsx',
-    watch: 'scripts/**/*'
+    compile: 'app/render.jsx',
+    watch: 'app/**/*'
   },
   pug: {
     compile: 'index.pug',

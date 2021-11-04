@@ -3,7 +3,7 @@ import { Router } from 'solid-app-router'
 import { StoreProvider } from './store'
 import Main from './Main'
 
-import '../platform'
+import './platform'
 
 render(() => (
   <Router>

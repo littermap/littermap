@@ -1,12 +1,12 @@
 //
-// The internal data store that the user interface reacts to
+// The central data store that the user interface dynamically reacts to
 //
 
-import { createContext, useContext } from "solid-js"
-import { createStore } from "solid-js/store"
-import { closeSubmitPopup } from "../../map"
-import createAgent from "./createAgent"
-import createUserProfile from "./createUserProfile"
+import { createContext, useContext } from 'solid-js'
+import { createStore } from 'solid-js/store'
+import { closeSubmitPopup } from '../map'
+import agent from '../request-agent'
+import Profile from './user-profile'
 
 const StoreContext = createContext()
 
@@ -67,10 +67,7 @@ export function StoreProvider(props) {
   // Interface to the data store (read current state, perform actions that change the state)
   const store = [state, actions]
 
-  // Asynchronous requests agent
-  const agent = createAgent(store)
-
-  profile = createUserProfile(agent, actions)
+  profile = Profile(actions)
 
   return (
     <StoreContext.Provider value={store}>

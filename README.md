@@ -1,4 +1,4 @@
-Web front-end for the Litter Map project.
+Web front-end for the Litter Map application.
 
 ## Technologies
 
@@ -13,10 +13,7 @@ Set up the configuration file:
 
 - `cp config-template.json config.json`
 
-Edit `config.json` and:
-
-- Adjust the api host if necessary
-- Fill in third party service access credentials
+Edit `config.json` and fill in necessary details.
 
 Install dependencies with [pnpm](https://pnpm.io/):
 
@@ -38,7 +35,7 @@ The app should now be available at http://localhost:9999
 
 ## Development
 
-Build and then watch source files for changes that automatically trigger a rebuild:
+Build and then monitor source files for changes, which automatically trigger a rebuild:
 
 - `pnpm watch`
 

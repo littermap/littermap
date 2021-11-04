@@ -2,22 +2,27 @@
   "title": "Litter Map",
   "development": true,
   "dev": {
-    "api_host": "https://2lrvdv0r03.execute-api.us-east-1.amazonaws.com",
-    "serve_port": 9999
+    "api_host": "!!! e.g., https://37afdv1r02.execute-api.us-east-1.amazonaws.com",
+    "serve_port": 9999,
+    "upload_debug": false
   },
   "backend": {
-    "base_url": "/api"
+    "api": "/api",
+    "media": "!!! e.g., https://littermap-backend-mediabucket-82xb02kpntrb9.s3.amazonaws.com"
   },
   "map": {
     "google": {
-      "api_key": "FILL-THIS-IN"
+      "api_key": "!!!"
     },
     "mapbox": {
-      "access_token": "FILL-THIS-IN"
+      "access_token": "!!!"
     },
     "default_zoom": 7,
     "min_add_location_zoom": 17,
     "long_click_interval": 800,
     "data_update_debounce": 1200
+  },
+  "location": {
+    "max_uploads": 6
   }
 }

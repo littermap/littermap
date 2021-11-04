@@ -41,7 +41,9 @@ function initMap() {
     window.actions.updateViewingLocation(null)
   })
 
-  submitPopup = new google.maps.InfoWindow()
+  submitPopup = new google.maps.InfoWindow({
+    maxWidth: "none"
+  })
 
   google.maps.event.addListener(submitPopup, 'closeclick', () => {
     window.actions.updateEditingNewLocation(false)
@@ -52,7 +54,7 @@ function initMap() {
     infoPopup.close()
   })
 
-  // Tap into mouse events to detect long clicks
+  // Listen to mouse events to detect long clicks
   map.addListener("mousedown", mapMouseDown)
   map.addListener("mouseup", mapMouseUp)
 
@@ -68,7 +70,7 @@ function initMap() {
 
   window.actions.setMapLoaded()
 
-  // Allow interaction with the map object from the console (in development)
+  // Allow interaction with the map object from the console (during development)
   if (config.development) {
     window.map = map
   }
@@ -142,6 +144,17 @@ function editNewLocation() {
   )
 
   window.actions.updateEditingNewLocation(true)
+
+  //
+  // Center the view on the popup 
+  //
+  // TODO: Consider instead adjusting the view just enough to accommodate the popup
+  //
+  map.panTo(
+    new google.maps.LatLng(
+      candidateLocation.lat, candidateLocation.lon
+    )
+  )
 }
 
 function closeSubmitPopup() {
@@ -230,7 +243,7 @@ async function loadLocations() {
   let url = `/radius/?lat=${lat}&lon=${lon}&r=${radius}&format=geojson`
 
   console.log("Fetching litter locations...")
-  let res = await fetch(config.backend + url)
+  let res = await fetch(config.backend.api + url)
 
   if (res.ok) {
     let json = await res.json()
@@ -310,24 +323,28 @@ function renderLocations(features) {
   }
 }
 
-function submitLocation({description, level}) {
+function submitLocation({description, level, images}) {
   submitPopup.close()
 
   let data = {
     ...candidateLocation,
     description,
-    level
+    level,
+    images
   }
 
   let request = new XMLHttpRequest()
-  request.open('POST', config.backend + '/add')
+  request.open('POST', config.backend.api + '/add')
   request.withCredentials = true
   request.send(JSON.stringify(data))
 
   request.onload = () => {
-    alert("Thank you for submitting this point.\n\nHelp us crowd source environmental cleanup by building a knowledge base of locations that need litter and/or plastic pollution cleanup. Become a part of the process to clean up the planet and restore it to its natural beauty with the ease of “spotting” locations that others can attend to. If you are one of the thousands of cleanup enthusiasts worldwide, use the map to locate your next cleanup.")
+    if (request.status >= 200 && request.status <= 299) {
+      alert("Thank you for submitting this point.\n\nHelp us crowd source environmental cleanup by building a knowledge base of locations that need litter and/or plastic pollution cleanup. Become a part of the process to clean up the planet and restore it to its natural beauty with the ease of “spotting” locations that others can attend to. If you are one of the thousands of cleanup enthusiasts worldwide, use the map to locate your next cleanup.")
 
-    loadLocations()
+      loadLocations()
+    } else
+      alert("Error submitting location")
   }
 }
 
@@ -342,7 +359,7 @@ export {
 }
 
 //
-// Expose this so it can be invoked from the popup event handler
+// Expose this so it can be invoked from the submit popup event handler
 //
 window.editNewLocation = editNewLocation
 

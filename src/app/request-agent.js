@@ -1,22 +1,21 @@
 const apis = {
-  littermap: config.backend
+  littermap: config.backend.api
 }
 
-export default function createAgent([state, actions]) {
+function createRequestAgent() {
   //
-  // Communicate with a service
+  // REST communication
   //
-  async function request(api, method, url, data, resultField) {
-    const headers = {}
+  async function request(api, method, url, data, field) {
     const opts = {
       method,
-      headers,
+      headers: {},
       // Allow including cookie and other credential headers when communicating across domains while testing
       credentials: config.development ? 'include' : 'same-origin'
     }
 
     if (data) {
-      headers["Content-Type"] = "application/json"
+      opts.headers["Content-Type"] = "application/json"
       opts.body = JSON.stringify(data)
     }
 
@@ -24,7 +23,7 @@ export default function createAgent([state, actions]) {
       const response = await fetch(apis[api] + url, opts)
       const json = await response.json()
 
-      return resultField ? json[resultField] : json
+      return field ? json[field] : json
     } catch (err) {
       console.error("server error: ", err.message)
 
@@ -32,15 +31,19 @@ export default function createAgent([state, actions]) {
     }
   }
 
-  //
-  // Profile methods
-  //
   const profile = {
     get: () => request("littermap", "get", "/profile", null, "profile"),
     logout: () => request("littermap", "get", "/logout")
   }
 
+  const uploads = {
+    getUploadLink: () => request("littermap", "get", "/getuploadlink")
+  }
+
   return {
-    profile
+    profile,
+    uploads
   }
 }
+
+export default createRequestAgent()

@@ -1,4 +1,3 @@
-import { Switch, Match } from 'solid-js'
 import Store from '../store'
 
 export default () => {
@@ -10,7 +9,7 @@ export default () => {
         <div id="avatar" />
       </Match>
       <Match when={!store.profile && !store.profileLoading}>
-        <a href={config.backend + '/login/google'}>
+        <a href={config.backend.api + '/login/google'}>
           <div id="avatar">
             <svg viewBox="-50 -50 100 100">
               <g fill="#aaa">

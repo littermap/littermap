@@ -154,7 +154,7 @@ export default () => {
           if (idx !== -1) {
             if (request.status === 204) {
               setValue(idx, 'src', url + '/' + fields.key)
-              setValue(idx, 'key', fields.key)
+              setValue(idx, 'id', fields.id)
               setValue(idx, 'status', "uploaded")
             } else {
               console.error("Upload failed with status: " + request.status)
@@ -269,7 +269,7 @@ export default () => {
     let details = {
       description: state.description,
       level: state.level,
-      images: state.photos.map(photo => photo.key)
+      images: state.photos.map(photo => photo.id)
     }
 
     closeEditNewLocation()

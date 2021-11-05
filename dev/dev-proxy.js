@@ -23,7 +23,8 @@ const port = config.dev.serve_port || 9999
 let proxy = httpProxy.createProxyMiddleware({
   target: 'http://localhost:3474',
   router: {
-    '/api': config.dev.api_host
+    '/api': config.dev.api_host,
+    '/media': config.dev.media_host
   },
   changeOrigin: true
 })

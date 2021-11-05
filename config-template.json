@@ -3,12 +3,15 @@
   "development": true,
   "dev": {
     "api_host": "!!! e.g., https://37afdv1r02.execute-api.us-east-1.amazonaws.com",
-    "serve_port": 9999,
-    "upload_debug": false
+    "media_host": "!!! e.g., https://littermap-backend-mediabucket-82xb02kpntrb9.s3.amazonaws.com",
+    "serve_port": 9999
+  },
+  "debug": {
+    "upload_info": false
   },
   "backend": {
     "api": "/api",
-    "media": "!!! e.g., https://littermap-backend-mediabucket-82xb02kpntrb9.s3.amazonaws.com"
+    "media": "/media"
   },
   "map": {
     "google": {

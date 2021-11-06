@@ -240,7 +240,7 @@ async function loadLocations() {
   let { lat, lon } = getCenter()
   let radius = getViewRadius()
 
-  let url = `/radius/?lat=${lat}&lon=${lon}&r=${radius}&format=geojson`
+  let url = `/radius?lat=${lat}&lon=${lon}&r=${radius}&format=geojson`
 
   console.log("Fetching litter locations...")
   let res = await fetch(config.backend.api + url)

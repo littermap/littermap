@@ -14,7 +14,7 @@ export default () => {
           </div>
           <div id="title">{window.config.title}</div>
         </section>
-        <img id="logo" src="images/logo.svg" alt="logo" />
+        <img id="logo" src="/images/logo.svg" alt="logo" />
         <InfoBox />
       </header>
       {store.menuVisible && <Menu />}

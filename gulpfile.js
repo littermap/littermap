@@ -7,11 +7,8 @@ const inject = require('gulp-inject')
 const { createGulpEsbuild } = require('gulp-esbuild')
 const { solidPlugin } = require('esbuild-plugin-solid')
 const fs = require('fs')
-const path = require('path')
-const glob = require('glob')
 const { braceExpand } = require('minimatch')
 const c = require('ansi-colors')
-const log = require('fancy-log')
 
 const dirs = {
   src: './src/',
@@ -40,7 +37,7 @@ function abort(message) {
 }
 
 //
-// Site configuration
+// Global configuration
 //
 
 let config
@@ -55,6 +52,36 @@ const readConfig = () => {
 }
 
 readConfig()
+
+//
+// Pass a set of configuration options to the application
+//
+
+const appConfig = (config) => ({
+  title: config.title,
+  backend: {
+    api: config.backend.api,
+    media: config.backend.media,
+  },
+  credentials: {
+    mapbox: {
+      access_token: config.map.mapbox.access_token,
+    }
+  },
+  development: config.development,
+  debug: {
+    upload_info: config.debug.upload_info
+  },
+  map: {
+    default_zoom: config.map.default_zoom,
+    min_add_location_zoom: config.map.min_add_location_zoom,
+    long_click_interval: config.map.long_click_interval,
+    data_update_debounce: config.map.data_update_debounce
+  },
+  location: {
+    max_uploads: config.location.max_uploads
+  }
+})
 
 //
 // Construct full source path
@@ -76,7 +103,7 @@ task('files', () => (
 ))
 
 //
-// Build the HTML from the Pug source files and then inline the minified styles and scripts into the HTML document
+// Build the HTML from the Pug source files and then inline the styles and scripts into the HTML document
 //
 
 const esbuild = createGulpEsbuild({
@@ -125,7 +152,12 @@ task('html', () => {
               assetNames: 'vendor/[name]-[hash]',
               sourcemap: config.development ? 'inline' : false,
               sourcesContent: true,
-              minify: !config.development
+              minify: !config.development,
+              define: {
+                config: JSON.stringify(
+                  appConfig(config)
+                )
+              }
             })
           )
           // Take just the asset files and put them in the output directory

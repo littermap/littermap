@@ -6,8 +6,6 @@ specifiers:
   esbuild: ^0.13.12
   esbuild-plugin-solid: ^0.4.0
   express: ^4.17.1
-  fancy-log: ^1.3.3
-  glob: ^7.2.0
   gulp: ^4.0.2
   gulp-esbuild: ^0.9.1
   gulp-filter: ^7.0.0
@@ -31,8 +29,6 @@ devDependencies:
   esbuild: 0.13.12
   esbuild-plugin-solid: 0.4.0_esbuild@0.13.12+solid-js@1.2.2
   express: 4.17.1
-  fancy-log: 1.3.3
-  glob: 7.2.0
   gulp: 4.0.2
   gulp-esbuild: 0.9.1
   gulp-filter: 7.0.0_gulp@4.0.2
@@ -894,8 +890,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001276
-      electron-to-chromium: 1.3.888
+      caniuse-lite: 1.0.30001278
+      electron-to-chromium: 1.3.890
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -995,8 +991,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /caniuse-lite/1.0.30001276:
-    resolution: {integrity: sha512-psUNoaG1ilknZPxi8HuhQWobuhLqtYSRUxplfVkEJdgZNB9TETVYGSBtv4YyfAdGvE6gn2eb0ztiXqHoWJcGnw==}
+  /caniuse-lite/1.0.30001278:
+    resolution: {integrity: sha512-mpF9KeH8u5cMoEmIic/cr7PNS+F5LWBk0t2ekGT60lFf0Wq+n9LspAj0g3P+o7DQhD3sUdlMln4YFAWhFYn9jg==}
     dev: true
 
   /center-align/0.1.3:
@@ -1496,8 +1492,8 @@ packages:
     resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
     dev: true
 
-  /electron-to-chromium/1.3.888:
-    resolution: {integrity: sha512-5iD1zgyPpFER4kJ716VsA4MxQ6x405dxdFNCEK2mITL075VHO5ResjY0xzQUZguCww/KlBxCA6JmBA9sDt1PRw==}
+  /electron-to-chromium/1.3.890:
+    resolution: {integrity: sha512-VWlVXSkv0cA/OOehrEyqjUTHwV8YXCPTfPvbtoeU2aHR21vI4Ejh5aC4AxUwOmbLbBgb6Gd3URZahoCxtBqCYQ==}
     dev: true
 
   /emoji-regex/8.0.0:
@@ -3541,8 +3537,8 @@ packages:
     resolution: {integrity: sha1-yobR/ogoFpsBICCOPchCS524NCw=}
     dev: true
 
-  /node-gyp/8.3.0:
-    resolution: {integrity: sha512-e+vmKyTiybKgrmvs4M2REFKCnOd+NcrAAnn99Yko6NQA+zZdMlRvbIUHojfsHrSQ1CddLgZnHicnEVgDHziJzA==}
+  /node-gyp/8.4.0:
+    resolution: {integrity: sha512-Bi/oCm5bH6F+FmzfUxJpPaxMEyIhszULGR3TprmTeku8/dMFcdTcypk120NeZqEt54r1BrgEKtm2jJiuIKE28Q==}
     engines: {node: '>= 10.12.0'}
     hasBin: true
     dependencies:
@@ -4106,7 +4102,7 @@ packages:
     dependencies:
       install-artifact-from-github: 1.2.0
       nan: 2.15.0
-      node-gyp: 8.3.0
+      node-gyp: 8.4.0
     transitivePeerDependencies:
       - supports-color
     dev: true

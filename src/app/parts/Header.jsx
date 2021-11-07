@@ -12,7 +12,7 @@ export default () => {
           <div id="menu-toggle" onclick={toggleMenu} style={store.menuVisible ? "z-index: 102" : ""}>
             ≡
           </div>
-          <div id="title">{window.config.title}</div>
+          <div id="title">{config.title}</div>
         </section>
         <img id="logo" src="/images/logo.svg" alt="logo" />
         <InfoBox />

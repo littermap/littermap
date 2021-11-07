@@ -5,6 +5,9 @@ import Main from './Main'
 
 import './platform'
 
+if (config.development)
+  window.config = config
+
 render(() => (
   <Router>
     <StoreProvider>

@@ -4,7 +4,8 @@ import agent from '../request-agent'
 import Store from '../store'
 
 const litterLevels = [
-  [0,   "You've got to be kidding"],
+  [1,   "You've got to be kidding"],
+  [2,   "Trace amounts of litter"],
   [10,  "Human activity has been noted"],
   [20,  "Starting to look bad"],
   [30,  "Takes more than one person"],
@@ -47,9 +48,8 @@ export default () => {
   function litterLevelCaption() {
     let caption
 
-    for (let i = 0; i < litterLevels.length && litterLevels[i][0] <= state.level; i++) {
+    for (let i = 0; i < litterLevels.length && litterLevels[i][0] <= state.level; i++)
       caption = litterLevels[i][1]
-    }
 
     return caption
   }
@@ -109,7 +109,7 @@ export default () => {
         // Find the photo again (in case it's been deleted while fetching the upload link)
         idx = findPhoto(photo)
 
-        if (idx === -1 )
+        if (idx === -1)
           return
 
         if (!url || !fields) {

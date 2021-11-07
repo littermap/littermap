@@ -1,22 +1,34 @@
 import Store from '../store'
 
 export default () => {
-  const [store, { logout }] = Store()
+  const [store, { initiateLogin, logout }] = Store()
+
+  const AnonProfilePic = () => (
+    <svg viewBox="-50 -50 100 100">
+      <g fill="#aaa">
+        <circle cx="0" cy="-8" r="20" />
+        <circle cx="0" cy="50" r="35" />
+      </g>
+    </svg>
+  )
 
   return (
     <Switch>
       <Match when={store.profileLoading}>
-        <div id="avatar" />
+        <div id="avatar">
+          <div class="spinner" />
+        </div>
       </Match>
-      <Match when={!store.profile && !store.profileLoading}>
-        <a href={config.backend.api + '/login/google'}>
+      <Match when={store.loggingIn}>
+        <div id="avatar">
+          <AnonProfilePic />
+          <div class="spinner" />
+        </div>
+      </Match>
+      <Match when={!store.profile}>
+        <a href={config.backend.api + '/login/google'} onclick={initiateLogin}>
           <div id="avatar">
-            <svg viewBox="-50 -50 100 100">
-              <g fill="#aaa">
-                <circle cx="0" cy="-8" r="20" />
-                <circle cx="0" cy="50" r="35" />
-              </g>
-            </svg>
+            <AnonProfilePic />
           </div>
         </a>
       </Match>
@@ -30,8 +42,10 @@ export default () => {
 }
 
 function avatarURL(id) {
-  const n = [3, 4, 5, 6][Math.random() * 4 | 0]
   const size = 256
+
+  // These appear to be the subdomains that serve the profile image
+  const n = [3, 4, 5, 6][Math.random() * 4 | 0]
 
   // Strip the 'g:' prefix
   id = id.slice(2)

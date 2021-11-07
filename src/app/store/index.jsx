@@ -20,6 +20,7 @@ export function StoreProvider(props) {
     get profileLoading() {
       return profile.loading
     },
+    loggingIn: false,
     mapLoaded: false,
     mapZoom: 0,
     showingStreetView: false,
@@ -35,6 +36,9 @@ export function StoreProvider(props) {
     },
     toggleMenu() {
       setState({ menuVisible: !state.menuVisible })
+    },
+    initiateLogin() {
+      setState({ loggingIn: true })
     },
     closeEditNewLocation() {
       setState({ editingNewLocation: false })
@@ -63,6 +67,11 @@ export function StoreProvider(props) {
 
   // Make application state available to global script code
   window.state = state
+
+  // Reset transitional state on "page unload" in case the browser keeps the page state and reinstates it when using the back button
+  window.addEventListener('unload', () => {
+    setState({ loggingIn: false })
+  })
 
   // Interface to the data store (read current state, perform actions that change the state)
   const store = [state, actions]

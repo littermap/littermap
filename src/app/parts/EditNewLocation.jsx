@@ -1,7 +1,7 @@
 import { createStore } from 'solid-js/store'
 import { submitLocation } from '../map'
 import { createFileUploader } from './FileUploader'
-import Store from '../store'
+import MainStore from '../store'
 
 const litterLevels = [
   [1,   "You've got to be kidding"],
@@ -22,7 +22,7 @@ const defaults = {
 }
 
 export default () => {
-  const [store, { closeEditNewLocation }] = Store()
+  const [store, { closeEditNewLocation }] = MainStore()
 
   const [state, setState] = createStore({
     ...defaults

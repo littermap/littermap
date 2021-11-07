@@ -1,9 +1,9 @@
 import { toggleBaseLayer, geolocateMe } from '../map'
 import AddressSearch from '../parts/AddressSearch'
-import Store from '../store'
+import MainStore from '../store'
 
 export default () => {
-  const [store] = Store()
+  const [store] = MainStore()
 
   const suggestion = () => (
     store.showingStreetView

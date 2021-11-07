@@ -24,7 +24,7 @@ export function StoreProvider(props) {
     mapLoaded: false,
     mapZoom: 0,
     showingStreetView: false,
-    menuVisible: false,
+    showingMenu: false,
     viewingLocation: null,
     editingNewLocation: false
   })
@@ -32,10 +32,10 @@ export function StoreProvider(props) {
   // Actions meant to be invoked by UI components
   const actions = {
     hideMenu() {
-      setState({ menuVisible: false })
+      setState({ showingMenu: false })
     },
     toggleMenu() {
-      setState({ menuVisible: !state.menuVisible })
+      setState({ showingMenu: !state.showingMenu })
     },
     initiateLogin() {
       setState({ loggingIn: true })

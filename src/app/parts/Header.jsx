@@ -1,15 +1,15 @@
 import InfoBox from './InfoBox'
 import Menu from './Menu'
-import Store from '../store'
+import MainStore from '../store'
 
 export default () => {
-  const [store, { toggleMenu }] = Store()
+  const [store, { toggleMenu }] = MainStore()
 
   return (
     <>
       <header>
         <section id="site-nav">
-          <div id="menu-toggle" onclick={toggleMenu} style={store.menuVisible ? "z-index: 102" : ""}>
+          <div id="menu-toggle" onclick={toggleMenu} style={store.showingMenu ? "z-index: 102" : ""}>
             ≡
           </div>
           <div id="title">{config.title}</div>
@@ -17,7 +17,7 @@ export default () => {
         <img id="logo" src="/images/logo.svg" alt="logo" />
         <InfoBox />
       </header>
-      {store.menuVisible && <Menu />}
+      {store.showingMenu && <Menu />}
     </>
   )
 }

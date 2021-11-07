@@ -1,7 +1,7 @@
-import Store from '../store'
+import MainStore from '../store'
 
 export default () => {
-  const [store, { initiateLogin, logout }] = Store()
+  const [store, { initiateLogin, logout }] = MainStore()
 
   const AnonProfilePic = () => (
     <svg viewBox="-50 -50 100 100">

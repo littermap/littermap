@@ -1,4 +1,9 @@
 // TODO If the box area is too large, we might have to download Planet.osm and put it on our backend
+module.exports.getWeights = getWeights;
+module.exports.readTagWeights = readTagWeights; 
+module.exports.calculateWeights = calculateWeights;
+
+// export default // remove when unit testing
 export default async function getWeights(x1, y1, x2, y2, timeout, r, c) {
 
     // TODO figure out what the radius is (since if it's too large, the API call won't work)

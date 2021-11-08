@@ -6,34 +6,31 @@ function createRequestAgent() {
   //
   // REST communication
   //
-  async function request(api, method, url, data, field) {
+  async function request(api, method, url, sendData, field) {
     const opts = {
-      method,
-      headers: {}
+      method
     }
 
-    if (data) {
-      opts.headers["Content-Type"] = "application/json"
-      opts.body = JSON.stringify(data)
+    if (sendData) {
+      opts.headers = { "Content-Type": "application/json" }
+      opts.body = JSON.stringify(sendData)
     }
 
-    let response, json
+    let response, receivedData
 
     try {
       response = await fetch(apis[api] + url, opts)
     } catch (e) {
-      console.info("Fetch error:", e.message)
-      return null
+      throw "Fetch error:" + e.message
     }
 
     try {
-      json = await response.json()
+      receivedData = await response.json()
     } catch (e) {
-      console.info("Server response is not valid JSON")
-      return null
+      throw "Server response is not valid JSON"
     }
 
-    return field ? json[field] : json
+    return field ? receivedData[field] : receivedData
   }
 
   const profile = {

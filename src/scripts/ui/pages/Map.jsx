@@ -23,6 +23,21 @@ export default () => {
           + " to add a littered location"
         )
   )
+
+  const heatmapText = () => (
+    store.showingStreetView
+      ? "Take a closer look"
+      : (
+          (store.mapZoom < 14 ? "Zoom in" : "Click")
+          + " to toggle Heat Map"
+        )
+  )
+
+  const checkIfShouldBeDisabled = () => {
+    store.mapZoom < 14 ? "disabled" : ""
+  }
+
+  console.log(store.mapZoom)
   
   return (
     <>
@@ -37,7 +52,7 @@ export default () => {
           </button>
         </Show>
       </Show>
-      <button id="heatmap-button" class="map-control" onclick={toggleHeatMap}>Toggle Heat Map</button>
+      <button id="heatmap-button" class="map-control" onclick={toggleHeatMap} {...checkIfShouldBeDisabled}>{heatmapText}</button>
       <Show when={heatMapActive()}>
         <HeatMapOverlay weightMatrix={weightMatrix()}/>
       </Show>

@@ -26,6 +26,7 @@
     "data_update_debounce": 1200
   },
   "location": {
-    "max_uploads": 6
+    "max_uploads": 6,
+    "max_file_size": 25165824
   }
 }

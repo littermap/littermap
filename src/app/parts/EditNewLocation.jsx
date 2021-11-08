@@ -28,7 +28,10 @@ export default () => {
     ...defaults
   })
 
-  const fileUploader = createFileUploader()
+  const fileUploader = createFileUploader({
+    maxFiles: config.location.max_uploads,
+    maxFileSize: config.location.max_file_size
+  })
 
   function descriptionChanged() {
     setState({ description: this.value })

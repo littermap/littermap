@@ -7,10 +7,11 @@ import agent from '../request-agent'
 
 const defaults = {
   items: [],
-  invalidLog: []
+  invalidLog: [],
+  tooManyWarning: false
 }
 
-export const createFileUploader = () => {
+export const createFileUploader = ({maxFiles = -1, maxFileSize = -1} = {}) => {
   let hiddenFileInput
 
   const [state, setState] = createStore({
@@ -18,13 +19,28 @@ export const createFileUploader = () => {
   })
 
   function setItemValue(idx, property, value) {
-    // Setting a nested value directly this way reliably triggers updates
+    // Set an item property and trigger a user interface update
     setState('items', idx, property, value)
   }
 
-  function filesChanged() {
-    let allowed = config.location.max_uploads - state.items.length
-    let files = [...this.files].slice(0, allowed)
+  function findItem(fileHash) {
+    return state.items.findIndex(
+      item => item.fileHash === fileHash
+    )
+  }
+
+  function filesSelected() {
+    let files = [...this.files]
+
+    if (maxFiles > -1) {
+      let allowed = maxFiles - state.items.length
+
+      if (files.length > allowed)
+        setState('tooManyWarning', true)
+
+      files = files.slice(0, allowed)
+    }
+
     let newItems = []
 
     files.forEach(
@@ -33,9 +49,9 @@ export const createFileUploader = () => {
           file.name + file.type + file.size + file.lastModified
         )
 
-        // Check if it's already been added
-        let idx = state.items.findIndex(item => item.fileHash === fileHash)
+        let idx = findItem(fileHash)
 
+        // Check if it's already been added
         if (idx === -1) {
           let item = {
             file,
@@ -56,27 +72,20 @@ export const createFileUploader = () => {
     })
   }
 
-  function findItem(item) {
-    return state.items.findIndex(
-      candidate => candidate.fileHash === item.fileHash
-    )
-  }
-
   function processImage(item) {
     let image = new Image()
 
     image.onload = uploadItem(item)
 
     image.onerror = () => {
-      let items = [...state.items]
-      let idx = items.findIndex(item => item.file === item.file)
+      let idx = findItem(item.fileHash)
 
       if (idx !== -1) {
         setState({
           invalidLog: [...state.invalidLog, item.file.name]
         })
 
-        deletePhoto(idx)
+        deleteItem(idx)
       } else
         URL.revokeObjectURL(image.src)
     }
@@ -87,35 +96,55 @@ export const createFileUploader = () => {
   function uploadItem(item) {
     return async () => {
       // Find the item from scratch (in case the item list has changed or it's been deleted)
-      let idx = findItem(item)
+      let idx = findItem(item.fileHash)
 
       if (idx !== -1) {
+        if (maxFileSize !== -1 && item.file.size > maxFileSize) {
+          item.error = "is " + sizeInMB(item.file.size) + ", the maximum is " + sizeInMB(maxFileSize)
+          setItemValue(idx, 'status', "failed")
+
+          return
+        }
+
+        item.progress = 0
         setItemValue(idx, 'status', "preparing")
 
-        let {url, fields} = await fetchUploadLink()
+        let url, fields
+
+        //
+        // Get a signed upload URL with a limited expiration date
+        //
+        try {
+          ({url, fields} = await fetchUploadLink())
+        } catch(e) {
+          console.info("Upload link fetch error:", e.message) // For debugging
+        }
 
         // Find the item again (in case the item list changed while fetching the upload link)
-        idx = findItem(item)
+        idx = findItem(item.fileHash)
 
         if (idx === -1)
           return
 
         if (!url || !fields) {
           console.info("Server didn't return an upload link")
+
+          item.error = "failed to upload: server didn't return an upload link"
           setItemValue(idx, 'status', "failed")
           return
         }
 
-        setItemValue(idx, 'progress', 0)
         setItemValue(idx, 'status', "uploading")
 
         const formData = new FormData()
+
         formData.append("content-type", item.file.type)
 
         Object.entries(fields).forEach(
           ([k, v]) => { formData.append(k, v) }
         )
 
+        // The file must be the last field in the form data
         formData.append("file", item.file)
 
         //
@@ -131,34 +160,40 @@ export const createFileUploader = () => {
         }
 
         request.onerror = () => {
-          console.error("Upload error")
+          item.error = "encountered an upload error"
           setItemValue(idx, 'status', "failed")
         }
 
         request.onload = () => {
           // Find the item again (in case the item list changed during the upload)
-          idx = findItem(item)
+          idx = findItem(item.fileHash)
 
           if (idx !== -1) {
-            if (request.status === 204) {
-              setItemValue(idx, 'src', url + '/' + fields.key)
-              setItemValue(idx, 'id', fields.id)
+            if (request.status === 204 || request.status === 201) {
+              item.src = url + '/' + fields.key
+              item.id = fields.id
               setItemValue(idx, 'status', "uploaded")
             } else {
-              console.error("Upload failed with status: " + request.status)
+              console.info("Upload failed with status:", request.status)
+
+              item.error = 'encountered an upload error'
               setItemValue(idx, 'status', "failed")
             }
           }
         }
 
         // Attach the request object reference to the item, to allow aborting the request
-        setItemValue(idx, "uploadRequest", request)
+        item.uploadRequest = request
 
         request.send(formData)
       } else {
         URL.revokeObjectURL(image.src)
       }
     }
+  }
+
+  function sizeInMB(bytes) {
+    return (bytes / 1000000).toFixed(1) + " MB"
   }
 
   function makeHash(str) {
@@ -178,8 +213,10 @@ export const createFileUploader = () => {
   }
 
   function freeItem(item) {
-    if (item.status === "uploading" && item.uploadRequest)
+    if (item.status === "uploading" && item.uploadRequest) {
+      console.info("Upload request aborted:", item.file.name)
       item.uploadRequest.abort()
+    }
 
     freeObjectURL(item)
   }
@@ -190,7 +227,7 @@ export const createFileUploader = () => {
     )
   }
 
-  function deletePhoto(idx) {
+  function deleteItem(idx) {
     // Copy the list of items
     const items = [...state.items]
 
@@ -216,10 +253,10 @@ export const createFileUploader = () => {
     return await agent.uploads.getUploadLink()
   }
 
-  function photoClicked(idx) {
+  function itemClicked(idx) {
     return () => {
-      setState({ invalidLog: [] })
-      deletePhoto(idx)
+      setState({ invalidLog: [], tooManyWarning: false })
+      deleteItem(idx)
     }
   }
 
@@ -233,13 +270,29 @@ export const createFileUploader = () => {
   }
 
   const Errors = () => (
-    <For each={state.invalidLog}>
-      {(item, idx) => (
+    <>
+      <For each={state.invalidLog}>
+        {(item, idx) => (
+          <p class="error">
+            {item} is not a valid or allowed image format
+          </p>
+        )}
+      </For>
+      <For each={state.items}>
+        {(item, idx) => (
+          <Show when={item.error}>
+            <p class="error">
+              {item.file.name} {item.error}
+            </p>
+          </Show>
+        )}
+      </For>
+      <Show when={state.tooManyWarning}>
         <p class="error">
-          {item} is not a valid image file
+          A maximum of {maxFiles} files is allowed
         </p>
-      )}
-    </For>
+      </Show>
+    </>
   )
 
   const DebugInfo = () => (
@@ -265,9 +318,9 @@ export const createFileUploader = () => {
         <For each={state.items}>
           {(item, idx) => (
             <Show when={["preparing", "uploading", "uploaded", "failed"].includes(item.status)}>
-              <div class="preview">
-                <img class={item.status} src={item.src} onclick={photoClicked(idx())} />
-                <Show when={item.status === "uploading"}>
+              <div class={"preview " + item.status}>
+                <img class={item.status} src={item.src} onclick={itemClicked(idx())} />
+                <Show when={["preparing", "uploading"].includes(item.status)}>
                   <progress max="100" value={item.progress} />
                 </Show>
               </div>
@@ -280,7 +333,7 @@ export const createFileUploader = () => {
         Add photos
       </button>
       <DebugInfo />
-      <input ref={hiddenFileInput} type="file" multiple accept="image/*" onchange={filesChanged} style="display:none" />
+      <input ref={hiddenFileInput} type="file" multiple accept="image/*" onchange={filesSelected} style="display:none" />
     </>
   )
 

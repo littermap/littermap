@@ -9,9 +9,7 @@ function createRequestAgent() {
   async function request(api, method, url, data, field) {
     const opts = {
       method,
-      headers: {},
-      // Allow including cookie and other credential headers when communicating across domains while testing
-      credentials: config.development ? 'include' : 'same-origin'
+      headers: {}
     }
 
     if (data) {
@@ -19,16 +17,23 @@ function createRequestAgent() {
       opts.body = JSON.stringify(data)
     }
 
+    let response, json
+
     try {
-      const response = await fetch(apis[api] + url, opts)
-      const json = await response.json()
-
-      return field ? json[field] : json
-    } catch (err) {
-      console.error("server error: ", err.message)
-
+      response = await fetch(apis[api] + url, opts)
+    } catch (e) {
+      console.info("Fetch error:", e.message)
       return null
     }
+
+    try {
+      json = await response.json()
+    } catch (e) {
+      console.info("Server response is not valid JSON")
+      return null
+    }
+
+    return field ? json[field] : json
   }
 
   const profile = {

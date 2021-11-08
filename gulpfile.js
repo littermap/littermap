@@ -79,7 +79,8 @@ const appConfig = (config) => ({
     data_update_debounce: config.map.data_update_debounce
   },
   location: {
-    max_uploads: config.location.max_uploads
+    max_uploads: config.location.max_uploads,
+    max_file_size: config.location.max_file_size
   }
 })
 

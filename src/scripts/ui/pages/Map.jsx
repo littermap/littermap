@@ -51,11 +51,12 @@ export default () => {
             ⊚
           </button>
         </Show>
+        <button id="heatmap-button" class="map-control" onclick={toggleHeatMap} {...checkIfShouldBeDisabled}>{heatmapText}</button>
+        <Show when={heatMapActive()}>
+          <HeatMapOverlay weightMatrix={weightMatrix()}/>
+        </Show>
       </Show>
-      <button id="heatmap-button" class="map-control" onclick={toggleHeatMap} {...checkIfShouldBeDisabled}>{heatmapText}</button>
-      <Show when={heatMapActive()}>
-        <HeatMapOverlay weightMatrix={weightMatrix()}/>
-      </Show>
+      
       <div id="hint">
         <p>
           {suggestion()}

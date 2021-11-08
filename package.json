@@ -18,7 +18,8 @@
     "watch": "rm -rf build/ && gulp build-and-watch",
     "serve": "superstatic build/ --debug",
     "proxy": "node dev/dev-proxy.js",
-    "clean": "rm -rfv build/"
+    "clean": "rm -rfv build/", 
+    "test": "jest"
   },
   "devDependencies": {
     "ansi-colors": "^4.1.1",

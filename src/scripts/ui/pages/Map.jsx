@@ -51,7 +51,7 @@ export default () => {
             ⊚
           </button>
         </Show>
-        <button id="heatmap-button" class="map-control" onclick={toggleHeatMap} {...checkIfShouldBeDisabled}>{heatmapText}</button>
+        <button id="heatmap-button" onclick={toggleHeatMap} {...checkIfShouldBeDisabled}>{heatmapText}</button>
         <Show when={heatMapActive()}>
           <HeatMapOverlay weightMatrix={weightMatrix()}/>
         </Show>

@@ -1,5 +1,10 @@
 // npm run test -- --coverage
-const predict = require('./predict');
+let predict = require('./predict');
+let fetchMock = require('jest-fetch-mock');
+fetchMock.enableMocks();
+beforeEach(() => {
+  fetch.resetMocks();
+});
 
 test('readTagWeights returns a map', () => {
   expect(predict.readTagWeights()).toBeInstanceOf(Map); // with format [string, [number, number]]
@@ -50,8 +55,35 @@ test('calculateWeights sparse matrix', () => {
       0, 0, 0.5, 1, 0.5]);
 });
 
-// TODO Dense matrix
-// TODO Overlapping matrix
+test('calculateWeights dense matrix', () => {
+  expect(predict.calculateWeights(null, 
+    [new Map([["a", 0]]), new Map([["a", 1]]), new Map([["a", 0]]), new Map([["a", 1]]), new Map([["a", 1]]),
+    new Map([["a", 1]]), new Map([["a", 1]]), new Map([["a", 0]]), new Map([["a", 1]]), new Map([["a", 0]]),
+    new Map([["a", 0]]), new Map([["a", 0]]), new Map([["a", 1]]), new Map([["a", 0]]), new Map([["a", 0]]),
+    new Map([["a", 1]]), new Map([["a", 1]]), new Map([["a", 1]]), new Map([["a", 0]]), new Map([["a", 1]]),
+    new Map([["a", 1]]), new Map([["a", 0]]), new Map([["a", 1]]), new Map([["a", 1]]), new Map([["a", 0]])],  
+    5, 5, 5, 5)).toStrictEqual(
+      [0.44912716005788034,   0.622817900144701, 0.5508728399421197,  0.6947629603472821, 0.622817900144701, 
+       0.622817900144701, 0.7965086402315215,  0.7245635800289402, 0.7245635800289402, 0.44912716005788034,
+       0.5508728399421197,  0.8263092599131795, 0.8263092599131793,  0.5508728399421197, 0.2754364199710598, 
+       0.6947629603472821, 1, 0.970199380318342, 0.7245635800289402, 0.44912716005788034,
+       0.622817900144701,  0.7245635800289402, 0.7965086402315215,  0.7245635800289402, 0.34738148017364107]);
+});
+
+test('calculateWeights overlapping matrix', () => {
+  expect(predict.calculateWeights(null, 
+    [new Map([["a", 2]]), new Map([["a", 0]]), new Map([["a", 0]]), new Map([["a", 5]]), new Map([["a", 0]]),
+    new Map([["a", 0]]), new Map([["a", 1]]), new Map([["a", 0]]), new Map([["a", 0]]), new Map([["a", 0]]),
+    new Map([["a", 0]]), new Map([["a", 0]]), new Map([["a", 0]]), new Map([["a", 0]]), new Map([["a", 0]]),
+    new Map([["a", 0]]), new Map([["a", 0]]), new Map([["a", 3]]), new Map([["a", 0]]), new Map([["a", 3]]),
+    new Map([["a", 0]]), new Map([["a", 3]]), new Map([["a", 0]]), new Map([["a", 1]]), new Map([["a", 0]])],  
+    5, 5, 5, 5)).toStrictEqual(
+      [0.45857864376269053, 0.3, 0.5585786437626905, 1, 0.5, 
+       0.3, 0.31715728752538097, 0.39289321881345246, 0.5, 0.2928932188134524,
+       0.05857864376269049, 0.27573593128807145, 0.3585786437626905, 0.35147186257614293, 0.3, 
+       0.17573593128807147, 0.6,  0.8343145750507619, 0.7,  0.6585786437626905,
+       0.3, 0.7757359312880714, 0.7,  0.5514718625761429, 0.4]);
+});
 
 /*
 test('getWeights node locations', () => {

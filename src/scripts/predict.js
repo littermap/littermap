@@ -1,7 +1,7 @@
 // TODO If the box area is too large, we might have to download Planet.osm and put it on our backend
-module.exports.getWeights = getWeights;
-module.exports.readTagWeights = readTagWeights; 
-module.exports.calculateWeights = calculateWeights;
+// module.exports.getWeights = getWeights; // remove when unit testing
+// module.exports.readTagWeights = readTagWeights; // remove when unit testing
+// module.exports.calculateWeights = calculateWeights; // remove when unit testing
 
 // export default // remove when unit testing
 export default async function getWeights(x1, y1, x2, y2, timeout, r, c) {
@@ -193,14 +193,14 @@ function calculateWeights(tagWeights, tagMatrix, r, c, weightR, weightC){
     // Tag first
     for(let i = 0; i < tagMatrix.length; i++){
         for(let [tag, frequency] of tagMatrix[i].entries()){
-            tag = tag.split(':')[0];
-            let radius = tagWeights.has(tag) ? tagWeights.get(tag)[0] : 0;
-            let weight = tagWeights.has(tag) ? 1/tagWeights.get(tag)[1] : 0;
+            tag = tag.split(':')[0]; // Comment out when testing 
+            let radius = tagWeights.has(tag) ? tagWeights.get(tag)[0] : 0; // Set to 2 when testing 
+            let weight = tagWeights.has(tag) ? 1/tagWeights.get(tag)[1] : 0; // Set to 1 when testing 
 
             // Calculate the amount that the tag contributes to the current cell's weight
             for(let j = 0; j < weightMatrix.length; j++){
                 let distance2 = Math.pow(j % weightC + (r - weightR)/2 - i % c, 2) + Math.pow(Math.floor(j / weightC) + (c - weightC)/2 - Math.floor(i / c), 2);
-                if(distance2 < radius*radius){ // <=
+                if(distance2 < radius*radius){ 
                     weightMatrix[j] += (1 - Math.sqrt(distance2)/radius) * weight * frequency;
                 }
             }

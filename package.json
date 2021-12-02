@@ -5,10 +5,10 @@
   "homepage": "https://littermap.bitbucket.io/",
   "author": "Ildar Sagdejev",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "none",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/earthstewards/littermap.git"
+    "url": "earthstewards/littermap"
   },
   "bugs": {
     "url": "https://github.com/earthstewards/littermap/issues"
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "ansi-colors": "^4.1.1",
+    "create-cert": "^1.0.6",
     "esbuild": "^0.13.12",
     "esbuild-plugin-solid": "^0.4.0",
     "express": "^4.17.1",

@@ -42,9 +42,7 @@
     "superstatic": "^7.1.0"
   },
   "dependencies": {
-    "axios": "^0.23.0",
     "jest-fetch-mock": "^3.0.3",
-    "read-excel-file": "^5.2.20",
     "solid-app-router": "^0.1.11",
     "solid-js": "^1.2.0"
   },

@@ -9,10 +9,22 @@ export default () => {
   const [store, { hideMenu } ] = useStore()
   const [heatMapActive, setHeatMapActive] = createSignal(false);
   const [weightMatrix, setWeightMatrix] = createSignal(new Array(400));
+  const [heatMapButton, setHeatMapButtonActive] = createSignal("");
   
+
+  let checkIfShouldBeDisabled = () => {
+
+    store.showingStreetView ? "disabled" : (store.mapZoom < 14 ? "disabled" : "")
+    
+  };
+
+
   const toggleHeatMap = () => {
+    //document.getElementById("heatmap-button").setAttribute("disabled", true);
+    document.getElementById("heatmap-button").toggleAttribute("disabled", true);
     let NWandSE = getNWandSE();
-    heatMapActive() ? setHeatMapActive(false) : getWeights(NWandSE[0], NWandSE[1], NWandSE[2], NWandSE[3], 60).then((matrix) => {setWeightMatrix(matrix); setHeatMapActive(true);}); 
+    heatMapActive() ? setHeatMapActive(false) : getWeights(NWandSE[0], NWandSE[1], NWandSE[2], NWandSE[3], 60).then((matrix) => {setWeightMatrix(matrix); setHeatMapActive(true);});
+    document.getElementById("heatmap-button").removeAttribute("disabled");
   };
 
   const suggestion = () => (
@@ -33,11 +45,7 @@ export default () => {
         )
   )
 
-  const checkIfShouldBeDisabled = () => {
-    store.mapZoom < 14 ? "disabled" : ""
-  }
-
-  console.log(store.mapZoom)
+  
   
   return (
     <>

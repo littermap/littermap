@@ -50,6 +50,7 @@
   cursor pointer
   &:hover
     color black
+  z-index 3
 
 #switch-layers
   top 125px
@@ -83,6 +84,7 @@
   opacity 0.8
   cursor pointer
   pointer-events none
+  z-index 2
 
 #heatmap-button
   all unset
@@ -105,18 +107,21 @@
   left 1%
   // background linear-gradient(to bottom, #555 0%, #191818 80%, #216155 100%)
   pill-shape()
+  z-index 2
 
 
 #heatmap-table
   all unset
   font-size 100px
   width 100%
-  height 100%
+  // height 100%
   position absolute
   pointer-events none
-  border .5px solid black
+  border .1px solid black
+  z-index 1
 
 td
   border .5px solid black
   width 150px
   height 39.5px
+  z-index 1

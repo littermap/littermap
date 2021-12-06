@@ -2,11 +2,11 @@ let map, infoPopup, submitPopup, points = []
 
 const submitPopupContent = {
   ask: '<span id="add-location" onclick="editNewLocation()" style="font-weight: bold">Add litter location?</span>',
-  edit: '<div id="edit-new-location"></div>'
+  edit: '<div class="location-info" id="edit-new-location"></div>'
 }
 
 const infoPopupContent = {
-  view: '<div id="view-location"></div>'
+  view: '<div class="location-info" id="view-location"></div>'
 }
 
 function initMap() {

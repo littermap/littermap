@@ -3,7 +3,7 @@
 //
 
 import { createStore } from 'solid-js/store'
-import agent from '../request-agent'
+import agent from '../../../request-agent'
 
 const defaults = {
   items: [],
@@ -11,15 +11,17 @@ const defaults = {
   tooManyWarning: false
 }
 
-export const createFileUploader = ({maxFiles = -1, maxFileSize = -1} = {}) => {
+export default createFileUploader = ({maxFiles = -1, maxFileSize = -1, existingItems} = {}) => {
   let hiddenFileInput
 
   const [state, setState] = createStore({
     ...defaults
   })
 
+  setExistingItems(existingItems)
+
   function setItemValue(idx, property, value) {
-    // Set an item property and trigger a user interface update
+    // Set an item property such that it triggers a user interface update
     setState('items', idx, property, value)
   }
 
@@ -45,6 +47,7 @@ export const createFileUploader = ({maxFiles = -1, maxFileSize = -1} = {}) => {
 
     files.forEach(
       file => {
+        // Use available information to create a distinctive hash to identify this file
         let fileHash = makeHash(
           file.name + file.type + file.size + file.lastModified
         )
@@ -264,9 +267,29 @@ export const createFileUploader = ({maxFiles = -1, maxFileSize = -1} = {}) => {
     hiddenFileInput.click()
   }
 
-  function reset() {
+  function reset(existingItems) {
     freeItems()
     setState({ ...defaults })
+    setExistingItems(existingItems)
+  }
+
+  function setExistingItems(existingItems) {
+    if (!existingItems)
+      return
+
+    let items = []
+
+    existingItems.forEach(
+      item => {
+        items.push({
+          id: item,
+          src: config.backend.media + '/' + item,
+          status: "existing"
+        })
+      }
+    )
+
+    setState({ items })
   }
 
   const Errors = () => (
@@ -299,14 +322,14 @@ export const createFileUploader = ({maxFiles = -1, maxFileSize = -1} = {}) => {
     <Show when={config.debug.upload_info}>
       <For each={state.items}>
         {(item, idx) => (
-          <>
+          <Show when={item.status !== "existing"}>
             <div>
               {item.file.name} ({item.status}) {(typeof item.progress !== "undefined") ? item.progress + "%" : ""}
             </div>
             <Show when={item.status === "uploading"}>
               <progress max="100" value={item.progress} />
             </Show>
-          </>
+          </Show>
         )}
       </For>
     </Show>
@@ -317,7 +340,7 @@ export const createFileUploader = ({maxFiles = -1, maxFileSize = -1} = {}) => {
       <div class="photos">
         <For each={state.items}>
           {(item, idx) => (
-            <Show when={["preparing", "uploading", "uploaded", "failed"].includes(item.status)}>
+            <Show when={["existing", "preparing", "uploading", "uploaded", "failed"].includes(item.status)}>
               <div class={"preview " + item.status}>
                 <img class={item.status} src={item.src} onclick={itemClicked(idx())} />
                 <Show when={["preparing", "uploading"].includes(item.status)}>
@@ -337,5 +360,10 @@ export const createFileUploader = ({maxFiles = -1, maxFileSize = -1} = {}) => {
     </>
   )
 
-  return { state, reset, isBusy, render: FileUploader }
+  return {
+    render: FileUploader,
+    getItems: () => state.items,
+    isBusy,
+    reset
+  }
 }

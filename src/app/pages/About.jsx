@@ -15,7 +15,7 @@ export default () => {
         </p>
         <h2>Terms of Service</h2>
         <p>
-          If you're curious how we collect your personal data, read out <Link href="/terms">terms</Link>.
+          If you're curious how we collect your personal data, read our <Link href="/terms">terms</Link>.
         </p>
       </div>
     </div>

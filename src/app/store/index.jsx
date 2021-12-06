@@ -7,11 +7,12 @@ import { createStore } from 'solid-js/store'
 import { closeSubmitPopup } from '../map'
 import agent from '../request-agent'
 import Profile from './user-profile'
+import createLocationInfo from '../parts/LocationInfo'
 
 const StoreContext = createContext()
 
 export function StoreProvider(props) {
-  let profile
+  let profile, store
 
   const [state, setState] = createStore({
     get profile() {
@@ -25,8 +26,8 @@ export function StoreProvider(props) {
     mapZoom: 0,
     showingStreetView: false,
     showingMenu: false,
-    viewingLocation: null,
-    editingNewLocation: false
+    viewingLocations: [],
+    editingNewLocations: []
   })
 
   // Actions meant to be invoked by UI components
@@ -58,10 +59,10 @@ export function StoreProvider(props) {
       setState({ showingStreetView: value })
     },
     updateViewingLocation(value) {
-      setState({ viewingLocation: value })
+      setState({ viewingLocations: value ? [createLocationInfo(store, value)] : [] })
     },
     updateEditingNewLocation(value) {
-      setState({ editingNewLocation: value })
+      setState({ editingNewLocations: value ? [createLocationInfo(store)] : [] })
     }
   }
 
@@ -74,7 +75,7 @@ export function StoreProvider(props) {
   })
 
   // Interface to the data store (read current state, perform actions that change the state)
-  const store = [state, actions]
+  store = [state, actions]
 
   profile = Profile(actions)
 

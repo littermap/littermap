@@ -54,7 +54,7 @@ const readConfig = () => {
 readConfig()
 
 //
-// Pass a set of configuration options to the application
+// Judiciously introduce relevant configuration options into the application code
 //
 
 const appConfig = (config) => ({

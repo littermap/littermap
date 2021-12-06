@@ -2,8 +2,8 @@ import { lazy } from 'solid-js'
 import { useRoutes } from 'solid-app-router'
 import Header from './parts/Header'
 import MapControls from './parts/MapControls'
-import ViewLocation from './parts/ViewLocation'
-import EditNewLocation from './parts/EditNewLocation'
+import ViewLocations from './map-integration/ViewLocations'
+import EditNewLocations from './map-integration/EditNewLocations'
 
 const routes = [ {
   path: "/about",
@@ -25,12 +25,12 @@ export default () => {
       <main>
         <div id="map">
           <MapControls />
-          {/* Components rendered inside the map */}
-          <ViewLocation />
-          <EditNewLocation />
         </div>
         <Page />
       </main>
+      {/* Views rendered in map elements */}
+      <ViewLocations />
+      <EditNewLocations />
     </>
   )
 }

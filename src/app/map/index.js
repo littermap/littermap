@@ -19,6 +19,18 @@ function initMap() {
     center: new google.maps.LatLng(35.899532, -79.056473),
     zoom: config.map.default_zoom,
     minZoom: 2,
+    restriction: {
+      latLngBounds: {
+        // Limit north/south view
+        north: 85,
+        south: -85,
+        // Let east/west wrap
+        west: -180,
+        east: 180
+      },
+      // Prevent zooming out beyond the complete view
+      strictBounds: true
+    },
     mapTypeId: google.maps.MapTypeId.HYBRID,
     mapTypeControl: false,
     fullscreenControl: false,
@@ -58,8 +70,9 @@ function initMap() {
   map.addListener("mousedown", mapMouseDown)
   map.addListener("mouseup", mapMouseUp)
 
-  // Respond to changes in map bounds
+  // Respond to changes in map view
   map.addListener("bounds_changed", boundsChanged)
+  map.addListener("zoom_changed", zoomChanged)
 
   // Respond to entering and exiting street view mode
   google.maps.event.addListener(streetView, "visible_changed",
@@ -67,6 +80,8 @@ function initMap() {
       window.actions.updateShowingStreetView(streetView.getVisible())
     }
   )
+
+  zoomChanged()
 
   window.actions.setMapLoaded()
 
@@ -173,7 +188,7 @@ function getCenter() {
 
   return {
     lat: lat(),
-    lon: lng()
+    lon: ((((lng() + 180) % 360) + 360) % 360) - 180 // Wrap longitude to [-180, 180]
   }
 }
 
@@ -210,6 +225,9 @@ function geolocateMe() {
 
 function boundsChanged() {
   requestLocations()
+}
+
+function zoomChanged() {
   window.actions.updateZoom(map.getZoom())
 }
 

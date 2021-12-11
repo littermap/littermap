@@ -1,5 +1,11 @@
+//
+// What's rendered on top of the map
+//
+
 import { toggleBaseLayer, geolocateMe } from '../map'
-import AddressSearch from '../parts/AddressSearch'
+import { LayersGlyph, NavigateGlyph } from '../elements/glyphs'
+import AddressSearch from './AddressSearch'
+import ProfileAvatar from './ProfileAvatar'
 import MainStore from '../store'
 
 export default () => {
@@ -19,29 +25,30 @@ export default () => {
   )
 
   return (
-    <>
-      <Show when={store.mapLoaded}>
-        <Portal mount={document.getElementById('map')}>
-          <Show when={!store.showingStreetView}>
-            <AddressSearch />
-            <button id="switch-layers" class="map-control" onclick={toggleBaseLayer}>
-              ⿻
-            </button>
+    <Show when={store.mapLoaded}>
+      <Portal mount={document.getElementById('map')}>
+        <Show when={!store.showingStreetView}>
+          <AddressSearch />
+          <ProfileAvatar />
+          <div id="map-buttons">
             <Show when={navigator.geolocation}>
-              <button id="geolocate" class="map-control" onclick={geolocateMe}>
-                ⊚
+              <button id="geolocate" onclick={geolocateMe}>
+                <NavigateGlyph />
               </button>
             </Show>
-          </Show>
-          <Show when={suggestion()}>
-            <div id="hint">
-              <p>
-                {suggestion()}
-              </p>
-            </div>
-          </Show>
-        </Portal>
-      </Show>
-    </>
+            <button id="switch-layers" onclick={toggleBaseLayer}>
+              <LayersGlyph />
+            </button>
+          </div>
+        </Show>
+        <Show when={suggestion()}>
+          <div id="hint">
+            <p>
+              {suggestion()}
+            </p>
+          </div>
+        </Show>
+      </Portal>
+    </Show>
   )
 }

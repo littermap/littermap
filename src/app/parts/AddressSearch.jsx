@@ -1,8 +1,10 @@
-import { createSignal, createResource, For } from 'solid-js'
+import { createSignal, createResource } from 'solid-js'
 import { goTo, getCenter } from '../map'
 
+const searchAsYouType = 2
+
 //
-// Zoom defaults by Mapbox place type
+// Default zooms for each Mapbox place type
 //
 // Reference: https://docs.mapbox.com/api/search/geocoding/#data-types
 //
@@ -35,16 +37,27 @@ export default () => {
     { initialValue: [] }
   )
 
+  let inputElement
+
   // Perform search
   const submitInput = (event) => {
-    var inputElement = document.getElementById("address-input")
     setSearchQuery(inputElement.value)
     event.preventDefault()
   }
 
   // Store current input value
   const inputChanged = (event) => {
-    setSearchInput(event.target.value)
+    let value = event.target.value
+
+    setSearchInput(value)
+
+    if (searchAsYouType) {
+      value = value.trim()
+
+      setSearchQuery(
+        value.length >= searchAsYouType ? value : ''
+      )
+    }
   }
 
   // Stop showing the search results
@@ -55,7 +68,7 @@ export default () => {
 
   // Clear the search including the search field
   const resetSearch = () => {
-    inputElement = document.getElementById("address-input").value = ''
+    inputElement.value = ''
     closeSearchResults()
   }
 
@@ -111,8 +124,6 @@ export default () => {
   // Configure a hot key to focus the input field
   document.addEventListener('keydown', (event) => {
     if (event.code === 'Slash') {
-      var inputElement = document.getElementById("address-input")
-
       if (event.target !== inputElement) {
         event.preventDefault()
         inputElement.focus()
@@ -126,10 +137,10 @@ export default () => {
         <div class="click-screen" onclick={closeSearchResults} />
       </Show>
       <div id="address-search" onkeydown={keydown}>
-        <form id="address-input-form" onsubmit={submitInput}>
-          <input id="address-input" type="text" oninput={inputChanged} placeholder="🔍" />
+        <form onsubmit={submitInput}>
+          <input type="text" oninput={inputChanged} placeholder="🔍" ref={inputElement} />
         </form>
-        <div id="search-results">
+        <div class="search-results">
           <For each={searchResults()}>
             {(result, i) => (
               <div class="result" classList={{selected: selected() === i()}} data-index={i()} onclick={resultClicked}>

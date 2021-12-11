@@ -1,67 +1,81 @@
 map-control-shadow()
   box-shadow 0 1px 4px -1px #ccc
 
+#avatar
+  background-color #ccc
+  width 48px
+  height 48px
+  position absolute
+  right 66px
+  top 6px
+  border-radius 50%
+  border 1.5px solid white
+  overflow hidden
+  &.logged-in
+    cursor pointer
+  img
+    width 100%
+    height 100%
+
 #address-search
   position absolute
-  top 16px
+  top 13px
   width 100%
   pointer-events none
   & > *
     pointer-events all
   .click-screen ~ &
     z-modal()
+  & form
+    padding 0 7px
+    & input
+      font-size 17px
+      width 210px
+      max-width 100%
+      pill-shape()
+      box-sizing border-box
+      padding 4px 12px
+      outline-style none
+      &::placeholder
+        text-align right
+  & .search-results
+    font-size 16px
+    background-color white
+    margin-top 2px
+    margin-right 7px
+    margin-left 7px
+    border-radius 6px
+    overflow hidden
+    max-width 592px
+    user-select none
+    map-control-shadow()
+    clear right
+    .result
+      padding 1px 4px
+      cursor pointer
+      &:hover, &.selected
+        background-color #ccf
 
-#address-input-form
-  padding 0 7px
-
-#address-input
-  font-size 17px
-  float right
-  width 210px
-  max-width 100%
-  box-sizing border-box
-  &::placeholder
-    text-align right
-
-#search-results
-  font-size 16px
-  background-color white
-  margin-right 7px
-  user-select none
-  map-control-shadow()
-  clear right
-  .result
-    padding 1px 4px
-    cursor pointer
-    &:hover, &.selected
-      background-color #ccf
-
-.map-control
-  all unset
-  font-size 38px
-  font-weight bold
-  color #666
-  background-color white
-  width 38px
-  height 41px
-  right 10px
-  border-radius 2px
-  text-align center
+#map-buttons
   position absolute
-  user-select none
-  map-control-shadow()
-  cursor pointer
-  &:hover
-    color black
-
-#switch-layers
-  top 54px
-  font-size 24px
-  line-height 2px
-
-#geolocate
-  top 54px + 51px
-  line-height 2px
+  top 30%
+  right 10px
+  button
+    all unset
+    color #666
+    background-color white
+    width 40px
+    height 40px
+    border-radius 50%
+    map-control-shadow()
+    margin-top 8px
+    display block
+    cursor pointer
+    &:hover
+      color darken(@color, 30%)
+    svg
+      width 100%
+      height 100%
 
 #hint
   background linear-gradient(to bottom, #555 0%, #191818 80%, #216155 100%)

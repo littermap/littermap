@@ -1,3 +1,7 @@
+//
+// Editable litter level field
+//
+
 import { createSignal } from 'solid-js'
 import createEditable from './Editable'
 
@@ -49,7 +53,7 @@ export default createLevelField = ({ initialValue, pureEdit }) => {
 
   const RenderInput = () => (
     <>
-      <input type="range" id="input-litter-level" name="level" min="1" max="100" value={getValue()} oninput={valueChanged} />
+      <input type="range" name="level" min="1" max="100" value={getValue()} oninput={valueChanged} />
       <p class="info">
         {getCaption(getValue())}
       </p>

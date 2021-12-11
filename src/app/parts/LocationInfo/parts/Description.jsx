@@ -1,3 +1,7 @@
+//
+// Editable description field
+//
+
 import { createSignal } from 'solid-js'
 import createEditable from './Editable'
 

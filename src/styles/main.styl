@@ -1,8 +1,9 @@
 @require 'lib/common'
-@require 'lib/spinner'
-@require 'header'
+@require 'lib/loading-spinner'
+@require 'main-menu'
 @require 'map-controls'
 @require 'map-content'
+@require 'pages'
 
 html,
 body
@@ -13,25 +14,8 @@ body
   overflow hidden
 
 #app
-  display flex
-  flex-flow column
   height 100%
-
-main
-  flex auto
-  display flex
   position relative
 
 #map
   fill-parent()
-
-.page
-  fill-parent()
-  background-color white
-  overflow-y auto
-  .content
-    font-family Arial
-    margin 20px
-    h1
-      font-size 20px
-      text-align center

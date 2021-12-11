@@ -1,3 +1,7 @@
+//
+// Current user icon
+//
+
 import MainStore from '../store'
 
 export default () => {

@@ -1,0 +1,40 @@
+#menu-toggle
+  font 30px bold sans-serif
+  background-color white
+  top 12px
+  right 8px
+  padding 0 16px
+  border-radius 6px
+  overflow hidden
+  cursor pointer
+  user-select none
+  position absolute
+  html.non-touch &:hover
+    background-color darken(@background-color, 20%)
+
+#menu
+  font-size 24px
+  text-align center
+  position absolute
+  background-color white
+  width 320px
+  max-width 100%
+  top 56px
+  right 6px
+  box-shadow 0 1px 3px 1px #ddd
+  border-radius 6px
+  overflow hidden
+  user-select none
+  z-modal(2)
+  & a
+    color inherit
+    text-decoration none
+  & ul
+    list-style-type none
+    padding-left 0
+    margin 0 0
+  & li
+    padding 12px 0
+    cursor pointer
+    &:hover
+      background-color #eaeaea

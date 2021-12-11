@@ -212,7 +212,7 @@ function toggleBaseLayer() {
 
 function geolocateMe() {
   navigator.geolocation.getCurrentPosition(
-    (position) => {
+    (position) => { // If position is returned...
       const pos = {
         lat: position.coords.latitude,
         lon: position.coords.longitude
@@ -248,7 +248,7 @@ function requestLocations() {
           loadLocations()
         }
       },
-      config.map.data_update_debounce
+      config.map.fetch_debounce
     )
   } else
     needToUpdate = true

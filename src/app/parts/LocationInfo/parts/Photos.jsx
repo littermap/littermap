@@ -1,3 +1,7 @@
+//
+// Editable set of uploaded photos
+//
+
 import { createSignal } from 'solid-js'
 import createFileUploader from '../elements/FileUploader'
 import createEditable from './Editable'

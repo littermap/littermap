@@ -38,7 +38,7 @@
     "superstatic": "^7.1.0"
   },
   "dependencies": {
-    "solid-app-router": "^0.1.13",
-    "solid-js": "^1.2.5"
+    "solid-app-router": "^0.1.14",
+    "solid-js": "^1.2.6"
   }
 }

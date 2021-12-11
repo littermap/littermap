@@ -4,14 +4,18 @@ export default () => {
   return (
     <div class="page">
       <div class="content">
+        <img class="logo" src="/images/logo.svg" />
         <h1>About Us</h1>
         <h2>The Litter Map Project</h2>
         <p>
-          According to Greta Thunberg, there are now more plastic bottles in the ocean than there are people in India [citation needed] ...
+          From Chapel Hill to Hanoi, we all face the same realization. We're not picking up after outselves. Let's get together and clean up our planet.
         </p>
         <h2>The Earth Stewards</h2>
         <p>
-          We started cleaning the planet after it was already too late. Learn more by picking up that plastic bottle.
+          The Earth Stewards is an initiative to bring people together over taking stewardship of our planet. You can support us by joining an initiative or purchasing our merchandise.
+        </p>
+        <p>
+          Link: <a href="https://www.theearthstewards.com/">The Earth Stewards</a>
         </p>
         <h2>Terms of Service</h2>
         <p>

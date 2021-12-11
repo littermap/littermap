@@ -58,7 +58,6 @@ readConfig()
 //
 
 const appConfig = (config) => ({
-  title: config.title,
   backend: {
     api: config.backend.api,
     media: config.backend.media,
@@ -75,8 +74,9 @@ const appConfig = (config) => ({
   map: {
     default_zoom: config.map.default_zoom,
     min_add_location_zoom: config.map.min_add_location_zoom,
+    address_search_as_you_type: config.map.address_search_as_you_type,
     long_click_interval: config.map.long_click_interval,
-    data_update_debounce: config.map.data_update_debounce
+    fetch_debounce: config.map.fetch_debounce
   },
   location: {
     max_uploads: config.location.max_uploads,

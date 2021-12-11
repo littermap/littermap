@@ -1,5 +1,7 @@
 //
-// File uploader (currently only images)
+// File uploader
+//
+// Only supports images (but could be extended to other file types)
 //
 
 import { createStore } from 'solid-js/store'

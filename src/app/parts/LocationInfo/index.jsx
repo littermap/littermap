@@ -1,5 +1,5 @@
 //
-// View or edit a location
+// View or edit a location's details
 //
 
 import { submitLocation } from '../../map'

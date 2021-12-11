@@ -22,8 +22,9 @@
     },
     "default_zoom": 7,
     "min_add_location_zoom": 17,
+    "address_search_as_you_type": 1,
     "long_click_interval": 800,
-    "data_update_debounce": 1200
+    "fetch_debounce": 1200
   },
   "location": {
     "max_uploads": 6,

@@ -2,6 +2,7 @@ export default () => {
   return (
     <div class="page">
       <div class="content">
+        <img class="logo" src="/images/logo.svg" />
         <h1>Terms of Service</h1>
         <p>
           This explicit agreement is between <b>You</b> (heretofore referred to as <b>Litter Hero</b>) and <b>The Earth Stewards</b> (heretofore referred to as <b>Service Provider</b>).

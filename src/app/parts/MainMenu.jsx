@@ -1,3 +1,7 @@
+//
+// Main menu
+//
+
 import { Link } from 'solid-app-router'
 import MainStore from '../store'
 

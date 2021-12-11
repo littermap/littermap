@@ -83,12 +83,14 @@ Check which packages depend on a node package:
 
 ### General
 
+- [Introduction to JavaScript](https://developer.mozilla.org/docs/Web/javascript)
 - [Using source maps for debugging](https://developer.mozilla.org/docs/Tools/Debugger/How_to/Use_a_source_map)
 - [Debugging on mobile with Firefox](https://developer.mozilla.org/docs/Tools/about:debugging)
 - [Node package managers: NPM vs Yarn vs PNPM](https://javascript.plainenglish.io/npm-yarn-pnpm-which-node-js-package-manager-should-you-use-a2a1378694f7)
 
 ### User interface
 
+- [Stylus cheatsheet](https://devhints.io/stylus)
 - [A look at solid](https://codechips.me/solidjs-first-look/)
 - [solid: documentation](https://www.solidjs.com/docs/latest)
 - [solid: examples](https://github.com/solidjs/solid/blob/main/documentation/resources/examples.md)

@@ -23,7 +23,6 @@ map-control-shadow()
   width 100%
   pointer-events none
   & > *
-    pointer-events all
   .click-screen ~ &
     z-modal()
   & form
@@ -36,6 +35,7 @@ map-control-shadow()
       box-sizing border-box
       padding 4px 12px
       outline-style none
+      pointer-events all
       &::placeholder
         text-align right
   & .search-results
@@ -50,6 +50,7 @@ map-control-shadow()
     user-select none
     map-control-shadow()
     clear right
+    pointer-events all
     .result
       padding 1px 4px
       cursor pointer

@@ -42,7 +42,7 @@ export default createEditable = ({ title, RenderView, RenderEdit, pureEdit, rese
         <Match when={getState() !== "viewing"}>
           <RenderEdit />
           <Show when={!pureEdit}>
-            <div>
+            <div class="buttons">
               <button onclick={saveClicked} disabled={getState() === "saving"}>
                 {getState() === "saving" ? "Saving..." : "Save"}
               </button>

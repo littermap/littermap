@@ -54,11 +54,11 @@ export default createLocationInfo = (store, existingLocation) => {
 
       <Show when={!existingLocation}>
         <section class="buttons">
-          <button onclick={cancel}>
-            Cancel
-          </button>
           <button onclick={submit} disabled={photos.isBusy()}>
             Submit
+          </button>
+          <button onclick={cancel}>
+            Cancel
           </button>
         </section>
       </Show>

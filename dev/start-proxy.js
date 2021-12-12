@@ -41,7 +41,7 @@ console.log()
   https.createServer(keys, app).listen(
     port,
     () => {
-      console.info("Launch the app:", `https://localhost:${port}`)
+      console.info("Launch the app:", `https://localhost:${port}`, "(don't be bothered by the SSL certificate warning)")
     }
   )
 })()

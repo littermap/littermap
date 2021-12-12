@@ -21,13 +21,17 @@ function createRequestAgent() {
     try {
       response = await fetch(apis[api] + url, opts)
     } catch (e) {
-      throw "Fetch error:" + e.message
+      console.error("Fetch error:", e.message)
+
+      return null
     }
 
     try {
       receivedData = await response.json()
     } catch (e) {
-      throw "Server response is not valid JSON"
+      console.error("Server response is not valid JSON")
+
+      return null
     }
 
     return field ? receivedData[field] : receivedData

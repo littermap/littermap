@@ -3,8 +3,9 @@
 //
 
 import { createSignal } from 'solid-js'
+import { PencilGlyph } from '../../../elements/glyphs'
 
-export default createEditable = ({ title, RenderValue, RenderInput, pureEdit, resetFn, saveFn }) => {
+export default createEditable = ({ title, RenderView, RenderEdit, pureEdit, resetFn, saveFn }) => {
   const [getState, setState] = createSignal(pureEdit ? "editing" : "viewing")
 
   function editClicked() {
@@ -33,13 +34,13 @@ export default createEditable = ({ title, RenderValue, RenderInput, pureEdit, re
         {title}
         <Show when={getState() === "viewing"}>
           <button class="edit" onclick={editClicked}>
-            edit
+            <PencilGlyph />
           </button>
         </Show>
       </label>
       <Switch>
         <Match when={getState() !== "viewing"}>
-          <RenderInput />
+          <RenderEdit />
           <Show when={!pureEdit}>
             <div>
               <button onclick={saveClicked} disabled={getState() === "saving"}>
@@ -53,7 +54,7 @@ export default createEditable = ({ title, RenderValue, RenderInput, pureEdit, re
         </Match>
         <Match when={getState() === "viewing"}>
           <div>
-            <RenderValue />
+            <RenderView />
           </div>
         </Match>
       </Switch>

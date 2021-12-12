@@ -3,7 +3,7 @@
 //
 
 import { createSignal } from 'solid-js'
-import createEditable from './Editable'
+import createEditable from '../Editable'
 
 export default createDescriptionField = ({ initialValue, pureEdit }) => {
   const [getValue, setValue] = createSignal(initialValue)
@@ -23,21 +23,20 @@ export default createDescriptionField = ({ initialValue, pureEdit }) => {
     setValue(getSavedValue())
   }
 
-  const RenderValue = () => (
+  const RenderView = () => (
     <div>
       {getSavedValue()}
     </div>
   )
 
-  // ... sync value
-  const RenderInput = () => (
+  const RenderEdit = () => (
     <textarea id="input-description" name="description" onchange={valueChanged}>{getValue()}</textarea>
   )
 
   const editable = createEditable({
     title: "What's going on at this location",
-    RenderValue,
-    RenderInput,
+    RenderView,
+    RenderEdit,
     pureEdit,
     resetFn,
     saveFn

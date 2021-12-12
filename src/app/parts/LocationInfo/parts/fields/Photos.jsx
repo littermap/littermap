@@ -3,8 +3,8 @@
 //
 
 import { createSignal } from 'solid-js'
-import createFileUploader from '../elements/FileUploader'
-import createEditable from './Editable'
+import createFileUploader from '../../elements/FileUploader'
+import createEditable from '../Editable'
 
 export default createPhotosField = ({ initialItems, pureEdit }) => {
   const [getSavedItems, setSavedItems] = createSignal(initialItems)
@@ -29,7 +29,7 @@ export default createPhotosField = ({ initialItems, pureEdit }) => {
     FileUploader.reset(getSavedItems())
   }
 
-  const RenderValue = () => (
+  const RenderView = () => (
     <Switch>
       <Match when={getSavedItems().length !== 0}>
         <div class="photos">
@@ -48,14 +48,14 @@ export default createPhotosField = ({ initialItems, pureEdit }) => {
     </Switch>
   )
 
-  const RenderInput = () => (
+  const RenderEdit = () => (
     <FileUploader.render />
   )
 
   const editable = createEditable({
     title: "Photos",
-    RenderValue,
-    RenderInput,
+    RenderView,
+    RenderEdit,
     pureEdit,
     resetFn,
     saveFn

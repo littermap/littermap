@@ -3,9 +3,9 @@
 //
 
 import { submitLocation } from '../../map'
-import createDescription from './parts/Description'
-import createLevel from './parts/Level'
-import createPhotos from './parts/Photos'
+import createDescription from './parts/fields/Description'
+import createLevel from './parts/fields/Level'
+import createPhotos from './parts/fields/Photos'
 
 const defaults = {
   description: '',

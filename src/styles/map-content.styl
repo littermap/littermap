@@ -1,3 +1,8 @@
+// Popup close button
+.gm-ui-hover-effect
+  right 0
+  padding 0
+
 #add-location
   cursor pointer
   &:hover
@@ -12,7 +17,15 @@
     & + *
       margin 4px 0
     & button.edit
-      margin-left 4px
+      all unset
+      color #666
+      margin-left 1px
+      cursor pointer
+      &:hover
+        color lighten(@color, 40%)
+      & svg
+        height 18px
+        vertical-align text-bottom
   & textarea
     width 77vw
     min-width 100%

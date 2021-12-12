@@ -25,7 +25,19 @@ const LayersGlyph = () => {
   )
 }
 
+const PencilGlyph = () => {
+  return (
+    <svg viewBox="-50 -50 100 100">
+      <g fill="currentColor" transform="rotate(45)">
+        <polygon points="0,30 -5,25 -5,-15 5,-15 5,25" />
+        <rect x="-5" y="-30" width="10" height="10" />
+      </g>
+    </svg>
+  )
+}
+
 export {
   NavigateGlyph,
-  LayersGlyph
+  LayersGlyph,
+  PencilGlyph
 }

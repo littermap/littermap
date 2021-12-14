@@ -10,12 +10,14 @@ const infoPopupContent = {
 }
 
 function initMap() {
+  let mapElement = document.getElementById('map')
+
   //
   // Google Maps API
   //   https://developers.google.com/maps/documentation/javascript/reference/
   //
 
-  map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(mapElement, {
     center: new google.maps.LatLng(35.899532, -79.056473),
     zoom: config.map.default_zoom,
     minZoom: 2,
@@ -81,11 +83,18 @@ function initMap() {
     }
   )
 
+  // Focus the map, so the keyboard shortcuts work right away
+  google.maps.event.addListenerOnce(map, 'tilesloaded',
+    () => {
+      mapElement.children[0].children[0].children[0].focus()
+    }
+  )
+
   zoomChanged()
 
   window.actions.setMapLoaded()
 
-  // Allow interaction with the map object from the console (during development)
+  // Allow interaction with the map object from the console during development
   if (config.development) {
     window.map = map
   }

@@ -1,3 +1,10 @@
+#map
+  & > div:first-child > div:first-child
+    // Briefly it's the third element which quickly gets bumped up to fourth (as the map loads)
+    & > div:nth-child(3), div:nth-child(4)
+      // Remove the blue outline when the map is in focus
+      border none !important
+
 // Popup info window contents
 .gm-style-iw-d
   // Don't crop the outline (e.g. on the full-width textarea when in focus)

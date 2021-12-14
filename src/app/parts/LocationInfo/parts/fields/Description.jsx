@@ -2,25 +2,21 @@
 // Editable description field
 //
 
-import { createSignal } from 'solid-js'
+import { createSignal, onMount } from 'solid-js'
 import createEditable from '../Editable'
 
 export default createDescriptionField = ({ initialValue, pureEdit }) => {
-  const [getValue, setValue] = createSignal(initialValue)
+  const [getInputValue, setInputValue] = createSignal(initialValue)
   const [getSavedValue, setSavedValue] = createSignal(initialValue)
 
-  function valueChanged() {
-    setValue(this.value)
-  }
-
   function saveFn() {
-    // ... save value on the backend
+    // ... logic for saving on the backend
 
-    setSavedValue(getValue())
+    setSavedValue(getInputValue())
   }
 
   function resetFn() {
-    setValue(getSavedValue())
+    setInputValue(getSavedValue())
   }
 
   const RenderView = () => (
@@ -29,9 +25,37 @@ export default createDescriptionField = ({ initialValue, pureEdit }) => {
     </div>
   )
 
-  const RenderEdit = () => (
-    <textarea id="input-description" name="description" onchange={valueChanged}>{getValue()}</textarea>
-  )
+  const RenderEdit = () => {
+    let textArea
+
+    function setAutoHeight() {
+      //
+      // Assume we are using 'box-sizing:border-box' to make the entire element fit exactly into
+      // the width of its parent container with 'width:100%'.
+      //
+      // However, this makes the border cut into the inner part, thereby impacting the calculation.
+      //
+      // So, add extra height for border (so the scroll bar doesn't appear when it shouldn't).
+      //
+      let border = textArea.offsetHeight - textArea.clientHeight + 1
+
+      textArea.style.height = '0'
+      textArea.style.height = textArea.scrollHeight + border + 'px'
+    }
+
+    function valueChanged() {
+      setInputValue(this.value)
+      setAutoHeight()
+    }
+
+    onMount(setAutoHeight)
+
+    return (
+      <textarea oninput={setAutoHeight} onchange={valueChanged} ref={textArea}>
+        {getInputValue()}
+      </textarea>
+    )
+  }
 
   const editable = createEditable({
     title: "What's going on at this location",
@@ -44,6 +68,6 @@ export default createDescriptionField = ({ initialValue, pureEdit }) => {
 
   return {
     render: editable.render,
-    getValue
+    getInputValue
   }
 }

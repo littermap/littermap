@@ -20,7 +20,7 @@ export default createPhotosField = ({ initialItems, pureEdit }) => {
   }
 
   function saveFn() {
-    // ... save value on the backend
+    // ... logic for saving on the backend
 
     setSavedItems(getItems())
   }

@@ -12,8 +12,8 @@ const defaults = {
   level: 10
 }
 
-export default createLocationInfo = (store, existingLocation) => {
-  let [, { closeEditNewLocation }] = store
+export default createLocationInfo = (mainStore, existingLocation) => {
+  let [store, { closeEditNewLocation }] = mainStore
 
   const description = createDescription({
     initialValue: !existingLocation ? defaults.description : existingLocation.description,
@@ -36,8 +36,8 @@ export default createLocationInfo = (store, existingLocation) => {
 
   function submit() {
     let details = {
-      description: description.getValue(),
-      level: level.getValue(),
+      description: description.getInputValue(),
+      level: level.getInputValue(),
       images: photos.getItems()
     }
 
@@ -54,7 +54,7 @@ export default createLocationInfo = (store, existingLocation) => {
 
       <Show when={!existingLocation}>
         <section class="buttons">
-          <button onclick={submit} disabled={photos.isBusy()}>
+          <button onclick={submit} disabled={photos.isBusy() || !level.isValid()}>
             Submit
           </button>
           <button onclick={cancel}>

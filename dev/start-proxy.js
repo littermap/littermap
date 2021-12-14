@@ -35,13 +35,15 @@ console.log()
   console.info("Generating self-signed SSL certificate...\n")
   const keys = await createCert()
 
+  console.info("Certificate generated (don't be bothered by the SSL certificate warning)\n")
+
   const app = express()
   app.use('/', proxy)
 
   https.createServer(keys, app).listen(
     port,
     () => {
-      console.info("Launch the app:", `https://localhost:${port}`, "(don't be bothered by the SSL certificate warning)")
+      console.info("Launch the app:", `https://localhost:${port}`)
     }
   )
 })()

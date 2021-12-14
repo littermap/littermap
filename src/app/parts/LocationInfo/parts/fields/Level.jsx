@@ -19,21 +19,21 @@ const litterLevels = [
 ]
 
 export default createLevelField = ({ initialValue, pureEdit }) => {
-  const [getValue, setValue] = createSignal(initialValue)
+  const [getInputValue, setInputValue] = createSignal(initialValue)
   const [getSavedValue, setSavedValue] = createSignal(initialValue)
 
-  function valueChanged(event) {
-    setValue(+event.target.value)
-  }
-
   function saveFn() {
-    // ... save value on the backend
+    // ... logic for saving on the backend
 
-    setSavedValue(getValue())
+    setSavedValue(getInputValue())
   }
 
   function resetFn() {
-    setValue(getSavedValue())
+    setInputValue(getSavedValue())
+  }
+
+  function isValid() {
+    return getInputValue() < 100
   }
 
   function getCaption(level) {
@@ -51,14 +51,20 @@ export default createLevelField = ({ initialValue, pureEdit }) => {
     </div>
   )
 
-  const RenderEdit = () => (
-    <>
-      <input type="range" name="level" min="1" max="100" value={getValue()} oninput={valueChanged} />
-      <p class="info">
-        {getCaption(getValue())}
-      </p>
-    </>
-  )
+  const RenderEdit = () => {
+    function valueChanged(event) {
+      setInputValue(+event.target.value)
+    }
+
+    return (
+      <>
+        <input type="range" min="1" max="100" value={getInputValue()} oninput={valueChanged} />
+        <p class="info">
+          {getCaption(getInputValue())}
+        </p>
+      </>
+    )
+  }
 
   const editable = createEditable({
     title: "Litter level",
@@ -66,11 +72,13 @@ export default createLevelField = ({ initialValue, pureEdit }) => {
     RenderEdit,
     pureEdit,
     resetFn,
-    saveFn
+    saveFn,
+    isValid
   })
 
   return {
     render: editable.render,
-    getValue
+    getInputValue,
+    isValid
   }
 }

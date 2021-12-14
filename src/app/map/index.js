@@ -260,7 +260,6 @@ async function loadLocations() {
 
   let url = `/radius?lat=${lat}&lon=${lon}&r=${radius}&format=geojson`
 
-  console.log("Fetching litter locations...")
   let res = await fetch(config.backend.api + url)
 
   if (res.ok) {
@@ -272,7 +271,7 @@ async function loadLocations() {
 
     renderLocations(json.features)
   } else
-    console.log("Failed to fetch litter locations: " + res.status)
+    console.info("Failed to fetch litter locations: " + res.status)
 }
 
 function renderLocations(features) {

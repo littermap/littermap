@@ -5,7 +5,6 @@
 import { createContext, useContext } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import { closeSubmitPopup } from '../map'
-import agent from '../request-agent'
 import Profile from './user-profile'
 import createLocationInfo from '../parts/LocationInfo'
 

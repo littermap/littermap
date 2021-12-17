@@ -112,7 +112,7 @@ const esbuild = createGulpEsbuild({
 })
 
 task('html', () => {
-  const assetsFilter = filter('vendor/**', {restore: true})
+  const filterAssetFiles = filter('vendor/**', {restore: true})
 
   return src(srcPath(sources.pug.compile))
     .pipe(
@@ -161,14 +161,18 @@ task('html', () => {
               }
             })
           )
-          // Take just the asset files and put them in the output directory
-          .pipe(assetsFilter)
-          .on("data", (file) => {
-            console.log(c.yellow("Including third-party file:"), "vendor/" + file.basename)
-          })
-          .pipe(dest(dirs.out))
-          // Bring back the bundles built by esbuild for injection into the HTML
-          .pipe(assetsFilter.restore)
+          //
+          // Temporarily hide the main files created by esbuild, leaving just the static assets
+          // that may be included with imported modules
+          //
+          .pipe(filterAssetFiles)
+            .on("data", (file) => {
+              console.log(c.yellow("Including third-party file:"), "vendor/" + file.basename)
+            })
+            // Put the asset files in the output directory
+            .pipe(dest(dirs.out))
+          // Bring back the main files created by esbuild for injection into the HTML
+          .pipe(filterAssetFiles.restore)
       ]),
       {
         // Inline file contents into the correct place in the rendered HTML (automatically based on file extension)

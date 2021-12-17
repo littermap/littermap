@@ -6,9 +6,9 @@ html
     title=self.title
     link(rel='shortcut icon' href='favicon.ico' type='image/x-icon')
     style.
-      <!-- inject:css --><!-- endinject -->
+      <!-- inject:css -->
   body
     #app
     script.
-      <!-- inject:js --><!-- endinject -->
+      <!-- inject:js -->
     script(src=`https://maps.googleapis.com/maps/api/js?key=${self.map.google.api_key}&v=weekly&callback=initMap`)

@@ -75,7 +75,7 @@ Check which packages depend on a node package:
 
 ## Caveats
 
-- The final JS and CSS from the build process are injected into the HTML after it is built from the Pug source. The injection point is marked with a start tag and what seems like an unnecessary end tag. However, that's the way the `gulp-inject` plugin currently works. See [klei/gulp-inject#14](https://github.com/klei/gulp-inject/issues/14)
+- The final JS and CSS from the build process are injected into the HTML after it is built from the Pug source. The project is at the moment using an experimental update to the `gulp-inject` plugin for `gulp` to do it. See: [klei/gulp-inject#279](https://github.com/klei/gulp-inject/pull/279)
 
 - Since Windows uses back slashes (`\`) as path separators (which can be traced to a feature of MS-DOS 2.0), the build script might need significant [modifications](https://shapeshed.com/writing-cross-platform-node/#use-pathresolve-to-traverse-the-filesystem) to its path handling in order to run properly on Windows
 

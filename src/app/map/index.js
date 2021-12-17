@@ -68,7 +68,7 @@ function initMap() {
     infoPopup.close()
   })
 
-  // Listen to mouse events to detect long clicks
+  // Listen to mouse events (for detecting long clicks)
   map.addListener("mousedown", mapMouseDown)
   map.addListener("mouseup", mapMouseUp)
 

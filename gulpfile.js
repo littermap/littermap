@@ -173,7 +173,9 @@ task('html', () => {
       {
         // Inline file contents into the correct place in the rendered HTML (automatically based on file extension)
         transform: (path, file) => file.contents.toString('utf8'),
-        // Remove placeholder tags when finished
+        // Don't require a closing placeholder tag
+        singleTag: true,
+        // Remove placeholder tags
         removeTags: true
       }
     ))

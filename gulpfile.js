@@ -72,6 +72,8 @@ const appConfig = (config) => ({
     upload_info: config.debug.upload_info
   },
   map: {
+    default_lat: config.map.default_lat,
+    default_lon: config.map.default_lon,
     default_zoom: config.map.default_zoom,
     min_add_location_zoom: config.map.min_add_location_zoom,
     address_search_as_you_type: config.map.address_search_as_you_type,

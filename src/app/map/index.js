@@ -18,7 +18,7 @@ function initMap() {
   //
 
   map = new google.maps.Map(mapElement, {
-    center: new google.maps.LatLng(35.899532, -79.056473),
+    center: new google.maps.LatLng(config.map.default_lat, config.map.default_lon),
     zoom: config.map.default_zoom,
     minZoom: 2,
     restriction: {

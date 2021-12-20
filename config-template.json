@@ -20,7 +20,9 @@
     "mapbox": {
       "access_token": "!!!"
     },
-    "default_zoom": 7,
+    "default_lat": 36.77,
+    "default_lon": -119.417,
+    "default_zoom": 4,
     "min_add_location_zoom": 17,
     "address_search_as_you_type": 1,
     "long_click_interval": 800,

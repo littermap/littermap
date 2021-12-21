@@ -23,7 +23,7 @@
   "devDependencies": {
     "ansi-colors": "^4.1.1",
     "create-cert": "^1.0.6",
-    "esbuild": "^0.14.5",
+    "esbuild": "^0.14.7",
     "esbuild-plugin-solid": "^0.4.1",
     "express": "^4.17.2",
     "gulp": "^4.0.2",

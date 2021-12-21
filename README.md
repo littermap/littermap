@@ -109,7 +109,7 @@ Check which packages depend on a node package:
 
 ### Build system
 
-The build tasks are orchestrated with Gulp, which takes time to master but accommodates extreme flexibility and performance while also making possible a relatively concise formulation.
+The build tasks are orchestrated with Gulp, which takes knowledge to master but enables a high level of flexibility and performance with a concise formulation.
 
 - [Gulp examples](https://github.com/gulpjs/gulp/tree/master/docs/recipes)
 - [Vinyl file descriptor API](https://github.com/gulpjs/vinyl#api)

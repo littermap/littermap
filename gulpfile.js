@@ -72,9 +72,7 @@ const appConfig = (config) => ({
     upload_info: config.debug.upload_info
   },
   map: {
-    default_lat: config.map.default_lat,
-    default_lon: config.map.default_lon,
-    default_zoom: config.map.default_zoom,
+    defaults: config.map.defaults,
     min_add_location_zoom: config.map.min_add_location_zoom,
     address_search_as_you_type: config.map.address_search_as_you_type,
     long_click_interval: config.map.long_click_interval,
@@ -137,14 +135,15 @@ task('html', () => {
         // Build script and style bundles and be ready to inject them into the HTML document
         //
         src(srcPath(sources.scripts.compile))
-          .pipe(esbuild({
+          .pipe(
+            esbuild({
               outdir: './',
               bundle: true,
               plugins: [
                 solidPlugin()
               ],
               loader: {
-                // Treat these as static files required by dependencies
+                // Treat imports with these extensions as static files required by dependencies
                 '.png': 'file',
                 '.woff': 'file',
                 '.woff2': 'file',
@@ -164,8 +163,8 @@ task('html', () => {
             })
           )
           //
-          // Temporarily hide the main files created by esbuild, leaving just the static assets
-          // that may be included with imported modules
+          // Temporarily hide the main files produced by esbuild, leaving just the static assets
+          // that might be included with imported modules
           //
           .pipe(filterAssetFiles)
             .on("data", (file) => {
@@ -177,7 +176,7 @@ task('html', () => {
           .pipe(filterAssetFiles.restore)
       ]),
       {
-        // Inline file contents into the correct place in the rendered HTML (automatically based on file extension)
+        // Insert file contents into the correct place in the rendered HTML (automatically based on file extension)
         transform: (path, file) => file.contents.toString('utf8'),
         // Don't require a closing placeholder tag
         singleTag: true,
@@ -192,13 +191,13 @@ task('html', () => {
 })
 
 //
-// Task to build the website
+// Task to build the application
 //
 
 task('build', parallel('files', 'html'))
 
 //
-// Task to watch file changes and trigger builds
+// Task to watch for file changes and trigger builds
 //
 
 task('watch', () => {

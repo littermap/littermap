@@ -18,8 +18,8 @@ function initMap() {
   //
 
   map = new google.maps.Map(mapElement, {
-    center: new google.maps.LatLng(config.map.default_lat, config.map.default_lon),
-    zoom: config.map.default_zoom,
+    center: new google.maps.LatLng(config.map.defaults.lat, config.map.defaults.lon),
+    zoom: config.map.defaults.zoom,
     minZoom: 2,
     restriction: {
       latLngBounds: {

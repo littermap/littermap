@@ -10,9 +10,6 @@ export default () => {
         <p>
           By reading this page you hereby agree...
         </p>
-        <h6>
-          [ small print regarding how all your rights belong to someone else ]
-        </h6>
         <p>
           You are asked to abide by these responsibilities:
           <ul>
@@ -28,6 +25,9 @@ export default () => {
             <li>Abide by the laws of the jurisdictions where we operate</li>
             <li>Pick up that plastic bottle</li>
           </ul>
+        </p>
+        <p>
+          Your contributions are yours, and the website is ours.
         </p>
       </div>
     </div>

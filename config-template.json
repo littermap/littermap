@@ -33,5 +33,34 @@
   "location": {
     "max_uploads": 6,
     "max_file_size": 25165824
+  },
+  "social": {
+    "links": [
+      {
+        "title": "facebook",
+        "icon": "brands/facebook-f",
+        "link": "https://fb.me/littermap"
+      },
+      {
+        "title": "twitter",
+        "icon": "brands/twitter",
+        "link": "https://twitter.com/littermap"
+      },
+      {
+        "title": "instagram",
+        "icon": "brands/instagram",
+        "link": "https://instagram.com/littermap"
+      },
+      {
+        "title": "tiktok",
+        "icon": "brands/tiktok",
+        "link": "https://tiktok.com/@danieltoben"
+      },
+      {
+        "title": "discord",
+        "icon": "brands/discord",
+        "link": "https://discord.gg/uxUPk8kb"
+      }
+    ]
   }
 }

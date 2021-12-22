@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@fortawesome/fontawesome-free': ^6.0.0-beta3
   ansi-colors: ^4.1.1
   create-cert: ^1.0.6
   esbuild: ^0.14.7
@@ -20,6 +21,7 @@ specifiers:
   superstatic: ^7.1.0
 
 dependencies:
+  '@fortawesome/fontawesome-free': 6.0.0-beta3
   solid-app-router: 0.1.14_solid-js@1.2.6
   solid-js: 1.2.6
 
@@ -341,6 +343,12 @@ packages:
       '@babel/helper-validator-identifier': 7.15.7
       to-fast-properties: 2.0.0
     dev: true
+
+  /@fortawesome/fontawesome-free/6.0.0-beta3:
+    resolution: {integrity: sha512-4SqOuhC8tSLeQvbW1nDmq6T7+8vdSgHy/w7PRwCFzMQCbKuYFIir/3UuWsV1QblX1lt7SGlSgwbaCv9XhRt8HA==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dev: false
 
   /@gar/promisify/1.1.2:
     resolution: {integrity: sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==}
@@ -903,7 +911,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001292
-      electron-to-chromium: 1.4.26
+      electron-to-chromium: 1.4.27
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
@@ -1504,8 +1512,8 @@ packages:
     resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
     dev: true
 
-  /electron-to-chromium/1.4.26:
-    resolution: {integrity: sha512-cA1YwlRzO6TGp7yd3+KAqh9Tt6Z4CuuKqsAJP6uF/H5MQryjAGDhMhnY5cEXo8MaRCczpzSBhMPdqRIodkbZYw==}
+  /electron-to-chromium/1.4.27:
+    resolution: {integrity: sha512-uZ95szi3zUbzRDx1zx/xnsCG+2xgZyy57pDOeaeO4r8zx5Dqe8Jv1ti8cunvBwJHVI5LzPuw8umKwZb3WKYxSQ==}
     dev: true
 
   /emoji-regex/8.0.0:

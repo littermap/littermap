@@ -5,6 +5,7 @@ import Main from './Main'
 
 import './platform'
 
+// Let `config` object injected by esbuild be accessible in the console (during development)
 if (config.development)
   window.config = config
 

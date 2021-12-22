@@ -1,4 +1,5 @@
 const { src, dest, task, watch, series, parallel } = require('gulp')
+const { braceExpand } = require('minimatch')
 const stylus = require('gulp-stylus')
 const pug = require('gulp-pug')
 const merge = require('merge2')
@@ -7,7 +8,6 @@ const inject = require('gulp-inject')
 const { createGulpEsbuild } = require('gulp-esbuild')
 const { solidPlugin } = require('esbuild-plugin-solid')
 const fs = require('fs')
-const { braceExpand } = require('minimatch')
 const c = require('ansi-colors')
 
 const dirs = {
@@ -30,6 +30,11 @@ const sources = {
   },
   files: '{favicon.ico,images/**/*}'
 }
+
+const icons = [
+  // List needed icons from: node_modules/@fortawesome/fontawesome-free/svgs/
+  'solid/users'
+]
 
 function abort(message) {
   console.error(c.red('!!'), message)
@@ -81,6 +86,9 @@ const appConfig = (config) => ({
   location: {
     max_uploads: config.location.max_uploads,
     max_file_size: config.location.max_file_size
+  },
+  social: {
+    links: config.social.links
   }
 })
 
@@ -102,6 +110,26 @@ task('files', () => (
   src(srcPath(sources.files))
     .pipe(dest(dirs.out))
 ))
+
+//
+// Hand-pick font awesome icons to include
+//
+
+task('font-awesome', () => {
+  const including = [
+    // Include icons specified at the top of this file
+    ...icons.map(item => item + '.svg'),
+    // Include icons associated with social links in config.json
+    ...config.social.links.map(item => item.icon + '.svg')
+  ]
+
+  console.log(c.green("Including font awesome icons:"))
+  console.log(including)
+
+  // Find icons installed by @fortawesome/fontawesome-free npm package
+  return src('node_modules/@fortawesome/fontawesome-free/svgs/{' + including.join(',') + '}')
+    .pipe(dest(dirs.out + 'images/icons/font-awesome/'))
+})
 
 //
 // Build the HTML from the Pug source files and then inline the styles and scripts into the HTML document
@@ -194,7 +222,7 @@ task('html', () => {
 // Task to build the application
 //
 
-task('build', parallel('files', 'html'))
+task('build', parallel('files', 'font-awesome', 'html'))
 
 //
 // Task to watch for file changes and trigger builds

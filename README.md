@@ -6,6 +6,7 @@ Web front-end for the Litter Map application.
 - User interface built with [solid](https://www.solidjs.com/)
 - Build system written in [gulp](https://github.com/gulpjs/gulp)
 - Scripts and runtime dependencies bundled with [esbuild](https://esbuild.github.io/)
+- SVG icons from [Font Awesome](https://github.com/FortAwesome/Font-Awesome)
 
 ## Get started
 

@@ -1,4 +1,5 @@
 const { src, dest, task, watch, series, parallel } = require('gulp')
+const { spawn } = require('child_process')
 const { braceExpand } = require('minimatch')
 const stylus = require('gulp-stylus')
 const pug = require('gulp-pug')
@@ -123,8 +124,8 @@ task('font-awesome', () => {
     ...config.social.links.map(item => item.icon + '.svg')
   ]
 
-  console.log(c.green("Including font awesome icons:"))
-  console.log(including)
+  console.info(c.green("Including font awesome icons:"))
+  console.info(including)
 
   // Find icons installed by @fortawesome/fontawesome-free npm package
   return src('node_modules/@fortawesome/fontawesome-free/svgs/{' + including.join(',') + '}')
@@ -196,7 +197,7 @@ task('html', () => {
           //
           .pipe(filterAssetFiles)
             .on("data", (file) => {
-              console.log(c.yellow("Including third-party file:"), "vendor/" + file.basename)
+              console.info(c.yellow("Including third-party file:"), "vendor/" + file.basename)
             })
             // Put the asset files in the output directory
             .pipe(dest(dirs.out))
@@ -212,7 +213,7 @@ task('html', () => {
         removeTags: true
       }
     ))
-    .on("data", (file) => { console.log(c.yellow("Built:"), file.basename) } )
+    .on("data", (file) => { console.info(c.yellow("Built:"), file.basename) } )
     // Prevents errors from crashing the watch task
     .on('error', (e) => e.end())
     .pipe(dest(dirs.out))
@@ -238,7 +239,7 @@ task('watch', () => {
         onChanged && onChanged()
 
         // Print which file has been modified
-        console.log('\n', c.green('!! File touched:'), file, '\n')
+        console.info('\n', c.green('!! File touched:'), file, '\n')
       })
 
     watching.push(paths)
@@ -246,7 +247,7 @@ task('watch', () => {
 
   // Use a glob to force directory level watching (bug in 'chokidar' 2.x, see issue #237)
   // When 'glob-watcher' switches to 'chokidar' 3.x this workaround won't be necessary (see issue #49)
-  _watch('./config.json*', series('build'), readConfig)
+  _watch('config.json*', series('build'), readConfig)
   _watch(
     // Expand braces {} into an array of paths with braceExpand()
     srcPath(braceExpand(sources.files)),
@@ -261,7 +262,36 @@ task('watch', () => {
     series('html')
   )
 
-  console.log("\nWatching paths:\n\n" + watching.flat().join('\n') + '\n')
+  console.info("\nWatching paths:\n\n" + watching.flat().join('\n') + '\n')
+})
+
+//
+// Start watching and restart gulp when gulpfile is modified
+//
+
+task("watch-autorestart", (done) => {
+  let proc
+
+  watch('gulpfile.js*', newGulp)
+
+  function newGulp(_done) {
+    if (proc) {
+      console.info(c.green("gulpfile.js modified, restarting gulp...\n"))
+      console.info(c.green("Killing gulp process:"), proc.pid)
+      proc.kill()
+    }
+
+    proc = spawn('gulp', ['build-and-watch'], { stdio: 'inherit' })
+
+    console.info(c.green("New gulp process:"), proc.pid)
+
+    if (_done)
+      _done()
+  }
+
+  newGulp()
+
+  done()
 })
 
 //

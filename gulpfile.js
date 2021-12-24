@@ -90,7 +90,8 @@ const appConfig = (config) => ({
   },
   social: {
     links: config.social.links
-  }
+  },
+  announcements: config.announcements
 })
 
 //

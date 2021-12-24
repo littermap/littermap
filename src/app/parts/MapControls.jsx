@@ -7,6 +7,7 @@ import ProfileAvatar from './ProfileAvatar'
 import MapButtons from './MapButtons'
 import HintBar from './HintBar'
 import SocialButtons from './SocialButtons'
+import Announcements from './Announcements'
 import MainStore from '../store'
 
 export default () => {
@@ -24,6 +25,7 @@ export default () => {
 
         <HintBar />
         <SocialButtons />
+        <Announcements />
       </Portal>
     </Show>
   )

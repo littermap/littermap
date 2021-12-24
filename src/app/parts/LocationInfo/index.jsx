@@ -71,7 +71,7 @@ export default createLocationInfo = (mainStore, existingLocation) => {
         </Match>
         <Match when={existingLocation}>
           <p class="info">
-            Submitted by {existingLocation.created_by || "someone"} at {existingLocation.created_at}
+            Submitted by <span class="who">{existingLocation.created_by || "someone"}</span> {existingLocation.created_at.comment}
           </p>
         </Match>
       </Switch>

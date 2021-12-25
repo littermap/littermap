@@ -2,7 +2,7 @@
 // Map control buttons
 //
 
-import { toggleBaseLayer, geolocateMe } from '../map'
+import { toggleBaseLayer, geolocateMe } from '../../map'
 import { LayersGlyph, NavigateGlyph } from '../elements/glyphs'
 
 export default () => {

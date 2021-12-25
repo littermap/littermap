@@ -1,12 +1,12 @@
 //
-// The central data store that the user interface dynamically reacts to
+// The central application state that the user interface dynamically reacts to
 //
 
 import { createContext, useContext } from 'solid-js'
 import { createStore } from 'solid-js/store'
-import { closeSubmitPopup } from '../map'
-import Profile from './user-profile'
-import createLocationInfo from '../parts/LocationInfo'
+import { closeSubmitPopup } from './map'
+import createProfile from './resources/user-profile'
+import createLocationInfo from './ui/parts/location-info/location-info'
 
 const StoreContext = createContext()
 
@@ -99,7 +99,7 @@ export function StoreProvider(props) {
   // Interface to the data store (read current state, perform actions that change the state)
   store = [state, actions]
 
-  profile = Profile(actions)
+  profile = createProfile(actions)
 
   return (
     <StoreContext.Provider value={store}>

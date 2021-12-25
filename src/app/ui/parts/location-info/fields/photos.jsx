@@ -3,9 +3,9 @@
 //
 
 import { createSignal } from 'solid-js'
-import createFileUploader from '../../elements/FileUploader'
-import createEditable from '../Editable'
-import MainStore from '../../../../store'
+import createFileUploader from '../file-uploader'
+import createEditable from '../editable-field'
+import MainStore from '../../../../main-store'
 
 export default createPhotosField = ({ initialItems, pureEdit }) => {
   const [getSavedItems, setSavedItems] = createSignal(initialItems)

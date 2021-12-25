@@ -1,12 +1,12 @@
-import MainStore from '../store'
+import MainStore from '../../main-store'
 
 export default () => {
   const [store] = MainStore()
 
   return (
-    <For each={store.editingNewLocations}>
+    <For each={store.viewingLocations}>
       {item => (
-        <Portal mount={document.getElementById('edit-new-location')}>
+        <Portal mount={document.getElementById('view-location')}>
           <item.render />
         </Portal>
       )}

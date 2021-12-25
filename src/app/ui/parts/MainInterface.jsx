@@ -4,7 +4,7 @@
 
 import { BurgerGlyph } from '../elements/glyphs'
 import MainMenu from './MainMenu'
-import MainStore from '../store'
+import MainStore from '../../main-store'
 
 export default () => {
   const [store, { toggleMenu }] = MainStore()

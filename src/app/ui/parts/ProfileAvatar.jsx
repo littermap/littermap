@@ -2,7 +2,7 @@
 // Current user icon
 //
 
-import MainStore from '../store'
+import MainStore from '../../main-store'
 
 export default () => {
   const [store, { initiateLogin, logout }] = MainStore()

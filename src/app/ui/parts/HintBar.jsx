@@ -2,7 +2,7 @@
 // Hint bar that shows a suggestion
 //
 
-import MainStore from '../store'
+import MainStore from '../../main-store'
 
 export default () => {
   const [store] = MainStore()

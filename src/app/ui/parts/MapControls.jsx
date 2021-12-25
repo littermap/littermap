@@ -2,14 +2,14 @@
 // What's rendered over the map
 //
 
-import AddressSearch from './AddressSearch'
-import ProfileAvatar from './ProfileAvatar'
-import MapButtons from './MapButtons'
+import Announcements from './Announcements'
 import HintBar from './HintBar'
 import SocialButtons from './SocialButtons'
-import Announcements from './Announcements'
+import ProfileAvatar from './ProfileAvatar'
+import MapButtons from './MapButtons'
+import AddressSearch from './AddressSearch'
 import PhotoViewer from './PhotoViewer'
-import MainStore from '../store'
+import MainStore from '../../main-store'
 
 export default () => {
   const [store] = MainStore()

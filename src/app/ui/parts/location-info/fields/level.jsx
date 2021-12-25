@@ -3,7 +3,7 @@
 //
 
 import { createSignal } from 'solid-js'
-import createEditable from '../Editable'
+import createEditable from '../editable-field'
 
 const litterLevels = [
   [1,   "You've got to be kidding"],

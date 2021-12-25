@@ -1,7 +1,7 @@
 import { render } from 'solid-js/web'
 import { Router } from 'solid-app-router'
-import { StoreProvider } from './store'
-import Main from './Main'
+import { StoreProvider } from './main-store'
+import Main from './ui/Main'
 
 import './platform'
 

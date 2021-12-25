@@ -2,8 +2,8 @@ import { lazy } from 'solid-js'
 import { useRoutes } from 'solid-app-router'
 import MapControls from './parts/MapControls'
 import MainInterface from './parts/MainInterface'
-import ViewLocations from './map-integration/ViewLocations'
-import EditNewLocations from './map-integration/EditNewLocations'
+import ViewLocations from './map-popups/ViewLocations'
+import EditNewLocations from './map-popups/EditNewLocations'
 
 const routes = [ {
   path: "/about",

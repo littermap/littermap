@@ -12,7 +12,7 @@ Web front-end for the Litter Map application.
 
 Set up the configuration file:
 
-- `cp config-template.json config.json`
+- `cp config-example.json config.json`
 
 Edit `config.json` and fill in necessary details.
 

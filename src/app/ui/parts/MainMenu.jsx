@@ -3,7 +3,7 @@
 //
 
 import { Link } from 'solid-app-router'
-import MainStore from '../store'
+import MainStore from '../../main-store'
 
 export default () => {
   const [store, { hideMenu }] = MainStore()

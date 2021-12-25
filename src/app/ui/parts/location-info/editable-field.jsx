@@ -3,7 +3,7 @@
 //
 
 import { createSignal } from 'solid-js'
-import { PencilGlyph } from '../../../elements/glyphs'
+import { PencilGlyph } from '../../elements/glyphs'
 
 export default createEditable = ({ title, RenderView, RenderEdit, pureEdit, resetFn, saveFn, isValid }) => {
   const [getState, setState] = createSignal(pureEdit ? "editing" : "viewing")

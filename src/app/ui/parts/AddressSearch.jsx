@@ -1,5 +1,5 @@
 import { createSignal, createResource } from 'solid-js'
-import { goTo, getCenter } from '../map'
+import { goTo, getCenter } from '../../map'
 
 const searchAsYouType = 2
 

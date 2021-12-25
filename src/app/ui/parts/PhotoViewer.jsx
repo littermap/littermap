@@ -2,8 +2,8 @@
 // Photo viewer
 //
 
-import Logo from '../elements/Logo'
-import MainStore from '../store'
+import Logo from './Logo'
+import MainStore from '../../main-store'
 
 const url = config.backend.media + '/'
 

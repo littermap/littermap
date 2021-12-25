@@ -3,7 +3,7 @@
 //
 
 import { createSignal, onMount } from 'solid-js'
-import createEditable from '../Editable'
+import createEditable from '../editable-field'
 
 export default createDescriptionField = ({ initialValue, pureEdit }) => {
   const [getInputValue, setInputValue] = createSignal(initialValue)

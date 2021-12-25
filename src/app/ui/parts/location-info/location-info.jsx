@@ -2,11 +2,11 @@
 // View or edit a location's details
 //
 
-import { submitLocation } from '../../map'
-import createDescription from './parts/fields/Description'
-import createLevel from './parts/fields/Level'
-import createPhotos from './parts/fields/Photos'
-import MainStore from '../../store'
+import { submitLocation } from '../../../map'
+import createDescription from './fields/description'
+import createLevel from './fields/level'
+import createPhotos from './fields/photos'
+import MainStore from '../../../main-store'
 
 const defaults = {
   description: '',

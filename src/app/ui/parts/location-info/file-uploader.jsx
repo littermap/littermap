@@ -5,7 +5,7 @@
 //
 
 import { createStore } from 'solid-js/store'
-import agent from '../../../request-agent'
+import agent from '../../../requests'
 
 const defaults = {
   items: [],

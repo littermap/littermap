@@ -1,5 +1,5 @@
 import { createResource } from 'solid-js'
-import agent from '../request-agent'
+import agent from '../requests'
 
 export default (actions) => {
   const [profile, { mutate }] = createResource(agent.profile.get)

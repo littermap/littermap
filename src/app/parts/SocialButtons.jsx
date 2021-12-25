@@ -18,7 +18,7 @@ export default () => {
   return (
     <>
       <Show when={getOpen()}>
-        <div onclick={hide} class="click-screen" />
+        <div class="click-screen" onclick={hide} />
       </Show>
 
       <div id="social-menu">

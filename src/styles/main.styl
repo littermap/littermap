@@ -1,8 +1,9 @@
-@require 'lib/common'
+@require 'lib/mixins'
 @require 'lib/loading-spinner'
 @require 'main-menu'
 @require 'map'
 @require 'map-controls'
+@require 'photo-viewer'
 @require 'location-info'
 @require 'pages'
 
@@ -20,3 +21,19 @@ body
 
 #map
   fill-parent()
+
+.trademark
+  display flex
+  align-items center
+  & img
+    height 26px
+  & .title
+    font-size 16px
+    color white
+    margin-left 2px
+    text-shadow 1px 1px 2px #111
+
+.click-screen
+  fill-parent()
+  &.disabled
+    pointer-events none

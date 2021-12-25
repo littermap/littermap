@@ -114,7 +114,7 @@ export default () => {
 
   const resultClicked = (event) => {
     const item = searchResults()[
-      parseInt(event.target.getAttribute('data-index'))
+      +event.target.dataset.index
     ]
 
     goToSearchResult(item)
@@ -133,9 +133,8 @@ export default () => {
 
   return (
     <>
-      <Show when={searchResults().length > 0}>
-        <div class="click-screen" onclick={closeSearchResults} />
-      </Show>
+      <div class={"click-screen" + (searchResults().length === 0 ? " disabled" : "")} onclick={closeSearchResults} />
+
       <div id="address-search" onkeydown={keydown}>
         <form onsubmit={submitInput}>
           <input type="text" oninput={inputChanged} placeholder="🔍" ref={inputElement} />

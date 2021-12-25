@@ -26,16 +26,18 @@ export function StoreProvider(props) {
     showingStreetView: false,
     showingMenu: false,
     viewingLocations: [],
-    editingNewLocations: []
+    editingNewLocations: [],
+    viewingImages: null,
+    currentImage: null
   })
 
   // Actions meant to be invoked by UI components
   const actions = {
-    hideMenu() {
-      setState({ showingMenu: false })
-    },
     toggleMenu() {
       setState({ showingMenu: !state.showingMenu })
+    },
+    hideMenu() {
+      setState({ showingMenu: false })
     },
     initiateLogin() {
       setState({ loggingIn: true })
@@ -43,6 +45,27 @@ export function StoreProvider(props) {
     closeEditNewLocation() {
       setState({ editingNewLocation: false })
       closeSubmitPopup()
+    },
+    viewImage({ images, idx } = {}) {
+      if (images) {
+        setState({
+          viewingImages: images,
+          currentImage: idx
+        })
+      } else {
+        setState({
+          viewingImages: null,
+          currentImage: null
+        })
+      }
+    },
+    viewPrevImage() {
+      setState({ currentImage: (state.currentImage + 1) % state.viewingImages.length })
+    },
+    viewNextImage() {
+      setState({
+        currentImage: state.currentImage !== 0 ? state.currentImage - 1 : state.viewingImages.length - 1
+      })
     }
   }
 
@@ -58,10 +81,10 @@ export function StoreProvider(props) {
       setState({ showingStreetView: value })
     },
     updateViewingLocation(value) {
-      setState({ viewingLocations: value ? [createLocationInfo(store, value)] : [] })
+      setState({ viewingLocations: value ? [createLocationInfo(value)] : [] })
     },
     updateEditingNewLocation(value) {
-      setState({ editingNewLocations: value ? [createLocationInfo(store)] : [] })
+      setState({ editingNewLocations: value ? [createLocationInfo()] : [] })
     }
   }
 

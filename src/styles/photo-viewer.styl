@@ -1,0 +1,45 @@
+#photo-viewer
+  width 80%
+  height 80%
+  top 10%
+  left 10%
+  position absolute
+  background-color #ccc
+  border-radius 6px
+  overflow hidden
+  box-shadow 0 1px 4px -1px black
+  & .photo
+    width 100%
+    height 100%
+    object-fit cover
+  & .trademark
+    position absolute
+    bottom 4px
+    left 4px
+  & .info
+    bottom 0
+    absolute-centered-fixed-width()
+    color white
+    text-align center
+  & button
+    all unset
+    cursor pointer
+  & .nav
+    top 45%
+    position absolute
+    color white
+    font-family Arial
+    font-size 48px
+    transform scaleY(190%)
+    user-select none
+    &.prev
+      left 4px
+    &.next
+      right 4px
+  & .close
+    top 1px
+    right 4px
+    position absolute
+    color white
+    font-size 24px
+    user-select none

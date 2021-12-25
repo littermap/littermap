@@ -22,8 +22,6 @@ map-control-shadow()
   top 13px
   width 100%
   pointer-events none
-  .click-screen ~ &
-    z-modal()
   & form
     padding 0 7px
     & input
@@ -34,7 +32,7 @@ map-control-shadow()
       box-sizing border-box
       padding 4px 12px
       outline-style none
-      pointer-events all
+      pointer-events auto
       &::placeholder
         text-align right
   & .search-results
@@ -48,8 +46,7 @@ map-control-shadow()
     max-width 592px
     user-select none
     map-control-shadow()
-    clear right
-    pointer-events all
+    pointer-events auto
     .result
       padding 1px 4px
       cursor pointer
@@ -83,8 +80,6 @@ button.map-control
   position absolute
   bottom 33px
   left 10px
-  .click-screen ~ &
-    z-modal()
   & .menu-toggle
     position relative
     & img.icon
@@ -119,16 +114,13 @@ button.map-control
   color #eee
   text-shadow 1px 1px 2px black
   pill-shape()
-  position absolute
-  left 50%
-  transform: translateX(-50%)
+  absolute-centered-dynamic-width()
   bottom 30px
   padding 0 1em
   text-align center
   white-space nowrap
   font-size 14px
   opacity 0.8
-  cursor pointer
   pointer-events none
 
 #announcements

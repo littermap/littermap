@@ -86,6 +86,7 @@ function initMap() {
   // Focus the map, so the keyboard shortcuts work right away
   google.maps.event.addListenerOnce(map, 'tilesloaded',
     () => {
+      // The element that receives keyboard input can be caught this way at this stage of loading
       mapElement.children[0].children[0].children[0].focus()
     }
   )

@@ -11,7 +11,7 @@ export default () => {
 
   return (
     <>
-      <div id="menu-toggle" onclick={toggleMenu} style={store.showingMenu ? "z-index: 102" : ""}>
+      <div id="menu-toggle" onclick={toggleMenu}>
         <BurgerGlyph />
       </div>
 

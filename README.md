@@ -44,6 +44,10 @@ Build and then monitor source files for changes, which automatically trigger a r
 
 Install them with `pnpm` and just `import` them in the scripts. The build system is going to automatically roll everything into a self-contained bundle and insert it into the end product.
 
+To update the dependencies to the newest versions:
+
+- `pnpm up`
+
 ### Local testing
 
 Use [ngrok](https://ngrok.com/) as an internet HTTPS proxy to the local HTTP proxy started with `pnpm proxy` for HTTPS support:
@@ -56,7 +60,7 @@ For Google Sign-in to work, the OAuth URL will need to be white-listed in the Go
 
 #### Testing on an Android device while serving from another machine
 
-While the website can be loaded from another machine serving it over a network, Google Sign-in will refuse to log you in if the redirect URL is not from an approved domain. Google OAuth will refuse to white-list a local IP, so the solution is to specify `localhost` as the redirect target (which it will accept) and then to use a local forwarding proxy to fetch the website over the network.
+While the website can be loaded from another machine serving it over a network, Google Sign-in will refuse to log you in if the redirect URL is not from an approved domain. Google OAuth will refuse to white-list a local IP, so the solution is to specify `localhost` as the redirect target (which it does accept) and then to use a local forwarding proxy to fetch the website over the network.
 
 - Install `termux` from the [F-Droid](https://f-droid.org/) repository
 - Run `pkg install nodejs openssl-tool`

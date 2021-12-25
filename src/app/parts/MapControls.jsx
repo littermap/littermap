@@ -8,6 +8,7 @@ import MapButtons from './MapButtons'
 import HintBar from './HintBar'
 import SocialButtons from './SocialButtons'
 import Announcements from './Announcements'
+import PhotoViewer from './PhotoViewer'
 import MainStore from '../store'
 
 export default () => {
@@ -16,16 +17,17 @@ export default () => {
   return (
     <Show when={store.mapLoaded}>
       <Portal mount={document.getElementById('map')}>
-
-        <Show when={!store.showingStreetView}>
-          <AddressSearch />
-          <ProfileAvatar />
-          <MapButtons />
-        </Show>
-
+        <Announcements />
         <HintBar />
         <SocialButtons />
-        <Announcements />
+
+        <Show when={!store.showingStreetView}>
+          <ProfileAvatar />
+          <MapButtons />
+          <AddressSearch />
+        </Show>
+
+        <PhotoViewer />
       </Portal>
     </Show>
   )

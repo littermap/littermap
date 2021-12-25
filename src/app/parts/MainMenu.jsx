@@ -10,7 +10,8 @@ export default () => {
 
   return (
     <>
-      <div onclick={hideMenu} class="click-screen" />
+      <div class="click-screen" onclick={hideMenu} />
+
       <nav id="menu">
         <ul>
           <Link href="/">

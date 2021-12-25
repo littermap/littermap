@@ -6,15 +6,14 @@ import { submitLocation } from '../../map'
 import createDescription from './parts/fields/Description'
 import createLevel from './parts/fields/Level'
 import createPhotos from './parts/fields/Photos'
+import MainStore from '../../store'
 
 const defaults = {
   description: '',
   level: 10
 }
 
-export default createLocationInfo = (mainStore, existingLocation) => {
-  let [store, { closeEditNewLocation }] = mainStore
-
+export default createLocationInfo = (existingLocation) => {
   const description = createDescription({
     initialValue: !existingLocation ? defaults.description : existingLocation.description,
     pureEdit: !existingLocation
@@ -46,37 +45,41 @@ export default createLocationInfo = (mainStore, existingLocation) => {
     submitLocation(details)
   }
 
-  const render = () => (
-    <>
-      <description.render />
-      <level.render />
-      <photos.render />
+  const render = () => {
+    let [store, { closeEditNewLocation }] = MainStore()
 
-      <Show when={!existingLocation}>
-        <section class="buttons">
-          <button onclick={submit} disabled={photos.isBusy() || !level.isValid()}>
-            Submit
-          </button>
-          <button onclick={cancel}>
-            Cancel
-          </button>
-        </section>
-      </Show>
+    return (
+      <>
+        <description.render />
+        <level.render />
+        <photos.render />
 
-      <Switch>
-        <Match when={!existingLocation && store.profile}>
-          <p class="info">
-            You are logged in as {store.profile.name}
-          </p>
-        </Match>
-        <Match when={existingLocation}>
-          <p class="info">
-            Submitted by <span class="who">{existingLocation.created_by || "someone"}</span> {existingLocation.created_at.comment}
-          </p>
-        </Match>
-      </Switch>
-    </>
-  )
+        <Show when={!existingLocation}>
+          <section class="buttons">
+            <button onclick={submit} disabled={photos.isBusy() || !level.isValid()}>
+              Submit
+            </button>
+            <button onclick={cancel}>
+              Cancel
+            </button>
+          </section>
+        </Show>
+
+        <Switch>
+          <Match when={!existingLocation && store.profile}>
+            <p class="info">
+              You are logged in as {store.profile.name}
+            </p>
+          </Match>
+          <Match when={existingLocation}>
+            <p class="info">
+              Submitted by <span class="who">{existingLocation.created_by || "someone"}</span> {existingLocation.created_at.comment}
+            </p>
+          </Match>
+        </Switch>
+      </>
+    )
+  }
 
   return { render }
 }

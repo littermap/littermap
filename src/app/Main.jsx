@@ -17,6 +17,7 @@ const routes = [ {
 } ]
 
 export default () => {
+  // Page renders based on the route
   const Page = useRoutes(routes)
 
   return (
@@ -26,7 +27,7 @@ export default () => {
       </div>
       <Page />
       <MainInterface />
-      {/* Views rendered in map elements */}
+      {/* Views rendered inside map elements */}
       <ViewLocations />
       <EditNewLocations />
     </>

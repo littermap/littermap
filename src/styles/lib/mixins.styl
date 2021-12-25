@@ -1,0 +1,27 @@
+fill-parent()
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
+
+// Horizontally center an absolutely positioned fixed width element
+absolute-centered-fixed-width()
+  position absolute
+  margin 0 auto
+  left 0
+  right 0
+
+// Center an absolutely positioned fixed size element in both dimensions
+absolute-centered-fixed-size()
+  fill-parent()
+  margin auto
+
+// Horizontally center an element whose width adapts to its content
+absolute-centered-dynamic-width()
+  position absolute
+  left 50%
+  transform: translateX(-50%)
+
+pill-shape()
+  border-radius 999px // percent won't work

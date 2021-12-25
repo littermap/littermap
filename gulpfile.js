@@ -91,6 +91,7 @@ const appConfig = (config) => ({
   social: {
     links: config.social.links
   },
+  title: config.title,
   announcements: config.announcements
 })
 

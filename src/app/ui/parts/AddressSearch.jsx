@@ -73,7 +73,7 @@ export default () => {
   }
 
   // Navigate search results with the keyboard
-  const keydown = event => {
+  const keydown = (event) => {
     let results = searchResults()
     let count = results.length
 

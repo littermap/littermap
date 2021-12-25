@@ -46,11 +46,15 @@ export function StoreProvider(props) {
       setState({ editingNewLocation: false })
       closeSubmitPopup()
     },
-    viewImage({ images, idx } = {}) {
-      if (images) {
+    viewImage(value) {
+      if (typeof value === "number") {
         setState({
-          viewingImages: images,
-          currentImage: idx
+          currentImage: value
+        })
+      } else if (typeof value === "object") {
+        setState({
+          viewingImages: value.images,
+          currentImage: value.idx
         })
       } else {
         setState({

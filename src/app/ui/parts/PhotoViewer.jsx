@@ -24,6 +24,7 @@ export default () => {
         viewNextImage()
         return
       case 27: // Escape
+      case 81: // Q
         viewImage()
         return
       case 68: // D

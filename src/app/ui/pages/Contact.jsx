@@ -5,10 +5,10 @@ export default () => {
         <img class="logo" src="/images/logo.svg" />
         <h1>Contact Us</h1>
         <p>
-          Connect with us on Instagram, Twitter and TikTok or contact us by <a href="mailto:danielaarontoben@gmail.com">e-mail</a>.
+          Connect with us on <a href="https://fb.me/littermap">Facebook</a>, <a href="https://instagram.com/littermap">Instagram</a>, <a href="https://twitter.com/littermap">Twitter</a> and <a href="https://tiktok.com/@danieltoben">TikTok</a> or contact us by <a href="mailto:daniel@littermap.com">e-mail</a>.
         </p>
         <p>
-          We love you.
+          Join us on <a href="https://discord.gg/uxUPk8kb">Discord</a>.
         </p>
       </div>
     </div>

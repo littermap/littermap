@@ -8,7 +8,7 @@ export default () => {
           This explicit agreement is between <b>You</b> (heretofore referred to as <b>Litter Hero</b>) and <b>The Earth Stewards</b> (heretofore referred to as <b>Service Provider</b>).
         </p>
         <p>
-          By reading this page you hereby agree...
+          By using this service you consent to these terms and conditions.
         </p>
         <p>
           You are asked to abide by these responsibilities:
@@ -28,6 +28,9 @@ export default () => {
         </p>
         <p>
           Your contributions are yours, and the website is ours.
+        </p>
+        <p>
+          However, we reserve the right to edit or delete content in order to moderate.
         </p>
       </div>
     </div>

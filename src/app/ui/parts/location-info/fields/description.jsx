@@ -2,8 +2,9 @@
 // Editable description field
 //
 
-import { createSignal, onMount } from 'solid-js'
+import { createSignal, onMount, onCleanup } from 'solid-js'
 import createEditable from '../editable-field'
+import MainStore from '../../../../main-store'
 
 export default createDescriptionField = ({ initialValue, pureEdit }) => {
   const [getInputValue, setInputValue] = createSignal(initialValue)
@@ -26,6 +27,8 @@ export default createDescriptionField = ({ initialValue, pureEdit }) => {
   )
 
   const RenderEdit = () => {
+    const [, { captureKeyboard }] = MainStore()
+
     let textArea
 
     function setAutoHeight() {
@@ -49,6 +52,18 @@ export default createDescriptionField = ({ initialValue, pureEdit }) => {
     }
 
     onMount(setAutoHeight)
+
+    onMount(
+      () => {
+        captureKeyboard(true)
+      }
+    )
+
+    onCleanup(
+      () => {
+        captureKeyboard(false)
+      }
+    )
 
     return (
       <textarea oninput={setAutoHeight} onchange={valueChanged} ref={textArea}>

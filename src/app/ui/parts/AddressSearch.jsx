@@ -1,5 +1,6 @@
 import { createSignal, createResource } from 'solid-js'
 import { goTo, getCenter } from '../../map'
+import MainStore from '../../main-store'
 
 const searchAsYouType = 2
 
@@ -21,6 +22,8 @@ const zooms = {
 }
 
 export default () => {
+  const [store] = MainStore()
+
   // What's in the input field
   const [searchInput, setSearchInput] = createSignal("")
 
@@ -123,10 +126,12 @@ export default () => {
 
   // Configure a hot key to focus the input field
   document.addEventListener('keydown', (event) => {
-    if (event.code === 'Slash') {
-      if (event.target !== inputElement) {
-        event.preventDefault()
-        inputElement.focus()
+    if (!store.keyboardCaptured) {
+      if (event.code === 'Slash') {
+        if (event.target !== inputElement) {
+          event.preventDefault()
+          inputElement.focus()
+        }
       }
     }
   })

@@ -28,7 +28,8 @@ export function StoreProvider(props) {
     viewingLocations: [],
     editingNewLocations: [],
     viewingImages: null,
-    currentImage: null
+    currentImage: null,
+    keyboardCaptured: false
   })
 
   // Actions meant to be invoked by UI components
@@ -38,6 +39,9 @@ export function StoreProvider(props) {
     },
     hideMenu() {
       setState({ showingMenu: false })
+    },
+    captureKeyboard(value) {
+      setState({ keyboardCaptured: value })
     },
     initiateLogin() {
       setState({ loggingIn: true })

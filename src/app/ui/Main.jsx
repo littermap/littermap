@@ -12,6 +12,9 @@ const routes = [ {
   path: "/contact",
   component: lazy(() => import('./pages/Contact'))
 }, {
+  path: "/faq",
+  component: lazy(() => import('./pages/FAQ'))
+}, {
   path: "/terms",
   component: lazy(() => import('./pages/Terms'))
 } ]

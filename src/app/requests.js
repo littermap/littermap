@@ -1,5 +1,5 @@
 const apis = {
-  littermap: config.backend.api
+  littermap: config.routes.api
 }
 
 function createRequestAgent() {

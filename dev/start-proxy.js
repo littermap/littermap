@@ -18,13 +18,13 @@ const httpProxy = require('http-proxy-middleware')
 const createCert = require('create-cert')
 const https = require('https')
 
-const port = config.dev.serve_port || 9999
+const port = config.local_dev.serve_port || 9999
 
 let proxy = httpProxy.createProxyMiddleware({
   target: 'http://localhost:3474',
   router: {
-    '/api': config.dev.api_host,
-    '/media': config.dev.media_host
+    '/api': config.local_dev.api_host,
+    '/media': config.local_dev.media_host
   },
   changeOrigin: true
 })

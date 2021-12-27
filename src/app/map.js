@@ -270,7 +270,7 @@ async function loadLocations() {
 
   let url = `/radius?lat=${lat}&lon=${lon}&r=${radius}&format=geojson`
 
-  let res = await fetch(config.backend.api + url)
+  let res = await fetch(config.routes.api + url)
 
   if (res.ok) {
     let json = await res.json()
@@ -361,7 +361,7 @@ function submitLocation({description, level, images}) {
   }
 
   let request = new XMLHttpRequest()
-  request.open('POST', config.backend.api + '/add')
+  request.open('POST', config.routes.api + '/add')
   request.withCredentials = true
   request.send(JSON.stringify(data))
 

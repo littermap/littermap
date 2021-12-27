@@ -64,10 +64,7 @@ readConfig()
 //
 
 const appConfig = (config) => ({
-  backend: {
-    api: config.backend.api,
-    media: config.backend.media,
-  },
+  routes: config.routes,
   credentials: {
     mapbox: {
       access_token: config.map.mapbox.access_token,

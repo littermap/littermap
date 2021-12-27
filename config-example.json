@@ -1,15 +1,15 @@
 {
   "title": "Litter Map",
   "development": true,
-  "dev": {
+  "debug": {
+    "upload_info": false
+  },
+  "local_dev": {
     "api_host": "!!! e.g., https://37afdv1r02.execute-api.us-east-1.amazonaws.com",
     "media_host": "!!! e.g., https://littermap-backend-mediabucket-82xb02kpntrb9.s3.amazonaws.com",
     "serve_port": 9999
   },
-  "debug": {
-    "upload_info": false
-  },
-  "backend": {
+  "routes": {
     "api": "/api",
     "media": "/media"
   },

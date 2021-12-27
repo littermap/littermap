@@ -285,7 +285,7 @@ export default createFileUploader = ({maxFiles = -1, maxFileSize = -1, existingI
       item => {
         items.push({
           id: item,
-          src: config.backend.media + '/' + item,
+          src: config.routes.media + '/' + item,
           status: "existing"
         })
       }

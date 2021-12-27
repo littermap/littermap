@@ -6,7 +6,7 @@ import { createEffect } from 'solid-js'
 import Logo from './Logo'
 import MainStore from '../../main-store'
 
-const url = config.backend.media + '/'
+const url = config.routes.media + '/'
 
 export default () => {
   const [store, { viewImage, viewNextImage, viewPrevImage }] = MainStore()

@@ -6,7 +6,8 @@ export default (actions) => {
 
   Object.assign(actions, {
     async logout() {
-      mutate(false)
+      // Set the logged in profile to "none"
+      mutate(null)
 
       try {
         await agent.profile.logout()

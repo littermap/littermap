@@ -14,18 +14,29 @@ const defaults = {
 }
 
 export default createLocationInfo = (existingLocation) => {
+  function allowedToEdit(profile) {
+    if (existingLocation) {
+      return config.debug.role === "admin" || (profile && profile.id === existingLocation.created_by)
+    } else {
+      return !!profile
+    }
+  }
+
   const description = createDescription({
     initialValue: !existingLocation ? defaults.description : existingLocation.description,
+    allowedToEdit,
     pureEdit: !existingLocation
   })
 
   const level = createLevel({
     initialValue: !existingLocation ? defaults.level : existingLocation.level,
+    allowedToEdit,
     pureEdit: !existingLocation
   })
 
   const photos = createPhotos({
     initialItems: !existingLocation ? [] : existingLocation.images,
+    allowedToEdit,
     pureEdit: !existingLocation
   })
 
@@ -56,7 +67,7 @@ export default createLocationInfo = (existingLocation) => {
 
         <Show when={!existingLocation}>
           <section class="buttons">
-            <button onclick={submit} disabled={photos.isBusy() || !level.isValid()}>
+            <button onclick={submit} disabled={!allowedToEdit(store.profile) || photos.isBusy() || !level.isValid()}>
               Submit
             </button>
             <button onclick={cancel}>
@@ -66,9 +77,9 @@ export default createLocationInfo = (existingLocation) => {
         </Show>
 
         <Switch>
-          <Match when={!existingLocation && store.profile}>
+          <Match when={!existingLocation}>
             <p class="info">
-              You are logged in as {store.profile.name}
+              {store.profile ? `You are logged in as ${store.profile.name}` : "You are not logged in"}
             </p>
           </Match>
           <Match when={existingLocation}>

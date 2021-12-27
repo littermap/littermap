@@ -7,7 +7,7 @@ import createFileUploader from '../file-uploader'
 import createEditable from '../editable-field'
 import MainStore from '../../../../main-store'
 
-export default createPhotosField = ({ initialItems, pureEdit }) => {
+export default createPhotosField = ({ initialItems, allowedToEdit, pureEdit }) => {
   const [getSavedItems, setSavedItems] = createSignal(initialItems)
 
   const FileUploader = createFileUploader({
@@ -70,7 +70,8 @@ export default createPhotosField = ({ initialItems, pureEdit }) => {
     RenderEdit,
     pureEdit,
     resetFn,
-    saveFn
+    saveFn,
+    allowedToEdit
   })
 
   return {

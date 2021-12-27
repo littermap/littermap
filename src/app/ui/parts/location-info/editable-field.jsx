@@ -5,8 +5,11 @@
 import { onMount, onCleanup } from 'solid-js'
 import { createSignal } from 'solid-js'
 import { PencilGlyph } from '../../elements/glyphs'
+import MainStore from '../../../main-store'
 
-export default createEditable = ({ title, RenderView, RenderEdit, pureEdit, resetFn, saveFn, isValid }) => {
+export default createEditable = (
+  { title, RenderView, RenderEdit, pureEdit, resetFn, saveFn, isValid, allowedToEdit }
+) => {
   // States: viewing, editing, saving
   const [getState, setState] = createSignal(pureEdit ? "editing" : "viewing")
 
@@ -31,6 +34,8 @@ export default createEditable = ({ title, RenderView, RenderEdit, pureEdit, rese
   }
 
   const render = () => {
+    const [store] = MainStore()
+
     function keydown(event) {
       if (event.which === 27) {
         if (!pureEdit && getState() === "editing") {
@@ -56,7 +61,7 @@ export default createEditable = ({ title, RenderView, RenderEdit, pureEdit, rese
       <section>
         <label>
           {title}
-          <Show when={getState() === "viewing"}>
+          <Show when={getState() === "viewing" && allowedToEdit(store.profile)}>
             <button class="edit" onclick={editClicked}>
               <PencilGlyph />
             </button>
@@ -67,7 +72,7 @@ export default createEditable = ({ title, RenderView, RenderEdit, pureEdit, rese
             <RenderEdit />
             <Show when={!pureEdit}>
               <div class="buttons">
-                <button onclick={saveClicked} disabled={getState() === "saving" || (isValid && !isValid())}>
+                <button onclick={saveClicked} disabled={getState() === "saving" || (isValid && !isValid()) || !allowedToEdit(store.profile)}>
                   {getState() === "saving" ? "Saving..." : "Save"}
                 </button>
                 <button onclick={cancelClicked} disabled={getState() === "saving"}>

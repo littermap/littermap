@@ -6,7 +6,7 @@ import { createSignal, onMount, onCleanup } from 'solid-js'
 import createEditable from '../editable-field'
 import MainStore from '../../../../main-store'
 
-export default createDescriptionField = ({ initialValue, pureEdit }) => {
+export default createDescriptionField = ({ initialValue, allowedToEdit, pureEdit }) => {
   const [getInputValue, setInputValue] = createSignal(initialValue)
   const [getSavedValue, setSavedValue] = createSignal(initialValue)
 
@@ -78,7 +78,8 @@ export default createDescriptionField = ({ initialValue, pureEdit }) => {
     RenderEdit,
     pureEdit,
     resetFn,
-    saveFn
+    saveFn,
+    allowedToEdit
   })
 
   return {

@@ -3,7 +3,7 @@
 //
 
 import { createSignal } from 'solid-js'
-import createEditable from '../editable-field'
+import createEditableField from '../editable-field'
 
 const litterLevels = [
   [1,   "You've got to be kidding"],
@@ -18,7 +18,7 @@ const litterLevels = [
   [100, "Please be honest"]
 ]
 
-export default createLevelField = ({ initialValue, pureEdit }) => {
+export default createLevelField = ({ initialValue, allowedToEdit, pureEdit }) => {
   const [getInputValue, setInputValue] = createSignal(initialValue)
   const [getSavedValue, setSavedValue] = createSignal(initialValue)
 
@@ -66,14 +66,15 @@ export default createLevelField = ({ initialValue, pureEdit }) => {
     )
   }
 
-  const editable = createEditable({
+  const editable = createEditableField({
     title: "Litter level",
     RenderView,
     RenderEdit,
     pureEdit,
     resetFn,
     saveFn,
-    isValid
+    isValid,
+    allowedToEdit
   })
 
   return {

@@ -17,6 +17,10 @@ export default () => {
         <p>
           These features are coming soon. Stay in <Link href="/contact">touch</Link> with us to be the first to know.
         </p>
+        <h2>Does this site use cookies?</h2>
+        <p>
+          This site uses cookies to keep track of whether you're logged in.
+        </p>
         <h2>I'd like to donate to support this project</h2>
         <p>
           We are working on accepting donations to make this an openly funded project.

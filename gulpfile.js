@@ -71,25 +71,26 @@ const appConfig = (config) => ({
     }
   },
   development: config.development,
-  debug: {
-    upload_info: config.debug.upload_info
-  },
+  debug: config.development ? {
+    upload_info: config.debug.upload_info,
+    role: config.debug.role,
+  } : {},
   map: {
     defaults: config.map.defaults,
     min_add_location_zoom: config.map.min_add_location_zoom,
     address_search_as_you_type: config.map.address_search_as_you_type,
     long_click_interval: config.map.long_click_interval,
-    fetch_debounce: config.map.fetch_debounce
+    fetch_debounce: config.map.fetch_debounce,
   },
   location: {
     max_uploads: config.location.max_uploads,
-    max_file_size: config.location.max_file_size
+    max_file_size: config.location.max_file_size,
   },
   social: {
-    links: config.social.links
+    links: config.social.links,
   },
   title: config.title,
-  announcements: config.announcements
+  announcements: config.announcements,
 })
 
 //

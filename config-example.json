@@ -2,7 +2,8 @@
   "title": "Litter Map",
   "development": true,
   "debug": {
-    "upload_info": false
+    "upload_info": false,
+    "role": ""
   },
   "local_dev": {
     "api_host": "!!! e.g., https://37afdv1r02.execute-api.us-east-1.amazonaws.com",

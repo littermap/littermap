@@ -2,6 +2,7 @@
 // What's rendered over the map
 //
 
+import DebugInfo from './DebugInfo'
 import Announcements from './Announcements'
 import HintBar from './HintBar'
 import SocialButtons from './SocialButtons'
@@ -17,6 +18,7 @@ export default () => {
   return (
     <Show when={store.mapLoaded}>
       <Portal mount={document.getElementById('map')}>
+        <DebugInfo />
         <Announcements />
         <HintBar />
         <SocialButtons />

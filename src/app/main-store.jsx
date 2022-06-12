@@ -10,9 +10,10 @@ import createLocationInfo from './ui/parts/location-info/location-info'
 
 const StoreContext = createContext()
 
-export function StoreProvider(props) {
-  let profile, store
+export function MainStoreProvider(props) {
+  let profile
 
+  // Reactive store for the state
   const [state, setState] = createStore({
     get profile() {
       return profile()
@@ -32,7 +33,7 @@ export function StoreProvider(props) {
     keyboardCaptured: false
   })
 
-  // Actions meant to be invoked by UI components
+  // Actions that change the state
   const actions = {
     toggleMenu() {
       setState({ showingMenu: !state.showingMenu })
@@ -104,19 +105,16 @@ export function StoreProvider(props) {
     setState({ loggingIn: false })
   })
 
-  // Interface to the data store (read current state, perform actions that change the state)
-  store = [state, actions]
-
   profile = createProfile(actions)
 
   return (
-    <StoreContext.Provider value={store}>
+    <StoreContext.Provider value={[state, actions]}>
       {props.children}
     </StoreContext.Provider>
   )
 }
 
-// Gives access to the data store
-export default function useStore() {
+// Gives access to the data store (must be called at render time)
+export default function MainStore() {
   return useContext(StoreContext)
 }

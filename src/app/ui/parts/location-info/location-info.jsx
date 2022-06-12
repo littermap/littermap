@@ -40,24 +40,24 @@ export default createLocationInfo = (existingLocation) => {
     pureEdit: !existingLocation
   })
 
-  function cancel() {
-    closeEditNewLocation()
-  }
-
-  function submit() {
-    let details = {
-      description: description.getInputValue(),
-      level: level.getInputValue(),
-      images: photos.getItems()
-    }
-
-    closeEditNewLocation()
-
-    submitLocation(details)
-  }
-
   const render = () => {
     let [store, { closeEditNewLocation }] = MainStore()
+
+    function cancel() {
+      closeEditNewLocation()
+    }
+
+    function submit() {
+      let details = {
+        description: description.getInputValue(),
+        level: level.getInputValue(),
+        images: photos.getItems()
+      }
+
+      closeEditNewLocation()
+
+      submitLocation(details)
+    }
 
     return (
       <>

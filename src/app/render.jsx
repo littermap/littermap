@@ -1,6 +1,6 @@
 import { render } from 'solid-js/web'
 import { Router } from 'solid-app-router'
-import { StoreProvider } from './main-store'
+import { MainStoreProvider as Store } from './main-store'
 import Main from './ui/Main'
 
 import './platform'
@@ -11,8 +11,8 @@ if (config.development)
 
 render(() => (
   <Router>
-    <StoreProvider>
+    <Store>
       <Main />
-    </StoreProvider>
+    </Store>
   </Router>
 ), document.getElementById('app'))

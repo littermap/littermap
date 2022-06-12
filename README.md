@@ -34,6 +34,8 @@ In a separate terminal, start the proxy that combines the front-end and back-end
 
 The app should now be available at http://localhost:9999
 
+If your browser complains about the self-signed SSL certificate, just bypass that warning.
+
 ## Development
 
 Build and then monitor source files for changes, which automatically trigger a rebuild:

@@ -16,7 +16,7 @@ const defaults = {
 export default createLocationInfo = (existingLocation) => {
   function allowedToEdit(profile) {
     if (existingLocation) {
-      return config.debug.role === "admin" || (profile && profile.id === existingLocation.created_by)
+      return config.debug.role === "admin" || (profile && existingLocation.created_by &&  profile.id === existingLocation.created_by.id)
     } else {
       return !!profile
     }
@@ -84,7 +84,7 @@ export default createLocationInfo = (existingLocation) => {
           </Match>
           <Match when={existingLocation}>
             <p class="info">
-              Submitted by <span class="who">{existingLocation.created_by || "someone"}</span> {existingLocation.created_at.comment}
+              Submitted by <span class="who">{existingLocation.created_by.name || "someone"}</span> {existingLocation.created_at.comment}
             </p>
           </Match>
         </Switch>

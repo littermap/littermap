@@ -8,14 +8,14 @@ export default () => {
         <h1>Frequently Asked Questions</h1>
         <h2>How can I contribute?</h2>
         <p>
-          Use it and tell your friends. Join us on <a href="https://discord.gg/uxUPk8kb">Discord</a>.
+          Use it and tell your friends. Join us on <a href="https://discord.gg/zPGZ2cE6">discord</a>.
         </p>
         <h2>Can places be edited?</h2>
         <p>
-          They can't be edited or deleted yet.
+          They can't be edited or deleted yet (see <a href="https://github.com/earthstewards/littermap-aws-backend/issues/15">issue on github</a>).
         </p>
         <p>
-          These features are coming soon. Stay in <Link href="/contact">touch</Link> with us to be the first to know.
+          Stay in <Link href="/contact">touch</Link> with the project to be in the know when new features get added.
         </p>
         <h2>Does this site use cookies?</h2>
         <p>
@@ -27,14 +27,11 @@ export default () => {
         </p>
         <h2>Who created this project?</h2>
         <p>
-          This project was started by <a href="https://tiktok.com/@danieltoben">Daniel Toben</a> and <a href="https://github.com/specious">Ildar Sagdejev</a>.
+          This project was started by <a href="https://tiktok.com/@danieltoben">Daniel Toben</a> and <a href="https://github.com/specious">Ildar Sagdejev</a> and we are looking for contributors interested in joining the team.
         </p>
+        <h2>Is the code for this app available?</h2>
         <p>
-          But we are looking for contributors interested in joining the team.
-        </p>
-        <h2>How is this app written?</h2>
-        <p>
-          Nobody actually asks this question.
+          The code for both the app and the back-end service is on <a href="https://github.com/earthstewards">github</a> and you can help make it better.
         </p>
       </div>
     </div>

@@ -22,6 +22,7 @@ export default () => {
           let val = config.debug[key]
 
           switch (key) {
+            case "network":
             case "upload_info":
               // Don't display if feature is turned off
               if (!val)

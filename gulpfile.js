@@ -60,7 +60,7 @@ const readConfig = () => {
 readConfig()
 
 //
-// Judiciously introduce relevant configuration options into the application code
+// Sensibly choose precisely which configuration options to introduce into the application code
 //
 
 const appConfig = (config) => ({
@@ -72,6 +72,7 @@ const appConfig = (config) => ({
   },
   development: config.development,
   debug: config.development ? {
+    network: config.debug.network,
     upload_info: config.debug.upload_info,
     role: config.debug.role,
   } : {},

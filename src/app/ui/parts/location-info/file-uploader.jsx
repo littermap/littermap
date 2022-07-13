@@ -5,7 +5,7 @@
 //
 
 import { createStore } from 'solid-js/store'
-import agent from '../../../requests'
+import network from '../../../requests'
 
 const defaults = {
   items: [],
@@ -255,7 +255,7 @@ export default createFileUploader = ({maxFiles = -1, maxFileSize = -1, existingI
   }
 
   async function fetchUploadLink() {
-    return await agent.uploads.getUploadLink()
+    return await network.uploads.getUploadLink()
   }
 
   function itemClicked(idx) {

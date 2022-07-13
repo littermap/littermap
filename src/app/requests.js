@@ -1,57 +1,88 @@
-const apis = {
-  littermap: config.routes.api
+//
+// Extendable list of remote services
+//
+const remotes = {
+  main: config.routes.api
 }
 
-function createRequestAgent() {
-  //
-  // REST communication
-  //
-  async function request(api, method, url, sendData, field) {
-    const opts = {
-      method
+async function request({ api = "main", method = "get", endpoint, field, payload }) {
+  if (config.debug.network)
+    console.info("Making request:", endpoint)
+
+  const opts = {
+    method
+  }
+
+  if (payload) {
+    opts.headers = { "Content-Type": "application/json" }
+    opts.body = JSON.stringify(payload)
+  }
+
+  let response, receivedData
+
+  try {
+    response = await fetch(remotes[api] + endpoint, opts)
+
+    if (config.debug.network) {
+      console.info("Reponse from endpoint:", endpoint)
+      console.info(response)
     }
 
-    if (sendData) {
-      opts.headers = { "Content-Type": "application/json" }
-      opts.body = JSON.stringify(sendData)
-    }
+    if (!response.ok) {
+      console.error("Server returned status: " + response.status)
 
-    let response, receivedData
-
-    try {
-      response = await fetch(apis[api] + url, opts)
-    } catch (e) {
-      console.error(e)
-      console.error("Fetch error")
+      // Response body
+      console.error(await response.text())
 
       return undefined
     }
+  } catch (e) {
+    console.error("HTTP fetch error")
+    console.error(e)
 
-    try {
-      receivedData = await response.json()
-    } catch (e) {
-      console.error(e)
-      console.error("Server response is not valid JSON as expected")
-
-      return undefined
-    }
-
-    return field ? receivedData[field] : receivedData
+    return undefined
   }
 
-  const profile = {
-    get: () => request("littermap", "get", "/profile", null, "profile"),
-    logout: () => request("littermap", "get", "/logout")
+  try {
+    receivedData = await response.json()
+  } catch (e) {
+    console.error("Received response from server is not valid JSON as expected")
+    console.error(e)
+
+    return undefined
   }
 
-  const uploads = {
-    getUploadLink: () => request("littermap", "get", "/getuploadlink")
+  if (config.debug.network) {
+    console.info("Received data from endpoint:", endpoint)
+    console.info(receivedData)
   }
 
-  return {
-    profile,
-    uploads
+  // If the service explicitly returned an error...
+  if (receivedData.error) {
+    console.error(receivedData)
+
+    return undefined
   }
+
+  //
+  // If the request was for a specific field, return just that field
+  //
+  return field ? receivedData[field] : receivedData
 }
 
-export default createRequestAgent()
+export default {
+  profile: {
+    get: () => request({
+      endpoint: "/profile",
+      field: "profile"
+    }),
+    logout: () => request({
+      endpoint: "/logout"
+    })
+  },
+  uploads: {
+    getUploadLink: () => request({
+      endpoint: "/getuploadlink"
+    })
+  }
+}

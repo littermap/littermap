@@ -1,16 +1,17 @@
 import { createResource } from 'solid-js'
-import agent from '../requests'
+import network from '../requests'
 
 export default (actions) => {
-  const [profile, { mutate }] = createResource(agent.profile.get)
+  const [profile, { mutate }] = createResource(network.profile.get)
 
   Object.assign(actions, {
     async logout() {
-      // Set the logged in profile to "none"
-      mutate(null)
-
       try {
-        await agent.profile.logout()
+        await network.profile.logout()
+
+        // Set the logged in profile to "none"
+        mutate(null)
+
         console.info("Logged out")
       } catch(e) {
         console.error("Error logging out:", e.message)

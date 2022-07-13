@@ -270,6 +270,9 @@ async function loadLocations() {
 
   let url = `/radius?lat=${lat}&lon=${lon}&r=${radius}&format=geojson`
 
+  if (config.debug.network)
+    console.info("Fetching:", url)
+
   let res = await fetch(config.routes.api + url)
 
   if (res.ok) {

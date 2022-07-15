@@ -1,3 +1,5 @@
+import { debounce } from './utils/debounce'
+
 let map, infoPopup, submitPopup, points = []
 
 const submitPopupContent = {
@@ -173,7 +175,7 @@ function editNewLocation() {
   //
   // Center the view on the popup 
   //
-  // TODO: Consider instead adjusting the view just enough to accommodate the popup
+  // TODO: Consider adjusting the view just enough to accommodate the popup
   //
   map.panTo(
     new google.maps.LatLng(
@@ -241,28 +243,7 @@ function zoomChanged() {
   window.actions.updateZoom(map.getZoom())
 }
 
-let debouncing = false
-let needToUpdate = false
-
-function requestLocations() {
-  if (!debouncing) {
-    debouncing = true
-    loadLocations()
-
-    setTimeout(
-      () => {
-        debouncing = false
-
-        if (needToUpdate) {
-          needToUpdate = false
-          loadLocations()
-        }
-      },
-      config.map.fetch_debounce
-    )
-  } else
-    needToUpdate = true
-}
+var requestLocations = debounce(loadLocations, config.map.fetch_interval, config.map.fetch_delay)
 
 async function loadLocations() {
   let { lat, lon } = getCenter()

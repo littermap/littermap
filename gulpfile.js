@@ -81,7 +81,8 @@ const appConfig = (config) => ({
     min_add_location_zoom: config.map.min_add_location_zoom,
     address_search_as_you_type: config.map.address_search_as_you_type,
     long_click_interval: config.map.long_click_interval,
-    fetch_debounce: config.map.fetch_debounce,
+    fetch_interval: config.map.fetch_interval,
+    fetch_delay: config.map.fetch_delay,
   },
   location: {
     max_uploads: config.location.max_uploads,

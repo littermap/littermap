@@ -30,7 +30,8 @@
     "min_add_location_zoom": 17,
     "address_search_as_you_type": 1,
     "long_click_interval": 800,
-    "fetch_debounce": 1200
+    "fetch_interval": 1200,
+    "fetch_delay": 200
   },
   "location": {
     "max_uploads": 6,

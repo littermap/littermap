@@ -31,7 +31,7 @@
     "address_search_as_you_type": 1,
     "long_click_interval": 800,
     "fetch_interval": 1200,
-    "fetch_delay": 200
+    "fetch_delay": 100
   },
   "location": {
     "max_uploads": 6,

@@ -88,7 +88,7 @@ function initMap() {
   // Focus the map, so the keyboard shortcuts work right away
   google.maps.event.addListenerOnce(map, 'tilesloaded',
     () => {
-      // The element that receives keyboard input can be caught this way at this stage of loading
+      // The element that receives keyboard input can be selected this way at this particular stage of loading
       mapElement.children[0].children[0].children[0].focus()
     }
   )
@@ -245,6 +245,8 @@ function zoomChanged() {
 
 var requestLocations = debounce(loadLocations, config.map.fetch_interval, config.map.fetch_delay)
 
+let cancel
+
 async function loadLocations() {
   let { lat, lon } = getCenter()
   let radius = getViewRadius()
@@ -254,14 +256,38 @@ async function loadLocations() {
   if (config.debug.network)
     console.info("Fetching:", url)
 
-  let res = await fetch(config.routes.api + url)
+  // Abort previous request
+  if (cancel)
+    cancel.abort()
+
+  cancel = new AbortController()
+  const signal = cancel.signal
+
+  let res
+
+  try {
+    res = await fetch(config.routes.api + url, { signal })
+  } catch(e) {
+    if (e instanceof DOMException && e.name === "AbortError") {
+      // It is perfectly normal for a request to be aborted due to a newer request taking its place
+      if (config.debug.network)
+        console.info("Existing active litter location fetch request cancelled by newer fetch request")
+    } else {
+      console.error(e)
+      console.info("Failed to fetch litter locations")
+    }
+
+    // The request failed and no locations will be loaded this time
+    return
+  }
+
+  cancel = null
 
   if (res.ok) {
     let json = await res.json()
     let count = json.features.length
-    let countInfo = count + ((count !== 1) ? " locations" : " location")
 
-    console.log("Received " + countInfo)
+    console.info("Received " + count + ((count !== 1) ? " locations" : " location"))
 
     renderLocations(json.features)
   } else

@@ -18,12 +18,13 @@
     "watch": "rm -rf build/ && gulp watch-autorestart",
     "serve": "superstatic build/ --debug",
     "proxy": "node dev/start-proxy.js",
-    "clean": "rm -rfv build/"
+    "clean": "rm -rfv build/",
+    "check-config": "./dev/check-config"
   },
   "devDependencies": {
     "ansi-colors": "^4.1.3",
     "create-cert": "^1.0.6",
-    "esbuild": "^0.14.48",
+    "esbuild": "^0.14.51",
     "esbuild-plugin-solid": "^0.4.2",
     "express": "^4.18.1",
     "gulp": "^4.0.2",
@@ -38,8 +39,8 @@
     "superstatic": "^8.0.0"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.1.1",
+    "@fortawesome/fontawesome-free": "^6.1.2",
     "solid-app-router": "^0.2.1",
-    "solid-js": "^1.4.6"
+    "solid-js": "^1.4.8"
   }
 }

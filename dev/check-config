@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+complete() {
+  echo -e "\e[1;32m✔ $1\e[0m"
+}
+
+echo "It is up to the administrator to make the sure configuration file is correct, however this script runs a few basic checks"
+echo
+
+if [ ! -f config.json ]; then
+  echo "config.json doesn't exist"
+
+  exit 1
+else
+  complete "config.json exists"
+fi
+
+if ! command -v jq &>/dev/null; then
+  echo
+  echo "Install jq to check config file for JSON syntax errors: https://stedolan.github.io/jq/download/"
+else
+  error=$(jq type < config.json 2>&1 >/dev/null)
+
+  if [ -n "$error" ]; then
+    echo
+    echo "Syntax error detected:"
+    echo
+    echo "$error"
+
+    exit 1
+  else
+    complete "no syntax errors detected"
+  fi
+fi

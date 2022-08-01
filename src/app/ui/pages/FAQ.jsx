@@ -8,7 +8,7 @@ export default () => {
         <h1>Frequently Asked Questions</h1>
         <h2>How can I contribute?</h2>
         <p>
-          Use it and tell your friends. Join us on <a href="https://discord.gg/zPGZ2cE6">discord</a>.
+          Use it and tell your friends. Join us on <a href="https://discord.gg/JvEQMSQaYr">discord</a>.
         </p>
         <h2>Can places be edited?</h2>
         <p>

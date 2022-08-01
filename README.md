@@ -20,6 +20,10 @@ Install dependencies with [pnpm](https://pnpm.io/):
 
 - `pnpm i`
 
+You can run a quick basic check on the configuration file with:
+
+- `pnpm check-config`
+
 Build the app:
 
 - `pnpm build`
@@ -46,9 +50,13 @@ Build and then monitor source files for changes, which automatically trigger a r
 
 Install them with `pnpm` and just `import` them in the scripts. The build system is going to automatically roll everything into a self-contained bundle and insert it into the end product.
 
+To check if new versions of packages exist:
+
+- `pnpm outdated`
+
 To update the dependencies to the newest versions:
 
-- `pnpm up`
+- `pnpm up --latest`
 
 ### Local testing
 

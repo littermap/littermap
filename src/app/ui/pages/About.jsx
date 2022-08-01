@@ -43,7 +43,7 @@ export default () => {
           Monetary contributions to help the project will soon be possible through a transparent donation platform.
         </p>
         <p>
-          By all means, hang out in our <a href="https://discord.gg/zPGZ2cE6">discord channel</a>.
+          By all means, hang out in our <a href="https://discord.gg/JvEQMSQaYr">discord channel</a>.
         </p>
         <h2>The Earth Stewards</h2>
         <p>

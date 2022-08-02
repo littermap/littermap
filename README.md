@@ -16,7 +16,9 @@ Set up the configuration file:
 
 Edit `config.json` and fill in necessary details.
 
-Install dependencies with [pnpm](https://pnpm.io/):
+Install the [pnpm](https://pnpm.io/installation) package manager for managing dependencies and running development scripts.
+
+Install dependencies:
 
 - `pnpm i`
 

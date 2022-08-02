@@ -2,7 +2,7 @@
   "name": "litter-map",
   "version": "1.0.0",
   "description": "Let people report litter on a global map",
-  "homepage": "https://littermap.bitbucket.io/",
+  "homepage": "https://littermap.com",
   "author": "Ildar Sagdejev",
   "private": true,
   "license": "none",
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.1.2",
-    "solid-app-router": "^0.2.1",
+    "solid-app-router": "^0.4.2",
     "solid-js": "^1.4.8"
   }
 }

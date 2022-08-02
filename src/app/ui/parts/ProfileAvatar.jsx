@@ -30,7 +30,7 @@ export default () => {
         </div>
       </Match>
       <Match when={!store.profile}>
-        <a href={config.routes.api + '/login/google'} onclick={initiateLogin}>
+        <a href={config.routes.api + '/login/google'} onclick={initiateLogin} rel="external">
           <div id="avatar">
             <AnonProfilePic />
           </div>

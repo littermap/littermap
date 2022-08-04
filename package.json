@@ -8,10 +8,10 @@
   "license": "none",
   "repository": {
     "type": "git",
-    "url": "earthstewards/littermap"
+    "url": "littermap/littermap"
   },
   "bugs": {
-    "url": "https://github.com/earthstewards/littermap/issues"
+    "url": "https://github.com/littermap/littermap/issues"
   },
   "scripts": {
     "build": "rm -rf build/ && gulp build",

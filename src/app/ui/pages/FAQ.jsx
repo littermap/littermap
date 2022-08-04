@@ -12,7 +12,7 @@ export default () => {
         </p>
         <h2>Can places be edited?</h2>
         <p>
-          They can't be edited or deleted yet (see <a href="https://github.com/earthstewards/littermap-aws-backend/issues/15">issue on github</a>).
+          They can't be edited or deleted yet (see <a href="https://github.com/littermap/littermap-aws-backend/issues/15">issue on github</a>).
         </p>
         <p>
           Stay in <Link href="/contact">touch</Link> with the project to be in the know when new features get added.
@@ -31,7 +31,7 @@ export default () => {
         </p>
         <h2>Is the code for this app available?</h2>
         <p>
-          The code for both the app and the back-end service is on <a href="https://github.com/earthstewards">github</a> and you can help make it better.
+          The code for both the app and the back-end service is on <a href="https://github.com/littermap">github</a> and you can help make it better.
         </p>
       </div>
     </div>

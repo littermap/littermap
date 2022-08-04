@@ -17,7 +17,7 @@ export default () => {
           Being a free and open source collaboration platform, it derives its energy and digital materials primarily from volunteer involvement and participation.
         </p>
         <p>
-          The source code for the app and the cloud service are both on <a href="https://github.com/earthstewards">github</a>. If you think you may want to contribute to its ongoing development, please take a look at the <a href="">contributing guidelines</a>. If you're interested in contributing to the development of the back-end service, we suggest that you start by launching your own instance of the service in your aws account.
+          The source code for the app and the cloud service are both on <a href="https://github.com/littermap">github</a>. If you think you may want to contribute to its ongoing development, please take a look at the <a href="">contributing guidelines</a>. If you're interested in contributing to the development of the back-end service, we suggest that you start by launching your own instance of the service in your aws account.
         </p>
         <p>
           Our primary goal is to solve the dilemma that this platform cannot exist, flourish and continually evolve without valuable contributions from people around the world.
@@ -47,7 +47,7 @@ export default () => {
         </p>
         <h2>The Earth Stewards</h2>
         <p>
-          The Earth Stewards is an initiative to bring people together over taking stewardship of the planet we call home. You can support us by joining an initiative or purchasing our merchandise.
+          The Earth Stewards is a related but separate initiative to bring people together over taking stewardship of the planet we call home. You can support us by joining an initiative or purchasing our merchandise.
         </p>
         <p>
           See our website: <a href="https://www.theearthstewards.com/">The Earth Stewards</a>

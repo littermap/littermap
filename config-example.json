@@ -68,12 +68,12 @@
   },
   "announcements": [
     {
-      "title": "We would like to announce",
-      "message": "Editing details on existing places doesn't save them permanently yet. Please join our <a href=\"https://discord.gg/JvEQMSQaYr\">discord</a> channel to see what's brewing."
+      "title": "Help locate trash on a global map!",
+      "message": "Click the circle profile icon then zoom all the way in to add a point!"
     },
     {
-      "title": "Help us build this free platform",
-      "message": "Check out our <a href=\"https://github.com/littermap\">github</a> repositories."
+      "title": "We would like to announce",
+      "message": "Editing details on existing places doesn't save them permanently yet. Please join our <a href=\"https://discord.gg/JvEQMSQaYr\">discord</a> channel to see what's brewing."
     }
   ]
 }

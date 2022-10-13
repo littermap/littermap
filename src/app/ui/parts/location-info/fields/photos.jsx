@@ -46,7 +46,7 @@ export default createPhotosField = ({ initialItems, allowedToEdit, pureEdit }) =
           <div class="photos">
             <For each={getSavedItems()}>
               {(image, idx) => (
-                <img src={config.routes.media + '/' + image} data-index={idx()} onclick={imageClicked} />
+                <img src={config.routes.media + '/' + image + '/80'} data-index={idx()} onclick={imageClicked} />
               )}
             </For>
           </div>

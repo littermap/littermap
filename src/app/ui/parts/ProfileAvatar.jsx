@@ -1,5 +1,7 @@
 //
-// Current user icon
+// Profile icon showing the current user
+//
+// Acts as the login/logout user interface element
 //
 
 import MainStore from '../../main-store'

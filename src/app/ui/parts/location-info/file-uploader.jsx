@@ -23,7 +23,7 @@ export default createFileUploader = ({maxFiles = -1, maxFileSize = -1, existingI
   setExistingItems(existingItems)
 
   function setItemValue(idx, property, value) {
-    // Set an item property such that it triggers a user interface update
+    // Set an item property in a way that triggers a user interface re-render
     setState('items', idx, property, value)
   }
 
@@ -100,7 +100,7 @@ export default createFileUploader = ({maxFiles = -1, maxFileSize = -1, existingI
 
   function uploadItem(item) {
     return async () => {
-      // Find the item from scratch (in case the item list has changed or it's been deleted)
+      // Find the item from scratch (in case the item list has changed or the item has been deleted)
       let idx = findItem(item.fileHash)
 
       if (idx !== -1) {
@@ -111,7 +111,7 @@ export default createFileUploader = ({maxFiles = -1, maxFileSize = -1, existingI
           return
         }
 
-        item.progress = 0
+        setItemValue(idx, 'progress', 0)
         setItemValue(idx, 'status', "preparing")
 
         let url, fields

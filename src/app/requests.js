@@ -84,5 +84,10 @@ export default {
     getUploadLink: () => request({
       endpoint: "/getuploadlink"
     })
+  },
+  location: {
+    get: () => request({
+      endpoint: "/mylocation"
+    })
   }
 }

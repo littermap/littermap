@@ -25,7 +25,7 @@
     "defaults": {
       "lat": 36.77,
       "lon": -119.42,
-      "zoom": 4
+      "zoom": 6
     },
     "min_add_location_zoom": 17,
     "address_search_as_you_type": 1,

@@ -9,6 +9,8 @@ import './platform'
 if (config.development)
   window.config = config
 
+import './utils/cloudfront-geolocation'
+
 render(() => (
   <Router>
     <Store>

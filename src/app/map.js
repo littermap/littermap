@@ -2,6 +2,11 @@ import { debounce } from './utils/debounce'
 
 let map, infoPopup, submitPopup, points = []
 
+let initialLocation = {
+  lat: config.map.defaults.lat,
+  lon: config.map.defaults.lon
+}
+
 const submitPopupContent = {
   ask: '<span id="add-location" onclick="editNewLocation()" style="font-weight: bold">Add litter location?</span>',
   edit: '<div class="location-info" id="edit-new-location"></div>'
@@ -20,7 +25,10 @@ function initMap() {
   //
 
   map = new google.maps.Map(mapElement, {
-    center: new google.maps.LatLng(config.map.defaults.lat, config.map.defaults.lon),
+    center: new google.maps.LatLng(
+      initialLocation.lat,
+      initialLocation.lon
+    ),
     zoom: config.map.defaults.zoom,
     minZoom: 2,
     restriction: {
@@ -189,10 +197,14 @@ function closeSubmitPopup() {
 }
 
 function goTo({ lat, lon, zoom }) {
-  map.setCenter({ lat, lng: lon })
+  if (map) {
+    map.setCenter({ lat, lng: lon })
 
-  if (zoom)
-    map.setZoom(zoom)
+    if (zoom)
+      map.setZoom(zoom)
+  } else {
+    initialLocation = { lat, lon }
+  }
 }
 
 function getCenter() {

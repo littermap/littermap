@@ -1,3 +1,22 @@
+# Litter Map
+
+Humanity’s calling for the next hundred years is restoring natural beauty to Mother Earth. We believe that the planet is more of a being to be in communion with, rather than a resource to be extracted. To assist in this mission, we are providing a platform to help with global pollution and litter cleanup. This work belongs to the future of the human race, and therefore, we are using technology to provide community support for the cleanup effort. Its host of features is not just valuable to our users, but also to the planet itself.
+
+# Mission
+
+We are advancing humanity’s mission of waste and plastic-pollution cleanup for the protection of Nature from harm and to improve the lives of human and non-human inhabitants. We provide a hub for the mission of cleaning up the planet for many different individuals and organizations, and we aim to be the ultimate resource and center of the cleanup effort.
+
+# Background
+
+We are a team of deeply devoted environmentalists who have a passion for restoring natural beauty. The planet is our common home, we borrow it from our children, and we inherit it from parents. Caring for our common home with all living things will speak into the future a life with less war, famine, destruction, climate disaster, hate, and division.
+
+# Community
+
+Software development live sessions happen on discord https://discord.gg/JvEQMSQaYr.  
+Litter Map is also a registered nonprofit organization with open board meetings on discord.
+
+# Technical Documentation
+
 Web front-end for the Litter Map application.
 
 ## Technologies

@@ -10,6 +10,7 @@ if (config.development)
   window.config = config
 
 import './utils/cloudfront-geolocation'
+import './utils/meta-sdk'
 
 render(() => (
   <Router>

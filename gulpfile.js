@@ -76,6 +76,10 @@ const appConfig = (config) => ({
     upload_info: config.debug.upload_info,
     role: config.debug.role,
   } : {},
+  meta: {
+    app_id: config.meta.app_id
+    api_version: config.meta.api_version
+  },
   map: {
     defaults: config.map.defaults,
     min_add_location_zoom: config.map.min_add_location_zoom,

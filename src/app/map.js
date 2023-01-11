@@ -109,6 +109,7 @@ function initMap() {
   if (config.development) {
     window.map = map
   }
+  addDaniel()
 }
 
 let downState
@@ -394,6 +395,27 @@ function submitLocation({description, level, images}) {
       loadLocations()
     } else
       alert("Error submitting location")
+  }
+}
+
+//adding daniels location here
+async function addDaniel() {
+  try {
+    let response = await fetch(config.routes.media + '/daniel.json')
+    let data = await response.json()
+    //try catch both of these later
+    // Create a new marker
+    new google.maps.Marker({
+      position: {lat: parseFloat(data.lat), lng: parseFloat(data.lng)},
+      map: map,
+      zIndex: 9999,
+      icon: {
+        url: "/images/daniel.png",
+        scaledSize: new google.maps.Size(51, 56)
+      }
+    })
+  } catch (e) {
+    console.log(e);
   }
 }
 

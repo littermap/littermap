@@ -416,7 +416,7 @@ async function addDaniel() {
         scaledSize: new google.maps.Size(55, 55)
       }
     })
-  }
+  } catch(e){}
 }
 //ending add daniels location here
 export {

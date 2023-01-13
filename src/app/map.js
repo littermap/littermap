@@ -399,26 +399,33 @@ function submitLocation({description, level, images}) {
 
 //adding daniels location here
 async function addDaniel() {
+  let locationData;
   try {
     // Load the JSON data
-    let response = await fetch(config.routes.media + '/daniel.json');
-    let data = await response.json();
+    let response = await fetch(config.routes.media + 'media/daniel.json')
+    locationData = await response.json()
+  } catch(e) {
+    console.log("Fetch failed")
+    return;
+  }
+  console.log(locationData)
 
-    // Extract the coordinate pair from the JSON data
-    let coords = data.coordinates;
+  // Extract the coordinate pair from the JSON data
+  const { lat, lng } = locationData
+  let coords = { lat, lng }
 
-    // Create a new marker
-    marker = new google.maps.Marker({
-      position: { lat: coords[1], lng: coords[0] },
-      map: map,
-      icon: {
-        url: "/images/daniel.png",
-        scaledSize: new google.maps.Size(55, 55)
-      }
-    })
-  } catch(e){}
+  // Create a new marker
+  new google.maps.Marker({
+    position: { lat: coords.lat, lng: coords.lng },
+    map: map,
+    //icon: {
+    //  url: "/images/daniel.png",
+    //  scaledSize: new google.maps.Size(55, 55)
+    //}
+  })
 }
 //ending add daniels location here
+
 export {
   map,
   goTo,

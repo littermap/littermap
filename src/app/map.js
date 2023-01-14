@@ -109,6 +109,7 @@ function initMap() {
   if (config.development) {
     window.map = map
   }
+  addDaniel()
 }
 
 let downState
@@ -398,18 +399,18 @@ function submitLocation({description, level, images}) {
 }
 
 //adding daniels location here
-google.maps.event.addListenerOnce(map, addDaniel)
-function addDaniel() {
+async function addDaniel() {
   try {
-    let response = await fetch(config.routes.media + 'media/daniel.json')
-    let data = await response
+    let response = await fetch(config.routes.media + '/daniel.json')
+    let data = await response.json()
+    //try catch both of these later
     // Create a new marker
     new google.maps.Marker({
       position: {lat: parseFloat(data.lat), lng: parseFloat(data.lng)},
       map: map,
       icon: {
         url: "/images/daniel.png",
-        scaledSize: new google.maps.Size(55, 55)
+        scaledSize: new google.maps.Size(51, 56)
       }
     })
   } catch (e) {
@@ -417,7 +418,6 @@ function addDaniel() {
   }
 }
 
-//ending add daniels location here
 
 export {
   map,
@@ -433,12 +433,7 @@ export {
 // Expose this so it can be invoked from the submit popup event handler
 //
 window.editNewLocation = editNewLocation
-
 //
 // Expose this so the Google Maps API script can invoke it
 //
 window.initMap = initMap
-//
-// Expose this so the Google Maps API script can invoke it
-//
-window.addDaniel = addDaniel

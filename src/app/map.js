@@ -408,6 +408,7 @@ async function addDaniel() {
     new google.maps.Marker({
       position: {lat: parseFloat(data.lat), lng: parseFloat(data.lng)},
       map: map,
+      zIndex: 9999,
       icon: {
         url: "/images/daniel.png",
         scaledSize: new google.maps.Size(51, 56)

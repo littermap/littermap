@@ -1,6 +1,6 @@
 ### So you would like to contribute to the Litter Map software platform?
 
-Wonderful! No background qualifications are required. However, the following guidelines are important:
+Wonderful! No previous qualifications are required. However, the following guidelines are important:
 
 - We want this to be a robust, extensible platform that will endure the test of heavy usage
 - We want to be conscious about performance
@@ -8,7 +8,7 @@ Wonderful! No background qualifications are required. However, the following gui
 - Despite its sophistication, we want the project to be approachable to contributors
 - We'd like to build this platform in a way that outsiders can understand how it works
 
-Also, we invite you to use anything from this project in your open source project. The code, contributed by the contributors, is published under the [GPL-3](https://github.com/littermap/littermap/blob/b57dde67cb58bcc84e11e37660be8955cf057e58/LICENSE) license.
+Also, we invite you to use anything from this project in your open source project. The code, contributed by the contributors, is published under the [AGPL-3](https://www.gnu.org/licenses/agpl-3.0) or later license.
 
 If you'd like to simply report a bug, please check to see if an [issue](https://github.com/littermap/littermap/issues) already exists, and if not create one.
 
@@ -16,7 +16,7 @@ If you have a question or would like to start a new topic, check the [discussion
 
 Code contributions are not the only way to help. Answering questions, helping others, reaching out and improving the documentation are immensely valuable to the community.
 
-## The project's path
+## The project's direction of development
 
 Our goal is to create the best global website for people to share information about littered locations and to create a place through which everyone worldwide can effectively collaborate on cleaning up our planet without the necessity of even knowing each other.
 
@@ -31,9 +31,9 @@ By contributing code to the Litter Map project, you assert that:
 
 You agree to:
 
-- License your contribution under the terms of the [GPL-3.0](https://github.com/littermap/littermap/blob/b57dde67cb58bcc84e11e37660be8955cf057e58/LICENSE) license
+- License your contribution under the terms of the [AGPL-3](https://www.gnu.org/licenses/agpl-3.0) or later license
 
-You retain the copyright to your work. By contributing to the Litter Map project you simply agree to release it as free software under the GPL-3.0 license.
+You retain the copyright to your work. By contributing to the Litter Map project you simply agree to release it as free software under the **AGPL-3.0-or-later** license.
 
 ## Effective contribution
 

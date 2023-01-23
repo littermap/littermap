@@ -29,8 +29,14 @@ export default () => {
         return
       case 68: // D
         let link = linkRefs[store.currentImage]
+
+        // Briefly set the download file name
         link.download = "littermap-" + store.viewingImages[store.currentImage]
+
+        // Activate the link
         link.click()
+
+        // Reset the link back to a normal link
         link.download = ""
         return
       case 13: // Return
@@ -40,9 +46,9 @@ export default () => {
 
     // Number keys select photos by index
     if (key >= 48 /* key 0 */ && key <= 57 /* key 9 */) {
-      let idx = key - 49
+      let idx = key - 49 // Let idx range -1, 0..8 for keys 0, 1..9
 
-      // Key 0 is photo number 10 (index 9)
+      // Key 0 (key index -1) is photo number 10 (array index 9)
       if (idx === -1)
         idx = 9
 
